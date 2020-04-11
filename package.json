@@ -44,6 +44,7 @@
   ],
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.12.1",
+    "axios": "^0.19.2",
     "chart.js": "2.9.3",
     "classnames": "2.2.6",
     "moment": "2.24.0",
@@ -55,9 +56,13 @@
     "react-datetime": "2.16.3",
     "react-dom": "^16.13.1",
     "react-google-maps": "9.4.5",
+    "react-notifications": "^1.6.0",
     "react-router-dom": "5.1.2",
     "react-scripts": "3.4.1",
-    "reactstrap": "8.4.1"
+    "react-spring": "^8.0.27",
+    "react-toastify": "^5.5.0",
+    "reactstrap": "8.4.1",
+    "toasted-notes": "^3.2.0"
   },
   "devDependencies": {
     "@types/googlemaps": "3.39.2",
