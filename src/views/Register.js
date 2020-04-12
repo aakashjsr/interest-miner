@@ -35,11 +35,9 @@ class Register extends React.Component {
   };
 
   handleChange = e => {
-    // console.log('Handle Change', event.target.name)
     let getValue = e.target.value;
     let getName = e.target.name;
     this.setState(() => ({ [getName]: getValue }))
-    // this.setState({ [event.target.name]: event.target.value });
   };
 
   _handleSubmit = e => {
@@ -49,12 +47,12 @@ class Register extends React.Component {
       toast.notify('Password Short Length!',{position:'top-right'})
      } else {
       let data = {
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
+        first_name: this.state.firstName,
+        last_name: this.state.lastName,
         email: this.state.email,
         password: this.state.password,
-        twitterId: this.state.twitterId,
-        authorId: this.state.authorId,
+        twitter_account_id: this.state.twitterId,
+        author_id: this.state.authorId,
       };
 
       user.userSignup(data).then(response => {
