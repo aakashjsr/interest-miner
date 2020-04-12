@@ -1,21 +1,23 @@
-/*!
 
-=========================================================
-*  Dashboard React - v1.1.0
-=========================================================
-*/
-import React from "react";
+import React, { Fragment,Component } from "react";
 import AppRoute from "./routes/index";
-import {ToastContainer} from 'react-toastify';
+import { getItem } from "./utils/localStorage";
+import { ToastContainer } from 'react-toastify';
 
+export const Theme = React.createContext();
 
-const App = () => (
-
-    <div>
-        <AppRoute />
-        <ToastContainer autoClose={8000} />
-    </div>
-);
+const App = () => {
+    const TOKEN = getItem("accessToken");
+    const state = {
+        TOKEN
+    }
+   return( <Fragment>
+        <Theme.Provider value={state}>
+            <AppRoute />
+            <ToastContainer autoClose={8000} />
+        </Theme.Provider>
+    </Fragment>)
+};
 
 export default App
 

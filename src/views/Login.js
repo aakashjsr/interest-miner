@@ -1,8 +1,9 @@
 
 import React from "react";
-import {Link } from 'react-router-dom';
-import toast from 'toasted-notes' 
-import 'toasted-notes/src/styles.css';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import Loader from 'react-loader-spinner'
+import { handleServerErrors } from "utils/errorHandler";
 import user from '../services/api';
 
 // reactstrap components
@@ -21,15 +22,16 @@ import {
   Col
 } from "reactstrap";
 
+import { Theme } from '../App';
+
 class Login extends React.Component {
 
-  
+
   state = {
-    
+
     email: '',
     password: '',
-    error: '',
-    passwordError: false
+    isLoding: false,
   };
 
   handleChange = e => {
@@ -40,25 +42,30 @@ class Login extends React.Component {
 
   _handleSubmit = e => {
     e.preventDefault();
-    // console.log('Form DAT ++>',this.state)
-    
-      let data = {
-        email: this.state.email,
-        password: this.state.password,
-      };
+    let data = {
+      email: this.state.email,
+      password: this.state.password,
+    };
 
-      user.userSignIn(data).then(response => {
-        console.log('RES on LOGIN++>',response.data.token)
-        if (response.status === 200) {
-          localStorage.setItem("accessToken", response.data.token);
-         }
-      
-        // this.props.history.push("/auth/login");
-      }).catch(error=>
-        toast.notify(error.response.data.username[0],{position:'top-right'})
-      )
-    
+    this.setState({ isLoding: true })
+    user.userSignIn(data).then(response => {
+      this.setState({ isLoding: false })
+      if (response.status === 200) {
+        localStorage.setItem("accessToken", response.data.token);
+        this.props.history.push("/admin/index");
+
+        //  <Theme.Consumer>
+        //       {state => console.log('CONTEXT++>',state)}
+        //       </Theme.Consumer>
+      }
+    }).catch(error =>{
+      this.setState({ isLoding: false })
+      handleServerErrors(error, toast.error)
+    }
+    )
+
   };
+
 
   render() {
     return (
@@ -67,7 +74,7 @@ class Login extends React.Component {
           <Card className="bg-secondary shadow border-0">
             {/* <CardHeader className="bg-transparent pb-5">
               <div className="text-muted text-center mt-2 mb-3"> */}
-                {/* <small>Sign in with</small>
+            {/* <small>Sign in with</small>
               </div>
               <div className="btn-wrapper text-center">
                 <Button
@@ -103,7 +110,11 @@ class Login extends React.Component {
             <CardBody className="px-lg-5 py-lg-5">
               <div className="text-center text-muted mb-4">
                 <small>Or sign in with credentials</small>
+
               </div>
+              { this.state.isLoding ? <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+            :  
+           
               <Form role="form" onSubmit={this._handleSubmit} method="post">
                 <FormGroup className="mb-3">
                   <InputGroup className="input-group-alternative">
@@ -112,7 +123,7 @@ class Login extends React.Component {
                         <i className="ni ni-email-83" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Email" type="email"  name="email" value={this.state.email} onChange={this.handleChange}/>
+                    <Input placeholder="Email" type="email" name="email" value={this.state.email} onChange={this.handleChange} />
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
@@ -122,7 +133,7 @@ class Login extends React.Component {
                         <i className="ni ni-lock-circle-open" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Password" type="password" name="password" value={this.state.password} onChange={this.handleChange}/>
+                    <Input placeholder="Password" type="password" name="password" value={this.state.password} onChange={this.handleChange} />
                   </InputGroup>
                 </FormGroup>
                 <div className="custom-control custom-control-alternative custom-checkbox">
@@ -144,6 +155,7 @@ class Login extends React.Component {
                   </Button>
                 </div>
               </Form>
+               }
             </CardBody>
           </Card>
           <Row className="mt-3">
@@ -160,7 +172,7 @@ class Login extends React.Component {
               <Link
                 className="text-light"
                 to="/auth/register"
-               
+
               >
                 <small>Create new account</small>
               </Link>

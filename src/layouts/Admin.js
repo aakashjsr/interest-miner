@@ -9,7 +9,7 @@ import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import PrivateRoute from '../routes/PrivateRoute';
 
-import routes from "routes.js";
+import routes from "../routes/routes";
 
 class Admin extends React.Component {
   componentDidUpdate(e) {

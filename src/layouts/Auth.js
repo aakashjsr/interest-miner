@@ -7,8 +7,9 @@ import { Container, Row, Col } from "reactstrap";
 // core components
 import AuthNavbar from "components/Navbars/AuthNavbar.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
+import routes from "../routes/routes";
 
-import routes from "routes";
+// import routes from "routes";
 
 class Auth extends React.Component {
   componentDidMount() {

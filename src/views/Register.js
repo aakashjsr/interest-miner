@@ -1,8 +1,8 @@
 
 import React from "react";
-
-import toast from 'toasted-notes' 
-import 'toasted-notes/src/styles.css';
+import { toast } from 'react-toastify';
+import Loader from 'react-loader-spinner'
+import { handleServerErrors } from "utils/errorHandler";
 import user from '../services/api';
 
 // reactstrap components
@@ -30,7 +30,7 @@ class Register extends React.Component {
     password: '',
     twitterId: '',
     authorId: '',
-    error: '',
+    isLoding: false,
     passwordError: false
   };
 
@@ -43,9 +43,12 @@ class Register extends React.Component {
   _handleSubmit = e => {
     e.preventDefault();
     // console.log('Form DAT ++>',this.state)
-    if( this.state.password.length < 8 ){
-      toast.notify('Password Short Length!',{position:'top-right'})
-     } else {
+    if (this.state.password.length < 8) {
+      toast.error("Password Short Length!", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 5000
+      });
+    } else {
       let data = {
         first_name: this.state.firstName,
         last_name: this.state.lastName,
@@ -55,17 +58,24 @@ class Register extends React.Component {
         author_id: this.state.authorId,
       };
 
+      this.setState({ isLoding: true })
+      // loder true ka code 
       user.userSignup(data).then(response => {
-      
+        // loder false ka code 
+        this.setState({ isLoding: false })
         this.props.history.push("/auth/login");
+
       }
-         ).catch(error=>
-        toast.notify(error.response.data.username[0],{position:'top-right'})
+      ).catch(error => {
+        this.setState({ isLoding: false })
+        handleServerErrors(error, toast.error)
+        // loder false ka code 
+      }
       )
     }
   };
 
- render() {
+  render() {
     return (
       <>
         <Col lg="6" md="8">
@@ -105,11 +115,14 @@ class Register extends React.Component {
                 </Button>
               </div>
             </CardHeader> */}
+
             <CardBody className="px-lg-5 py-lg-5">
               <div className="text-center text-muted mb-4">
                 <small>Or sign up with credentials</small>
               </div>
-              
+              {
+              this.state.isLoding ? <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+              :
               <Form role="form" onSubmit={this._handleSubmit} method="post">
                 <FormGroup>
                   <InputGroup className="input-group-alternative mb-3">
@@ -136,7 +149,7 @@ class Register extends React.Component {
                         <i className="ni ni-email-83" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Email" type="email" autoComplete="new-email" name="email" value={this.state.email} onChange={this.handleChange}/>
+                    <Input placeholder="Email" type="email" autoComplete="new-email" name="email" value={this.state.email} onChange={this.handleChange} />
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
@@ -146,7 +159,7 @@ class Register extends React.Component {
                         <i className="ni ni-lock-circle-open" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Password" type="password" autoComplete="new-password" name="password" value={this.state.password} onChange={this.handleChange}/>
+                    <Input placeholder="Password" type="password" autoComplete="new-password" name="password" value={this.state.password} onChange={this.handleChange} />
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
@@ -156,7 +169,7 @@ class Register extends React.Component {
                         <i className="ni ni-email-83" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Author Id" type="email" autoComplete="new-email" name="authorId" value={this.state.authorId} onChange={this.handleChange}/>
+                    <Input placeholder="Author Id" type="email" autoComplete="new-email" name="authorId" value={this.state.authorId} onChange={this.handleChange} />
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
@@ -166,10 +179,10 @@ class Register extends React.Component {
                         <i className="ni ni-email-83" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Twitter Account" type="email" autoComplete="new-email" name="twitterId" value={this.state.twitterId} onChange={this.handleChange}/>
+                    <Input placeholder="Twitter Account" type="email" autoComplete="new-email" name="twitterId" value={this.state.twitterId} onChange={this.handleChange} />
                   </InputGroup>
                 </FormGroup>
-               
+
                 {/* <div className="text-muted font-italic">
                   <small>
                     password strength:{" "}
@@ -204,6 +217,7 @@ class Register extends React.Component {
                   </Button>
                 </div>
               </Form>
+              }
             </CardBody>
           </Card>
         </Col>

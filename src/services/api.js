@@ -7,8 +7,6 @@ class user {
     //** SIGNUP API **//
   static userSignup(data) {
     const TOKEN = getItem("accessToken");
-    // console.log(TOKEN);
-    // try{
     return axios({
             method: "post",
             url: `${BASE_URL}/api/accounts/register/`,
@@ -17,30 +15,20 @@ class user {
               res => {
                   res.json()
               }
-            ).catch(
-                error=> error
             )
         };
 
            //** SIGNUP API **//
   static userSignIn(data) {
-    const TOKEN = getItem("accessToken");
-    // console.log(TOKEN);
-    // try{
+    
     return axios({
             method: "post",
             url: `${BASE_URL}/api/accounts/login/`,
             data: data
           }).then(
               res => res
-              
-            ).catch(
-                error=> error
-                
-                // console.log('ERROR++>',error.response.data)
-            )
-            
-        };
+              )
+            };
      
  
 
