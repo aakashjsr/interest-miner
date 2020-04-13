@@ -1,20 +1,4 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 // node.js library that concatenates classes (strings)
 import classnames from "classnames";
@@ -23,6 +7,7 @@ import Chart from "chart.js";
 // react plugin used to create charts
 import { Line, Bar } from "react-chartjs-2";
 // reactstrap components
+import ConceptMap from "../components/ConceptMap"
 import {
   Button,
   Card,
@@ -75,16 +60,16 @@ class Index extends React.Component {
         <Container className="mt--7" fluid>
           <Row>
             <Col className="mb-5 mb-xl-0" xl="8">
-              <Card className="bg-gradient-default shadow">
+              <Card className="bg-gradient-default1 shadow">
                 <CardHeader className="bg-transparent">
                   <Row className="align-items-center">
                     <div className="col">
-                      <h6 className="text-uppercase text-light ls-1 mb-1">
+                      <h6 className="text-uppercase text-light1 ls-1 mb-1">
                         Overview
                       </h6>
-                      <h2 className="text-white mb-0">Sales value</h2>
+                      <h2 className="text-white1 mb-0">Concept Map</h2>
                     </div>
-                    <div className="col">
+                    {/* <div className="col">
                       <Nav className="justify-content-end" pills>
                         <NavItem>
                           <NavLink
@@ -112,17 +97,18 @@ class Index extends React.Component {
                           </NavLink>
                         </NavItem>
                       </Nav>
-                    </div>
+                    </div> */}
                   </Row>
                 </CardHeader>
                 <CardBody>
                   {/* Chart */}
-                  <div className="chart">
-                    <Line
+                  <div className="chart1">
+                  <ConceptMap/>
+                    {/* <Line
                       data={chartExample1[this.state.chartExample1Data]}
                       options={chartExample1.options}
                       getDatasetAtEvent={e => console.log(e)}
-                    />
+                    /> */}
                   </div>
                 </CardBody>
               </Card>
