@@ -112,7 +112,7 @@ class Login extends React.Component {
                 <small>Or sign in with credentials</small>
 
               </div>
-              { this.state.isLoding ? <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+              { this.state.isLoding ? <div className="text-center"><Loader type="Puff" color="#00BFFF" height={100} width={100} /></div>
             :  
            
               <Form role="form" onSubmit={this._handleSubmit} method="post">
@@ -136,7 +136,7 @@ class Login extends React.Component {
                     <Input placeholder="Password" type="password" name="password" value={this.state.password} onChange={this.handleChange} />
                   </InputGroup>
                 </FormGroup>
-                <div className="custom-control custom-control-alternative custom-checkbox">
+                {/* <div className="custom-control custom-control-alternative custom-checkbox">
                   <input
                     className="custom-control-input"
                     id=" customCheckLogin"
@@ -148,7 +148,7 @@ class Login extends React.Component {
                   >
                     <span className="text-muted">Remember me</span>
                   </label>
-                </div>
+                </div> */}
                 <div className="text-center">
                   <Button className="my-4" color="primary" type="submit">
                     Sign in

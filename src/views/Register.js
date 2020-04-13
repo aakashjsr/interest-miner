@@ -43,12 +43,12 @@ class Register extends React.Component {
   _handleSubmit = e => {
     e.preventDefault();
     // console.log('Form DAT ++>',this.state)
-    if (this.state.password.length < 8) {
-      toast.error("Password Short Length!", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 5000
-      });
-    } else {
+    // if (this.state.password.length < 8) {
+    //   toast.error("Password Short Length!", {
+    //     position: toast.POSITION.TOP_RIGHT,
+    //     autoClose: 5000
+    //   });
+    // } else {
       let data = {
         first_name: this.state.firstName,
         last_name: this.state.lastName,
@@ -72,7 +72,7 @@ class Register extends React.Component {
         // loder false ka code 
       }
       )
-    }
+    // }
   };
 
   render() {
@@ -121,7 +121,7 @@ class Register extends React.Component {
                 <small>Or sign up with credentials</small>
               </div>
               {
-              this.state.isLoding ? <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+              this.state.isLoding ? <div className="text-center"><Loader type="Puff" color="#00BFFF" height={100} width={100} /></div>
               :
               <Form role="form" onSubmit={this._handleSubmit} method="post">
                 <FormGroup>
@@ -166,20 +166,20 @@ class Register extends React.Component {
                   <InputGroup className="input-group-alternative mb-3">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
-                        <i className="ni ni-email-83" />
+                        <i className="ni ni-hat-3" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Author Id" type="email" autoComplete="new-email" name="authorId" value={this.state.authorId} onChange={this.handleChange} />
+                    <Input placeholder="Author Id" type="text" autoComplete="new-email" name="authorId" value={this.state.authorId} onChange={this.handleChange} />
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
                   <InputGroup className="input-group-alternative mb-3">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
-                        <i className="ni ni-email-83" />
+                        <i class="fab fa-twitter"/>
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Twitter Account" type="email" autoComplete="new-email" name="twitterId" value={this.state.twitterId} onChange={this.handleChange} />
+                    <Input placeholder="Twitter Account" type="text" autoComplete="new-email" name="twitterId" value={this.state.twitterId} onChange={this.handleChange} />
                   </InputGroup>
                 </FormGroup>
 
@@ -191,7 +191,7 @@ class Register extends React.Component {
                 </div> */}
                 <Row className="my-4">
                   <Col xs="12">
-                    <div className="custom-control custom-control-alternative custom-checkbox">
+                    {/* <div className="custom-control custom-control-alternative custom-checkbox">
                       <input
                         className="custom-control-input"
                         id="customCheckRegister"
@@ -208,7 +208,7 @@ class Register extends React.Component {
                           </a>
                         </span>
                       </label>
-                    </div>
+                    </div> */}
                   </Col>
                 </Row>
                 <div className="text-center">
