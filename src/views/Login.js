@@ -52,6 +52,7 @@ class Login extends React.Component {
       this.setState({ isLoding: false })
       if (response.status === 200) {
         localStorage.setItem("accessToken", response.data.token);
+        localStorage.setItem("name", response.data.first_name);
         this.props.history.push("/admin/index");
 
         //  <Theme.Consumer>

@@ -2,6 +2,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {logout} from "../../helper/index";
+import { getItem } from "utils/localStorage";
+
 // reactstrap components
 import {
   DropdownMenu,
@@ -32,7 +34,7 @@ class AdminNavbar extends React.Component {
             >
               {this.props.brandText}
             </Link>
-            <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+            {/* <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
               <FormGroup className="mb-0">
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
@@ -43,20 +45,21 @@ class AdminNavbar extends React.Component {
                   <Input placeholder="Search" type="text" />
                 </InputGroup>
               </FormGroup>
-            </Form>
+            </Form> */}
             <Nav className="align-items-center d-none d-md-flex" navbar>
               <UncontrolledDropdown nav>
                 <DropdownToggle className="pr-0" nav>
                   <Media className="align-items-center">
                     <span className="avatar avatar-sm rounded-circle">
-                      <img
+                    <i class="fas fa-user-tie"></i>
+                      {/* <img
                         alt="..."
                         src={require("assets/img/theme/team-4-800x800.jpg")}
-                      />
+                      /> */}
                     </span>
                     <Media className="ml-2 d-none d-lg-block">
                       <span className="mb-0 text-sm font-weight-bold">
-                        Jessica Jones
+                        {getItem("name")? getItem("name"):'User' }
                       </span>
                     </Media>
                   </Media>

@@ -12,9 +12,8 @@ class user {
             url: `${BASE_URL}/api/accounts/register/`,
             data: data
           }).then(
-              res => {
-                  res.json()
-              }
+              res => res.json()
+              
             )
         };
 
