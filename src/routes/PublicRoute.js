@@ -1,20 +1,21 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { getItem } from "../utils/localStorage";
 
 
-export const PublicRoute = ({
-    isAuthanicated,
-    component: Component,
-    ...rest
-}) => (
+
+export const PublicRoute = ({isAuthanicated, component: Component, ...rest}) => {
+    const TOKEN = getItem("accessToken");
+    return (
         <Route {...rest} component={(props) => (
-            isAuthanicated ? (
-                <Redirect to="/dashbord" />
+        TOKEN ? (
+                <Redirect to="/admin/index" />
             ) : (
                     <Component {...props} />
                 )
-        )} />
-    );
+        )} 
+    />)
+};
 
 
 

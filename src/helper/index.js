@@ -1,5 +1,5 @@
 
-import { getItem } from "../utils/localStore";
+import { getItem } from "../utils/localStorage";
 import moment from "moment";
 
 export const logout = () => {

@@ -8,6 +8,8 @@ import { Container, Row, Col } from "reactstrap";
 import AuthNavbar from "components/Navbars/AuthNavbar.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 import routes from "../routes/routes";
+import PublicRoute from '../routes/PublicRoute';
+
 
 // import routes from "routes";
 
@@ -22,7 +24,7 @@ class Auth extends React.Component {
     return routes.map((prop, key) => {
       if (prop.layout === "/auth") {
         return (
-          <Route
+          <PublicRoute
             path={prop.layout + prop.path}
             component={prop.component}
             key={key}
