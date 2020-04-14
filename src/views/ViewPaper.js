@@ -72,9 +72,11 @@ class ViewPaper extends React.Component {
 
       }).catch(error => {
         this.setState({ isLoding: false })
-        console.log(error)
+        handleServerErrors(error, toast.error)
+        
         
       })
+      
 }
 
   deleteEnquiry = (id)=>{
@@ -90,7 +92,8 @@ class ViewPaper extends React.Component {
 
       }).catch(error => {
         this.setState({ isLoding: false })
-        console.log(error)
+        handleServerErrors(error, toast.error)
+        
       })
     
   }
@@ -109,7 +112,8 @@ user.getPaper(id).then(response => {
 
       }).catch(error => {
         this.setState({ isLoding: false })
-        console.log(error)
+        handleServerErrors(error, toast.error)
+        
         
       })
   }
@@ -131,23 +135,9 @@ user.getPaper(id).then(response => {
       abstract:paperdata.abstract
     });
 
-
-      
-// user.getPaper(id).then(response => {
-//         // loder false ka code 
-//         console.log('GET A PAPER RES:++>',response.data)
-//         this.setState({ 
-//           isLoding: false,
-//           modal : !this.state.modal,
-//           paperDetail : response.data
-//          })
-
-//       }).catch(error => {
-//         this.setState({ isLoding: false })
-//         console.log(error)
-        
-//       })
   }
+
+
 toggle = (id) => {
     this.setState({
       modal : !this.state.modal
@@ -174,10 +164,7 @@ toggle = (id) => {
       }).catch(error => {
         // this.setState({ isLoding: false })
         handleServerErrors(error, toast.error)
-
-        // console.log(error)
-        
-      })
+         })
   }
 
   edittoggle = ( ) => {
@@ -204,8 +191,11 @@ toggle = (id) => {
               <Card className="shadow">
                 <CardHeader className="border-0">
                   <h3 className="mb-0">Papers tables</h3>
+                  <hr/>
                 </CardHeader>
-                <Table className="align-items-center table-flush" responsive>
+               
+                  {this.state.data.length ? this.state.data.map((value,index)=>(
+                     <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                     <tr>
                       <th scope="col">Title</th>
@@ -217,8 +207,8 @@ toggle = (id) => {
                     </tr>
                   </thead>
                   <tbody>
-                   {this.state.data ? 
-                    this.state.data.map((value,index)=>(
+                   
+                    
                        <tr key={value.id}>
                       <th scope="row">
                         <Media className="align-items-center">
@@ -349,7 +339,7 @@ toggle = (id) => {
                             <i className="fas fa-ellipsis-v" />
                           </DropdownToggle>
                           <DropdownMenu className="dropdown-menu-arrow" right>
-      {/* <Button size="sm" color="danger" onClick={this.showEnquiry(value.id)}></Button> */}
+                        {/* <Button size="sm" color="danger" onClick={this.showEnquiry(value.id)}></Button> */}
 
                             <DropdownItem
                               onClick={()=>this.showEnquiry(value.id)}
@@ -371,14 +361,20 @@ toggle = (id) => {
                         </UncontrolledDropdown>
                       </td>
                     </tr>
-                    ))
+                    
                    
                     
                    
-                   :<div className="text-center"><Loader type="Puff" color="#00BFFF" height={100} width={100} /></div>}
+                  
+                  
                     
                   </tbody>
-                </Table>
+                  </Table>
+                  ))
+                   :
+                   
+                  <div className="text-center" style={{padding:'20px'}}><strong > No papers added</strong></div>}
+                
                 {/* <CardFooter className="py-4">
                   <nav aria-label="...">
                     <Pagination
