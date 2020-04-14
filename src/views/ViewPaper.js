@@ -51,7 +51,8 @@ class ViewPaper extends React.Component {
             title: '',
             url: '',
             year: '',
-            abstract:''
+            abstract:'',
+            id:''
        }
 
   componentDidMount(){
@@ -123,7 +124,7 @@ user.getPaper(id).then(response => {
 
        this.setState({
           editmodal : !this.state.editmodal,
-
+      id: paperdata.id,
       title: paperdata.title,
       url: paperdata.url,
       year: paperdata.year,
@@ -153,14 +154,39 @@ toggle = (id) => {
     })
     };
 
-  edittoggle = (id) => {
+  handleUpdate=( )=>{
+    let data = {
+        // id: this.state.id,
+        title: this.state.title,
+        url: this.state.url,
+        year: this.state.year,
+        abstract: this.state.abstract,
+      };
+      
+  user.updatePaper(data,this.state.id).then(response => {
+       toast.success("Update Papaer !", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000
+        });
+        //  this.getPaperData();
+        this.setState({ title:'', url:'',year:'',abstract:'' })
+
+      }).catch(error => {
+        // this.setState({ isLoding: false })
+        handleServerErrors(error, toast.error)
+
+        // console.log(error)
+        
+      })
+  }
+
+  edittoggle = ( ) => {
     this.setState({
       editmodal : !this.state.editmodal
     })
     };
 
   handleChange = e => {
-    console.log(e)
     let getValue = e.target.value;
     let getName = e.target.name;
     this.setState(() => ({ [getName]: getValue }))
@@ -431,7 +457,7 @@ toggle = (id) => {
         <ModalHeader toggle={this.edittoggle}>Edit Paper</ModalHeader>
         <ModalBody>
           <CardBody>
-                  <Form onSubmit={this._handleSubmit} method="post">
+                  <Form >
                     <h6 className="heading-small text-muted mb-4">
                       Paper information
                     </h6>
@@ -515,9 +541,9 @@ toggle = (id) => {
                     </div>
                      <Button
                         color="primary"
-                        type="submit"
+                        type="button"
                         
-                        // onClick={e => e.preventDefault()}
+                        onClick={()=>this.handleUpdate()}
                         // size="md"
                       >
                         Save
@@ -532,7 +558,7 @@ toggle = (id) => {
 
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={this.edittoggle}>OK</Button>
+          {/* <Button color="primary" onClick={this.edittoggle}>OK</Button> */}
         </ModalFooter>
       </Modal>
     </div>

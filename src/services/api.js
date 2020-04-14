@@ -94,6 +94,25 @@ class user {
               res => res
                )
         };
+
+          //** UPDATE PAPER API **//
+  static updatePaper(data,id) {
+    const TOKEN = getItem("accessToken");
+    // console.log('SKD',data)
+    return axios({
+            method: "patch",
+            url: `${BASE_URL}/api/interests/papers/${id}`,
+            headers: {
+                "Content-Type": "application/json",
+                  Accept: "application/json",
+                 'Authorization' :  `Token ${TOKEN}`
+          },
+            data: data
+          }).then(
+              res => res
+              
+            )
+        };
  
 
 
