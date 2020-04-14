@@ -24,7 +24,14 @@ import {
   Table,
   Container,
   Row,
-  UncontrolledTooltip
+  UncontrolledTooltip, 
+  // Card,
+  // CardHeader,
+  CardBody,
+  FormGroup,
+  Form,
+  Input,
+  Col
 } from "reactstrap";
 import user from '../services/api';
 
@@ -39,7 +46,12 @@ class ViewPaper extends React.Component {
             data:[],
             paperDetail:[],
             isLoding: false,
-            modal: false
+            modal: false,
+            editmodal: false,
+            title: '',
+            url: '',
+            year: '',
+            abstract:''
        }
 
   componentDidMount(){
@@ -102,7 +114,24 @@ user.getPaper(id).then(response => {
   }
 
     editEnquiry = (id)=>{
-      console.log('PAPER ID:>>',id)
+      // console.log('PAPER ID:>>',id)
+      
+      const paperdata = this.state.data.find((v,i)=>{
+            return  v.id == id
+        })
+      console.log('PAPER DATA:>>',paperdata);
+
+       this.setState({
+          editmodal : !this.state.editmodal,
+
+      title: paperdata.title,
+      url: paperdata.url,
+      year: paperdata.year,
+      abstract:paperdata.abstract
+    });
+
+
+      
 // user.getPaper(id).then(response => {
 //         // loder false ka code 
 //         console.log('GET A PAPER RES:++>',response.data)
@@ -118,15 +147,27 @@ user.getPaper(id).then(response => {
         
 //       })
   }
-
-
-  toggle = (id) => {
+toggle = (id) => {
     this.setState({
       modal : !this.state.modal
     })
     };
 
+  edittoggle = (id) => {
+    this.setState({
+      editmodal : !this.state.editmodal
+    })
+    };
+
+  handleChange = e => {
+    console.log(e)
+    let getValue = e.target.value;
+    let getName = e.target.name;
+    this.setState(() => ({ [getName]: getValue }))
+  };
+
   render() {
+    console.log(this.state.title)
     return (
       <>
         <Header />
@@ -382,6 +423,120 @@ user.getPaper(id).then(response => {
       </Modal>
     </div>
               {/* //  End Modal   */}
+
+
+                {/* // Edit Start Modal */}
+                   <div>
+      <Modal isOpen={this.state.editmodal} toggle={this.edittoggle} >
+        <ModalHeader toggle={this.edittoggle}>Edit Paper</ModalHeader>
+        <ModalBody>
+          <CardBody>
+                  <Form onSubmit={this._handleSubmit} method="post">
+                    <h6 className="heading-small text-muted mb-4">
+                      Paper information
+                    </h6>
+                    <div className="pl-lg-4">
+                      <Row>
+                        <Col lg="12">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-username"
+                            >
+                              Title
+                            </label>
+                            <Input
+                              className="form-control-alternative"
+                              // defaultValue="lucky.jesse"
+                              type="text"
+                              id="input-username"
+                              name="title" defaultValue={this.state.title} value={this.state.title} onChange={this.handleChange} 
+                              placeholder="Title"
+                              
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col lg="12">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-email"
+                            >
+                              URL
+                            </label>
+                            <Input
+                              className="form-control-alternative"
+                              id="input-email"
+                              name="url" defaultValue={this.state.url} onChange={this.handleChange} 
+                              placeholder="https://www.zyz.com"
+                              type="text"
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col lg="12">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-first-name"
+                            >
+                              Year
+                            </label>
+                            <Input
+                              className="form-control-alternative"
+                              defaultValue="Lucky"
+                              id="input-first-name"
+                              name="year" defaultValue={this.state.year} onChange={this.handleChange} 
+                              placeholder="Year"
+                              type="number"
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col lg="12">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-last-name"
+                            >
+                              Abstract
+                            </label>
+                            <Input
+                              className="form-control-alternative"
+                              // defaultValue="Jesse"
+                              id="input-last-name"
+                              name="abstract" defaultValue={this.state.abstract} onChange={this.handleChange} 
+                              placeholder="Abstract"
+                              type="textarea"
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                    </div>
+                     <Button
+                        color="primary"
+                        type="submit"
+                        
+                        // onClick={e => e.preventDefault()}
+                        // size="md"
+                      >
+                        Save
+                      </Button>
+                  </Form>
+                </CardBody>
+        
+          {/* <strong>Title: </strong> <input type="text" defaultValue={this.state.title} name="title"/><br/>
+          <strong>Year: </strong> {this.state.year}<br/>
+          <strong>URL: </strong> {this.state.url}<br/>
+          <strong>Abstract: </strong> <br/> {this.state.abstract} */}
+
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={this.edittoggle}>OK</Button>
+        </ModalFooter>
+      </Modal>
+    </div>
+              {/* // Edit End Modal   */}
             </div>
           </Row>
         </Container>
