@@ -30,7 +30,8 @@ class AddPaper extends React.Component {
     title: '',
     url:'',
     year:'',
-    abstract:''
+    abstract:'',
+    isLoding: false
   }
 
   handleChange = e => {
@@ -47,20 +48,21 @@ class AddPaper extends React.Component {
         year: this.state.year,
         abstract: this.state.abstract,
       };
-      
+
       this.setState({ isLoding: true })
       // loder true ka code 
-      // user.userSignup(data).then(response => {
-      //   // loder false ka code 
-      //   this.setState({ isLoding: false })
-      //   this.props.history.push("/auth/login");
+      user.addPaper(data).then(response => {
+       toast.success("Add Papaer !", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000
+        });
+        this.setState({ title:'', url:'',year:'',abstract:'' })
 
-      // }
-      // ).catch(error => {
-      //   this.setState({ isLoding: false })
-      //   console.log(error)
+      }).catch(error => {
+        this.setState({ isLoding: false })
+        console.log(error)
         
-      // })
+      })
     
   };
 
@@ -159,7 +161,7 @@ class AddPaper extends React.Component {
                             />
                           </FormGroup>
                         </Col>
-                        <Col lg="6">
+                        <Col lg="12">
                           <FormGroup>
                             <label
                               className="form-control-label"

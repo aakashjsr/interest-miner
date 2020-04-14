@@ -1,10 +1,13 @@
 
 import React from "react";
 // react plugin used to create google maps
-
+import { toast } from 'react-toastify';
+import Loader from 'react-loader-spinner'
+import { handleServerErrors } from "utils/errorHandler";
 
 // reactstrap components
 import {
+  Modal, ModalHeader, ModalBody, ModalFooter ,Button,
   Badge,
   Card,
   CardHeader,
@@ -23,12 +26,106 @@ import {
   Row,
   UncontrolledTooltip
 } from "reactstrap";
+import user from '../services/api';
+
 
 // core components
 import Header from "components/Headers/Header.js";
 
 
 class ViewPaper extends React.Component {
+
+  state = {
+            data:[],
+            paperDetail:[],
+            isLoding: false,
+            modal: false
+       }
+
+  componentDidMount(){
+
+ this.setState({ isLoding: true })
+    this.getPaperData();
+  }
+
+  getPaperData=()=>{
+    user.getListPaper().then(response => {
+        // loder false ka code 
+        console.log('ADD PAPER RES:++>')
+        this.setState({ 
+          isLoding: false,
+          data : response.data
+         })
+
+      }).catch(error => {
+        this.setState({ isLoding: false })
+        console.log(error)
+        
+      })
+}
+
+  deleteEnquiry = (id)=>{
+    console.log('DELETE ID ++>',id) 
+    user.deletePaper(id).then(response => {
+       
+         toast.success("Delete Papaer !", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000
+        });
+       
+       this.getPaperData();
+
+      }).catch(error => {
+        this.setState({ isLoding: false })
+        console.log(error)
+      })
+    
+  }
+
+
+
+  showEnquiry = (id)=>{
+user.getPaper(id).then(response => {
+        // loder false ka code 
+        console.log('GET A PAPER RES:++>',response.data)
+        this.setState({ 
+          isLoding: false,
+          modal : !this.state.modal,
+          paperDetail : response.data
+         })
+
+      }).catch(error => {
+        this.setState({ isLoding: false })
+        console.log(error)
+        
+      })
+  }
+
+    editEnquiry = (id)=>{
+      console.log('PAPER ID:>>',id)
+// user.getPaper(id).then(response => {
+//         // loder false ka code 
+//         console.log('GET A PAPER RES:++>',response.data)
+//         this.setState({ 
+//           isLoding: false,
+//           modal : !this.state.modal,
+//           paperDetail : response.data
+//          })
+
+//       }).catch(error => {
+//         this.setState({ isLoding: false })
+//         console.log(error)
+        
+//       })
+  }
+
+
+  toggle = (id) => {
+    this.setState({
+      modal : !this.state.modal
+    })
+    };
+
   render() {
     return (
       <>
@@ -47,16 +144,18 @@ class ViewPaper extends React.Component {
                       <th scope="col">Title</th>
                       <th scope="col">URL</th>
                       <th scope="col">Year</th>
-                      <th scope="col">Users</th>
+                      {/* <th scope="col">Users</th> */}
                       <th scope="col">Abstract</th>
                       <th scope="col" />
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                   {this.state.data ? 
+                    this.state.data.map((value,index)=>(
+                       <tr key={value.id}>
                       <th scope="row">
                         <Media className="align-items-center">
-                          <a
+                          {/* <a
                             className="avatar rounded-circle mr-3"
                             href="#pablo"
                             onClick={e => e.preventDefault()}
@@ -65,22 +164,23 @@ class ViewPaper extends React.Component {
                               alt="..."
                               src={require("assets/img/theme/bootstrap.jpg")}
                             />
-                          </a>
+                          </a> */}
                           <Media>
                             <span className="mb-0 text-sm">
-                              Argon Design System
+                              {value.title}
                             </span>
                           </Media>
                         </Media>
                       </th>
-                      <td>$2,500 USD</td>
+                      <td>{value.url}</td>
                       <td>
-                        <Badge color="" className="badge-dot mr-4">
+                      {value.year}
+                        {/* <Badge color="" className="badge-dot mr-4">
                           <i className="bg-warning" />
                           pending
-                        </Badge>
+                        </Badge> */}
                       </td>
-                      <td>
+                      {/* <td>
                         <div className="avatar-group">
                           <a
                             className="avatar avatar-sm"
@@ -155,9 +255,10 @@ class ViewPaper extends React.Component {
                             Jessica Doe
                           </UncontrolledTooltip>
                         </div>
-                      </td>
+                      </td> */}
                       <td>
-                        <div className="d-flex align-items-center">
+                      {`${value.abstract.slice(0, 15)} ...`}
+                        {/* <div className="d-flex align-items-center">
                           <span className="mr-2">60%</span>
                           <div>
                             <Progress
@@ -166,7 +267,7 @@ class ViewPaper extends React.Component {
                               barClassName="bg-danger"
                             />
                           </div>
-                        </div>
+                        </div> */}
                       </td>
                       <td className="text-right">
                         <UncontrolledDropdown>
@@ -181,21 +282,21 @@ class ViewPaper extends React.Component {
                             <i className="fas fa-ellipsis-v" />
                           </DropdownToggle>
                           <DropdownMenu className="dropdown-menu-arrow" right>
+      {/* <Button size="sm" color="danger" onClick={this.showEnquiry(value.id)}></Button> */}
+
                             <DropdownItem
-                              href="#pablo"
-                              onClick={e => e.preventDefault()}
+                              onClick={()=>this.showEnquiry(value.id)}
                             >
                               View
                             </DropdownItem>
-                            <DropdownItem
-                              href="#pablo"
-                              onClick={e => e.preventDefault()}
+                            <DropdownItem   
+                             onClick={()=>this.editEnquiry(value.id)}
                             >
                               Edit
                             </DropdownItem>
                             <DropdownItem
-                              href="#pablo"
-                              onClick={e => e.preventDefault()}
+                            // href="#"
+                              onClick={() => this.deleteEnquiry(value.id)}
                             >
                               Remove
                             </DropdownItem>
@@ -203,6 +304,11 @@ class ViewPaper extends React.Component {
                         </UncontrolledDropdown>
                       </td>
                     </tr>
+                    ))
+                   
+                    
+                   
+                   :<div className="text-center"><Loader type="Puff" color="#00BFFF" height={100} width={100} /></div>}
                     
                   </tbody>
                 </Table>
@@ -259,6 +365,23 @@ class ViewPaper extends React.Component {
                   </nav>
                 </CardFooter> */}
               </Card>
+               {/* //  Start Modal */}
+                   <div>
+      <Modal isOpen={this.state.modal} toggle={this.toggle} >
+        <ModalHeader toggle={this.toggle}>Paper Detail</ModalHeader>
+        <ModalBody>
+          <strong>Title: </strong> {this.state.paperDetail && this.state.paperDetail.title}<br/>
+          <strong>Year: </strong> {this.state.paperDetail && this.state.paperDetail.year}<br/>
+          <strong>URL: </strong> {this.state.paperDetail && this.state.paperDetail.url}<br/>
+          <strong>Abstract: </strong> <br/> {this.state.paperDetail && this.state.paperDetail.abstract}
+
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={this.toggle}>OK</Button>
+        </ModalFooter>
+      </Modal>
+    </div>
+              {/* //  End Modal   */}
             </div>
           </Row>
         </Container>

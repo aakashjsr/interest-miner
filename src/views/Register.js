@@ -62,14 +62,16 @@ class Register extends React.Component {
       // loder true ka code 
       user.userSignup(data).then(response => {
         // loder false ka code 
+        // console.log("REG:><",response)
+
         this.setState({ isLoding: false })
         this.props.history.push("/auth/login");
 
       }
       ).catch(error => {
         this.setState({ isLoding: false })
-        console.log(error)
-        // handleServerErrors(error, toast.error)
+        // console.log("REG ERROR:><",error)
+        handleServerErrors(error, toast.error)
         
       }
       )
