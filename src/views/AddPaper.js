@@ -60,7 +60,8 @@ class AddPaper extends React.Component {
 
       }).catch(error => {
         this.setState({ isLoding: false })
-        console.log(error)
+        // console.log(error)
+        handleServerErrors(error, toast.error)
         
       })
     
