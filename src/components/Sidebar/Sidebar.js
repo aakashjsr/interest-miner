@@ -250,7 +250,7 @@ class Sidebar extends React.Component {
             </Form>
             
             {/* strat drop down */}
-            
+{/*             
           <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle}>
           <DropdownToggle nav caret style={{padding: '0'}}>
             <i className="fas fa-tasks" style={{minWidth: '2.25rem',color: '#5e72e4'}} />
@@ -273,17 +273,22 @@ class Sidebar extends React.Component {
         
             {/* <DropdownItem divider />
             <DropdownItem>Add Papers</DropdownItem> */}
-          </DropdownMenu>
-        </Dropdown>
+          {/* </DropdownMenu>
+        </Dropdown> */} 
 
 
             {/* end drop down */}
 
 
+            <h6 className="navbar-heading text-muted">Data Management</h6>
+            <hr className="my-2" />
+
+           
             {/* Navigation */}
             <Nav navbar>{this.createLinks(routes)}</Nav>
-            {/* Divider */}
             <hr className="my-3" />
+
+            
             {/* Heading */}
             {/* <h6 className="navbar-heading text-muted">Documentation</h6> */}
             {/* Navigation */}

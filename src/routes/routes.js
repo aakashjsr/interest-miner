@@ -16,15 +16,17 @@ var routes = [
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: Index,
-    layout: "/admin"
+    layout: "/admin",
+    display: "none"
+
   },
   {
     path: "/add-paper",
     name: "Add Paper",
-    icon: "fas fa-tasks text-blue",
+    icon: "ni ni-fat-add text-orange",
     component: AddPaper,
     layout: "/admin",
-    display: "none"
+    // display: "none"
   },
    {
     path: "/view-paper",
@@ -32,22 +34,31 @@ var routes = [
     icon: "fas fa-tasks text-blue",
     component: ViewPaper,
     layout: "/admin",
-    display: "none"
+    // display: "none"
   },
   
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
+   {
+    path: "/keyword",   
+    name: "Keyword",
+    icon: "ni ni-archive-2 text-yellow",
     component: Maps,
     layout: "/admin",
-    display: "none"
-
+    // display: "none"
   },
+  
+  // {
+  //   path: "/maps",
+  //   name: "Maps",
+  //   icon: "ni ni-pin-3 text-orange",
+  //   component: Maps,
+  //   layout: "/admin",
+  //   display: "none"
+
+  // },
   {
     path: "/user-profile",
     name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
+    icon: "ni ni-single-02 text-green",
     component: Profile,
     layout: "/admin"
   },
