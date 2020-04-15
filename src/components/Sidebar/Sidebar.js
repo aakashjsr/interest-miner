@@ -137,7 +137,7 @@ class Sidebar extends React.Component {
             <span className="navbar-toggler-icon" />
           </button>
           {/* Brand */}
-          {logo ? (
+          {/* {logo ? (
             <NavbarBrand className="pt-0" {...navbarBrandProps}>
               <img
                 alt={logo.imgAlt}
@@ -145,7 +145,13 @@ class Sidebar extends React.Component {
                 src={logo.imgSrc}
               />
             </NavbarBrand>
-          ) : null}
+          ) : null} */}
+
+            <NavbarBrand className="pt-0" {...navbarBrandProps}>
+            <span style={{fontWeight: 'bolder',color: '#1189ef'}}>INTEREST MINER</span>
+            </NavbarBrand>
+
+
           {/* User */}
           <Nav className="align-items-center d-md-none">
             <UncontrolledDropdown nav>
