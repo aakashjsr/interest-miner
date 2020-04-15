@@ -56,83 +56,89 @@ class ViewPaper extends React.Component {
        }
 
   componentDidMount(){
+            this.setState({ isLoding: true },this.getPaperData())
+    }
 
- this.setState({ isLoding: true })
-    this.getPaperData();
-  }
-
+//** GET ALL PAPERS **//
   getPaperData=()=>{
     user.getListPaper().then(response => {
-        // loder false ka code 
-        console.log('ADD PAPER RES:++>')
         this.setState({ 
           isLoding: false,
           data : response.data
-         })
-
-      }).catch(error => {
+        })
+    }).catch(error => {
         this.setState({ isLoding: false })
         handleServerErrors(error, toast.error)
-        
-        
-      })
-      
-}
+        })
+  }
 
+//** DELETE A PAPERS **//
   deleteEnquiry = (id)=>{
-    console.log('DELETE ID ++>',id) 
-    user.deletePaper(id).then(response => {
-       
-         toast.success("Delete Papaer !", {
+
+   this.setState({isLoding:true},()=>{
+      
+      user.deletePaper(id).then(response => {
+  const newvalue = this.state.data.filter((v,i)=> v.id !=id );
+    this.setState({ isLoding: false,
+        data:[...newvalue]
+         })
+
+       toast.success("Delete Papaer !", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000
         });
        
-       this.getPaperData();
-
       }).catch(error => {
         this.setState({ isLoding: false })
         handleServerErrors(error, toast.error)
         
       })
+   })
     
   }
 
 
-
+//** SHOW A PAPERS **//
   showEnquiry = (id)=>{
-user.getPaper(id).then(response => {
-        // loder false ka code 
-        console.log('GET A PAPER RES:++>',response.data)
-        this.setState({ 
-          isLoding: false,
-          modal : !this.state.modal,
-          paperDetail : response.data
-         })
 
-      }).catch(error => {
-        this.setState({ isLoding: false })
-        handleServerErrors(error, toast.error)
-        
-        
-      })
-  }
-
-    editEnquiry = (id)=>{
-      // console.log('PAPER ID:>>',id)
-      
-      const paperdata = this.state.data.find((v,i)=>{
+     const paperdata = this.state.data.find((v,i)=>{
             return  v.id == id
         })
       console.log('PAPER DATA:>>',paperdata);
 
        this.setState({
+          modal : !this.state.modal,
+          paperDetail:paperdata
+    });
+// user.getPaper(id).then(response => {
+//         // loder false ka code 
+//         console.log('GET A PAPER RES:++>',response.data)
+//         this.setState({ 
+//           isLoding: false,
+//           modal : !this.state.modal,
+//           paperDetail : response.data
+//          })
+
+//       }).catch(error => {
+//         this.setState({ isLoding: false })
+//         handleServerErrors(error, toast.error)
+        
+        
+//       })
+  }
+
+//** SET VALUES IN EDIT PAPERS MODAL **//
+    editEnquiry = (id)=>{
+       const paperdata = this.state.data.find((v,i)=>{
+            return  v.id == id
+        })
+       this.setState({
           editmodal : !this.state.editmodal,
-      id: paperdata.id,
-      title: paperdata.title,
-      url: paperdata.url,
-      year: paperdata.year,
-      abstract:paperdata.abstract
+          id: paperdata.id,
+          title: paperdata.title,
+          url: paperdata.url,
+          year: paperdata.year,
+          abstract:paperdata.abstract
     });
 
   }
@@ -144,6 +150,7 @@ toggle = (id) => {
     })
     };
 
+//** UPDATE A PAPERS **//
   handleUpdate=( )=>{
     let data = {
         // id: this.state.id,
@@ -153,19 +160,28 @@ toggle = (id) => {
         abstract: this.state.abstract,
       };
       
-  user.updatePaper(data,this.state.id).then(response => {
+      this.setState(
+          {
+            isLoding:true,editmodal : !this.state.editmodal
+          },()=>{
+        user.updatePaper(data,this.state.id).then(response => {
+        this.setState({
+            isloading: false,
+        });
+
+         this.getPaperData();
+
        toast.success("Update Papaer !", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000
         });
-        //  this.getPaperData();
-        this.setState({ title:'', url:'',year:'',abstract:'' })
 
       }).catch(error => {
         // this.setState({ isLoding: false })
-        handleServerErrors(error, toast.error)
-         })
-  }
+        handleServerErrors(error, toast.error) })
+ })
+
+  };
 
   edittoggle = ( ) => {
     this.setState({
@@ -180,9 +196,10 @@ toggle = (id) => {
   };
 
   render() {
-    console.log(this.state.title)
+    console.log(this.state.isLoding)
     return (
       <>
+      
         <Header />
         {/* Page content */}
         <Container className="mt--7" fluid>
@@ -191,11 +208,8 @@ toggle = (id) => {
               <Card className="shadow">
                 <CardHeader className="border-0">
                   <h3 className="mb-0">Papers tables</h3>
-                  <hr/>
                 </CardHeader>
-               
-                  {this.state.data.length ? this.state.data.map((value,index)=>(
-                     <Table className="align-items-center table-flush" responsive>
+                <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                     <tr>
                       <th scope="col">Title</th>
@@ -207,125 +221,26 @@ toggle = (id) => {
                     </tr>
                   </thead>
                   <tbody>
-                   
-                    
-                       <tr key={value.id}>
-                      <th scope="row">
-                        <Media className="align-items-center">
-                          {/* <a
-                            className="avatar rounded-circle mr-3"
-                            href="#pablo"
-                            onClick={e => e.preventDefault()}
-                          >
-                            <img
-                              alt="..."
-                              src={require("assets/img/theme/bootstrap.jpg")}
-                            />
-                          </a> */}
-                          <Media>
-                            <span className="mb-0 text-sm">
-                              {value.title}
-                            </span>
-                          </Media>
-                        </Media>
-                      </th>
-                      <td>{value.url}</td>
-                      <td>
-                      {value.year}
-                        {/* <Badge color="" className="badge-dot mr-4">
-                          <i className="bg-warning" />
-                          pending
-                        </Badge> */}
-                      </td>
-                      {/* <td>
-                        <div className="avatar-group">
-                          <a
-                            className="avatar avatar-sm"
-                            href="#pablo"
-                            id="tooltip742438047"
-                            onClick={e => e.preventDefault()}
-                          >
-                            <img
-                              alt="..."
-                              className="rounded-circle"
-                              src={require("assets/img/theme/team-1-800x800.jpg")}
-                            />
-                          </a>
-                          <UncontrolledTooltip
-                            delay={0}
-                            target="tooltip742438047"
-                          >
-                            Ryan Tompson
-                          </UncontrolledTooltip>
-                          <a
-                            className="avatar avatar-sm"
-                            href="#pablo"
-                            id="tooltip941738690"
-                            onClick={e => e.preventDefault()}
-                          >
-                            <img
-                              alt="..."
-                              className="rounded-circle"
-                              src={require("assets/img/theme/team-2-800x800.jpg")}
-                            />
-                          </a>
-                          <UncontrolledTooltip
-                            delay={0}
-                            target="tooltip941738690"
-                          >
-                            Romina Hadid
-                          </UncontrolledTooltip>
-                          <a
-                            className="avatar avatar-sm"
-                            href="#pablo"
-                            id="tooltip804044742"
-                            onClick={e => e.preventDefault()}
-                          >
-                            <img
-                              alt="..."
-                              className="rounded-circle"
-                              src={require("assets/img/theme/team-3-800x800.jpg")}
-                            />
-                          </a>
-                          <UncontrolledTooltip
-                            delay={0}
-                            target="tooltip804044742"
-                          >
-                            Alexander Smith
-                          </UncontrolledTooltip>
-                          <a
-                            className="avatar avatar-sm"
-                            href="#pablo"
-                            id="tooltip996637554"
-                            onClick={e => e.preventDefault()}
-                          >
-                            <img
-                              alt="..."
-                              className="rounded-circle"
-                              src={require("assets/img/theme/team-4-800x800.jpg")}
-                            />
-                          </a>
-                          <UncontrolledTooltip
-                            delay={0}
-                            target="tooltip996637554"
-                          >
-                            Jessica Doe
-                          </UncontrolledTooltip>
-                        </div>
-                      </td> */}
-                      <td>
-                      {`${value.abstract.slice(0, 15)} ...`}
-                        {/* <div className="d-flex align-items-center">
-                          <span className="mr-2">60%</span>
-                          <div>
-                            <Progress
-                              max="100"
-                              value="60"
-                              barClassName="bg-danger"
-                            />
-                          </div>
-                        </div> */}
-                      </td>
+
+                  {/* START LOADER */}
+
+                { this.state.isLoding ? 
+                  (  
+                    <tr className="text-center" style={{padding:'20px'}}><td></td>
+                        <td style={{textAlign: 'right'}}> <Loader type="Puff" color="#00BFFF" height={100} width={100} /></td>
+                   </tr>
+                   )
+                   :
+                
+                   ( 
+                    this.state.data.length ? 
+                    this.state.data.map((value,index)=>(
+                      <tr key={value.id}>
+                          <th scope="row"> {value.title} </th>
+                          <td>{value.url}</td>
+                          <td>{value.year}</td>
+                          <td> {`${value.abstract.slice(0, 15)} ...`}</td>
+                      
                       <td className="text-right">
                         <UncontrolledDropdown>
                           <DropdownToggle
@@ -339,8 +254,6 @@ toggle = (id) => {
                             <i className="fas fa-ellipsis-v" />
                           </DropdownToggle>
                           <DropdownMenu className="dropdown-menu-arrow" right>
-                        {/* <Button size="sm" color="danger" onClick={this.showEnquiry(value.id)}></Button> */}
-
                             <DropdownItem
                               onClick={()=>this.showEnquiry(value.id)}
                             >
@@ -352,7 +265,6 @@ toggle = (id) => {
                               Edit
                             </DropdownItem>
                             <DropdownItem
-                            // href="#"
                               onClick={() => this.deleteEnquiry(value.id)}
                             >
                               Remove
@@ -361,20 +273,23 @@ toggle = (id) => {
                         </UncontrolledDropdown>
                       </td>
                     </tr>
-                    
+                    ))
                    
                     
                    
-                  
-                  
+                   :
+              
+                    (
+                    <tr className="text-center1" style={{padding:'20px'}}><td></td>
+                        <td style={{textAlign: 'right'}}> <strong > No Papers Data</strong></td>
+                   </tr>
+                   )
+               
+                   
+                   )}
                     
                   </tbody>
-                  </Table>
-                  ))
-                   :
-                   
-                  <div className="text-center" style={{padding:'20px'}}><strong > No papers added</strong></div>}
-                
+                </Table>
                 {/* <CardFooter className="py-4">
                   <nav aria-label="...">
                     <Pagination
