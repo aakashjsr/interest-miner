@@ -68,7 +68,7 @@ class user {
     const TOKEN = getItem("accessToken");
     return axios({
             method: "get",
-            url: `${BASE_URL}/api/interests/papers/${id}`,
+            url: `${BASE_URL}/api/interests/papers/${id}/`,
             headers: {
                 "Content-Type": "application/json",
                  Accept: "application/json",
@@ -84,7 +84,7 @@ class user {
     const TOKEN = getItem("accessToken");
     return axios({
             method: "DELETE",
-            url: `${BASE_URL}/api/interests/papers/${id}`,
+            url: `${BASE_URL}/api/interests/papers/${id}/`,
             headers: {
                 "Content-Type": "application/json",
                  Accept: "application/json",
@@ -101,7 +101,7 @@ class user {
     // console.log('SKD',data)
     return axios({
             method: "patch",
-            url: `${BASE_URL}/api/interests/papers/${id}`,
+            url: `${BASE_URL}/api/interests/papers/${id}/`,
             headers: {
                 "Content-Type": "application/json",
                   Accept: "application/json",

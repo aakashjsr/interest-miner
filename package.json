@@ -22,7 +22,6 @@
   "bugs": {
     "url": "https://github.com/creativetimofficial/argon-dashboard-react/issues"
   },
-  
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -60,6 +59,7 @@
     "react-konva": "^16.13.0-0",
     "react-loader-spinner": "^3.1.14",
     "react-notifications": "^1.6.0",
+    "react-overlay-loading": "^1.0.3",
     "react-router-dom": "5.1.2",
     "react-scripts": "3.4.1",
     "react-spring": "^8.0.27",
