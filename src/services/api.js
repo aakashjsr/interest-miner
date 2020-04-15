@@ -115,6 +115,24 @@ class user {
         };
  
 
+          //** GET USER DATA API **//
+  static getUserData() {
+    const TOKEN = getItem("accessToken");
+    return axios({
+            method: "post",
+            url: `${BASE_URL}/api/accounts/profile/`,
+          //   headers: {
+          //       "Content-Type": "application/json",
+          //         Accept: "application/json",
+          //        'Authorization' :  `Token ${TOKEN}`
+          // },
+          //   data: data
+          }).then(
+              res => res
+              
+            )
+        };
+
 
 
 }
