@@ -226,8 +226,8 @@ toggle = (id) => {
 
                 { this.state.isLoding ? 
                   (  
-                    <tr className="text-center" style={{padding:'20px'}}><td></td>
-                        <td style={{textAlign: 'right'}}> <Loader type="Puff" color="#00BFFF" height={100} width={100} /></td>
+                    <tr className="text-center" style={{padding:'20px'}}><td></td><td></td>
+                        <td style={{textAlign: 'center'}}> <Loader type="Puff" color="#00BFFF" height={100} width={100} /></td>
                    </tr>
                    )
                    :
@@ -365,13 +365,13 @@ toggle = (id) => {
                 {/* // Edit Start Modal */}
                    <div>
       <Modal isOpen={this.state.editmodal} toggle={this.edittoggle} >
-        <ModalHeader toggle={this.edittoggle}>Edit Paper</ModalHeader>
+        <ModalHeader toggle={this.edittoggle}><strong>Edit Paper information</strong></ModalHeader>
         <ModalBody>
           <CardBody>
                   <Form >
-                    <h6 className="heading-small text-muted mb-4">
+                    {/* <h6 className="heading-small text-muted mb-4">
                       Paper information
-                    </h6>
+                    </h6> */}
                     <div className="pl-lg-4">
                       <Row>
                         <Col lg="12">

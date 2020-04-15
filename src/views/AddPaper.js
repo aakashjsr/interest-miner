@@ -56,7 +56,8 @@ class AddPaper extends React.Component {
                autoClose: 2000
            });
            this.setState({isLoding: false , title:'', url:'',year:'',abstract:'' })
-   
+            this.props.history.push("/admin/view-paper");
+
          }).catch(error => {
            this.setState({ isLoding: false })
            // console.log(error)
@@ -164,8 +165,8 @@ class AddPaper extends React.Component {
                               id="input-last-name"
                               name="abstract" value={this.state.abstract} onChange={this.handleChange} 
                               placeholder="Abstract"
-                              className="form-control-alternative"
-                              rows="5"
+                              // className="form-control-alternative"
+                              rows="10"
                               type="textarea"
                             />
                           </FormGroup>
