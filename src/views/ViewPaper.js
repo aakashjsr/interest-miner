@@ -2,6 +2,7 @@
 import React from "react";
 // react plugin used to create google maps
 import { toast } from 'react-toastify';
+import {Link} from 'react-router-dom'
 import Loader from 'react-loader-spinner'
 import { handleServerErrors } from "utils/errorHandler";
 
@@ -259,11 +260,14 @@ toggle = (id) => {
                             >
                               View
                             </DropdownItem>
-                            <DropdownItem   
-                             onClick={()=>this.editEnquiry(value.id)}
+                            
+                              <Link to={`/admin/edit-paper/${value.id}`}>
+                              <DropdownItem   
+                             //  onClick={()=>this.editEnquiry(value.id)}
                             >
-                              Edit
+                               Edit
                             </DropdownItem>
+                             </Link>
                             <DropdownItem
                               onClick={() => this.deleteEnquiry(value.id)}
                             >
