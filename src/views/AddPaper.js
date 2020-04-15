@@ -62,7 +62,7 @@ class AddPaper extends React.Component {
            this.setState({ isLoding: false })
            // console.log(error)
            handleServerErrors(error, toast.error)
-           
+
          })
       })
 
@@ -86,11 +86,11 @@ class AddPaper extends React.Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  {this.state.isLoding ? 
+                  {this.state.isLoding ?
                   (<div className="text-center" style={{padding:'20px'}}>
                          <Loader type="Puff" color="#00BFFF" height={100} width={100} />
                    </div>)
-                  
+
                   :
                   <Form onSubmit={this._handleSubmit} method="post">
                     <h6 className="heading-small text-muted mb-4">
@@ -109,7 +109,7 @@ class AddPaper extends React.Component {
                             <Input
                               className="form-control-alternative"
                               id="input-username"
-                              name="title" value={this.state.title} onChange={this.handleChange} 
+                              name="title" value={this.state.title} onChange={this.handleChange}
                               placeholder="Title"
                               type="text"
                             />
@@ -126,7 +126,7 @@ class AddPaper extends React.Component {
                             <Input
                               className="form-control-alternative"
                               id="input-email"
-                              name="url" value={this.state.url} onChange={this.handleChange} 
+                              name="url" value={this.state.url} onChange={this.handleChange}
                               placeholder="https://www.zyz.com"
                               type="text"
                             />
@@ -146,7 +146,7 @@ class AddPaper extends React.Component {
                               className="form-control-alternative"
                               defaultValue="Lucky"
                               id="input-first-name"
-                              name="year" value={this.state.year} onChange={this.handleChange} 
+                              name="year" value={this.state.year} onChange={this.handleChange}
                               placeholder="Year"
                               type="number"
                             />
@@ -163,7 +163,7 @@ class AddPaper extends React.Component {
                             <Input
                               className="form-control-alternative"
                               id="input-last-name"
-                              name="abstract" value={this.state.abstract} onChange={this.handleChange} 
+                              name="abstract" value={this.state.abstract} onChange={this.handleChange}
                               placeholder="Abstract"
                               // className="form-control-alternative"
                               rows="10"
@@ -174,7 +174,9 @@ class AddPaper extends React.Component {
                       </Row>
                     </div>
                     <hr className="my-4" />
-                   <Button color="primary" type="submit"> Save </Button>
+                   <div align="right">
+                     <Button color="primary" type="submit"> Save </Button>
+                   </div>
                   </Form>
                   }
                 </CardBody>
