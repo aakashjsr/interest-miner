@@ -30,7 +30,7 @@ var routes = [
   },
    {
     path: "/view-paper",
-    name: "View Paper",
+    name: "My Papers",
     icon: "fas fa-tasks text-blue",
     component: ViewPaper,
     layout: "/admin",
@@ -43,7 +43,7 @@ var routes = [
     icon: "ni ni-archive-2 text-yellow",
     component: Maps,
     layout: "/admin",
-    // display: "none"
+    display: "none"
   },
   
   // {
@@ -60,7 +60,9 @@ var routes = [
     name: "User Profile",
     icon: "ni ni-single-02 text-green",
     component: Profile,
-    layout: "/admin"
+    layout: "/admin",
+    display: "none"
+
   },
   {
     path: "/tables",
