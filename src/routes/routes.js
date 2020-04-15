@@ -5,6 +5,8 @@ import Register from "../views/Register.js";
 import Login from "../views/Login.js";
 import AddPaper from "../views/AddPaper.js";
 import ViewPaper from "../views/ViewPaper.js";
+import EditPaper from "../views/EditPaper.js";
+
 
 import Tables from "../views/examples/Tables.js";
 import Icons from "../views/examples/Icons.js";
@@ -27,6 +29,14 @@ var routes = [
     component: AddPaper,
     layout: "/admin",
     // display: "none"
+  },
+  {
+    path: "/edit-paper/:id",
+    name: "Edit Paper",
+    icon: "ni ni-fat-add text-orange",
+    component: EditPaper,
+    layout: "/admin",
+    display: "none"
   },
    {
     path: "/view-paper",
