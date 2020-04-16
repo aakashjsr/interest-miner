@@ -349,7 +349,7 @@ toggle = (id) => {
               </Card>
                {/* //  Start Modal */}
                    <div>
-      <Modal isOpen={this.state.modal} toggle={this.toggle} >
+      <Modal isOpen={this.state.modal} toggle={this.toggle} size="lg" >
         <ModalHeader toggle={this.toggle}>Paper Detail</ModalHeader>
         <ModalBody>
           <strong>Title: </strong> <p>{this.state.paperDetail && this.state.paperDetail.title}</p><br/>

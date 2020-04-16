@@ -6,6 +6,8 @@ import Login from "../views/Login.js";
 import AddPaper from "../views/AddPaper.js";
 import ViewPaper from "../views/ViewPaper.js";
 import EditPaper from "../views/EditPaper.js";
+import Keywords from "../views/Keywords.js";
+
 
 
 import Tables from "../views/examples/Tables.js";
@@ -51,9 +53,9 @@ var routes = [
     path: "/keyword",   
     name: "Keyword",
     icon: "ni ni-archive-2 text-yellow",
-    component: Maps,
+    component: Keywords,
     layout: "/admin",
-    display: "none"
+    // display: "none"
   },
   
   // {
