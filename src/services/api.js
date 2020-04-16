@@ -115,18 +115,37 @@ class user {
         };
  
 
-          //** GET USER DATA API **//
+          //** GET USER PROFILE DATA API **//
   static getUserData() {
     const TOKEN = getItem("accessToken");
     return axios({
-            method: "post",
+            method: "get",
             url: `${BASE_URL}/api/accounts/profile/`,
-          //   headers: {
-          //       "Content-Type": "application/json",
-          //         Accept: "application/json",
-          //        'Authorization' :  `Token ${TOKEN}`
-          // },
+            headers: {
+                "Content-Type": "application/json",
+                  Accept: "application/json",
+                 'Authorization' :  `Token ${TOKEN}`
+          },
           //   data: data
+          }).then(
+              res => res
+              
+            )
+        };
+
+            //** UPDATE USER PROFILE API **//
+  static updateUserProfile(data,id) {
+    const TOKEN = getItem("accessToken");
+    // console.log('SKD',data)
+    return axios({
+            method: "patch",
+            url: `${BASE_URL}/api/accounts/profile/`,
+            headers: {
+                "Content-Type": "application/json",
+                  Accept: "application/json",
+                 'Authorization' :  `Token ${TOKEN}`
+          },
+            data: data
           }).then(
               res => res
               
