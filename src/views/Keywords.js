@@ -27,10 +27,32 @@ import Header from "components/Headers/Header.js";
 class Keywords extends React.Component {
 
   state = {
-    keywordData:[{id:'1',keyword:"computer"},{id:'2',keyword:"Mechine Learning"},{id:'3',keyword:"Coocking"}],
+    // keywordData:[{id:'1',keyword:"computer"},{id:'2',keyword:"Mechine Learning"},{id:'3',keyword:"Coocking"}],
+    keywordData:[],
+
     keyword: '',
     isLoding: false
   }
+  
+
+  componentDidMount(){
+    this.setState({isLoding: true},()=>{
+       user.getKeyword().then(response => {
+        this.setState({ 
+          isLoding: false,
+          data : response.data
+        })
+    }).catch(error => {
+        this.setState({ isLoding: false })
+        handleServerErrors(error, toast.error)
+        })
+      
+    })
+  }
+
+
+
+
 
   handleChange = e => {
     let getValue = e.target.value;
@@ -40,30 +62,30 @@ class Keywords extends React.Component {
 
   _handleSubmit = e => {
     e.preventDefault();
-      let data = {
-        Keywords: this.state.keyword,
-      };
+      // let data = {
+      //   Keywords: this.state.keyword,
+      // };
 
       this.setState({
         keywordData: [...this.state.keywordData,this.state.keyword]
+      });
+
+      this.setState({ isLoding: true },()=>{
+        user.addKeyword(this.state.keyword).then(response => {
+          toast.success("Add Keyword !", {
+               position: toast.POSITION.TOP_RIGHT,
+               autoClose: 2000
+           });
+           this.setState({isLoding: false , keyword:'' })
+            // this.props.history.push("/admin/view-paper");
+
+         }).catch(error => {
+           this.setState({ isLoding: false })
+           // console.log(error)
+           handleServerErrors(error, toast.error)
+
+         })
       })
-
-      // this.setState({ isLoding: true },()=>{
-        // user.addPaper(data).then(response => {
-        //   toast.success("Add Papaer !", {
-        //        position: toast.POSITION.TOP_RIGHT,
-        //        autoClose: 2000
-        //    });
-        //    this.setState({isLoding: false , title:'', url:'',year:'',abstract:'' })
-        //     this.props.history.push("/admin/view-paper");
-
-        //  }).catch(error => {
-        //    this.setState({ isLoding: false })
-        //    // console.log(error)
-        //    handleServerErrors(error, toast.error)
-
-        //  })
-      // })
 
   };
 
@@ -94,7 +116,6 @@ class Keywords extends React.Component {
 
 
   render() {
-    console.log('KEYWORD DATA',this.state.keywordData)
     return (
       <>
         <Header />
@@ -177,7 +198,7 @@ class Keywords extends React.Component {
                <Row>
                         <Col md="12">
                           <FormGroup>
-                           {v.keyword}
+                           {v}
                             <div align="right">
                           <Button size="sm" color="danger" type="button" onClick={() => this.deleteKeyword(v.id)}> X </Button>
                           </div>

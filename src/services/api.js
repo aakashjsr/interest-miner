@@ -152,6 +152,45 @@ class user {
             )
         };
 
+        
+
+            //** GET KEYWORD DATA API **//
+  static getKeyword() {
+    const TOKEN = getItem("accessToken");
+    return axios({
+            method: "get",
+            url: `${BASE_URL}/api/interests/keywords/`,
+            headers: {
+                "Content-Type": "application/json",
+                  Accept: "application/json",
+                 'Authorization' :  `Token ${TOKEN}`
+          },
+          //   data: data
+          }).then(
+              res => res
+              
+            )
+        };
+
+          //** ADD KEYWORD DATA API **//
+  static addKeyword(data) {
+    console.log('DD',data)
+    const TOKEN = getItem("accessToken");
+    return axios({
+            method: "post",
+            url: `${BASE_URL}/api/interests/keywords/`,
+            headers: {
+                "Content-Type": "application/json",
+                  Accept: "application/json",
+                 'Authorization' :  `Token ${TOKEN}`
+          },
+            keywords: data
+          }).then(
+              res => res
+              
+            )
+        };
+
 
 
 }

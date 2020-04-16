@@ -7,8 +7,7 @@ import AddPaper from "../views/AddPaper.js";
 import ViewPaper from "../views/ViewPaper.js";
 import EditPaper from "../views/EditPaper.js";
 import Keywords from "../views/Keywords.js";
-
-
+import Visualization from "../views/Visualization.js";
 
 import Tables from "../views/examples/Tables.js";
 import Icons from "../views/examples/Icons.js";
@@ -56,6 +55,14 @@ var routes = [
     component: Keywords,
     layout: "/admin",
     // display: "none"
+  },
+   {
+    path: "/visualization",
+    name: "Visualization",
+    icon: "fas fa-chart-pie text-green",
+    component: Visualization,
+    layout: "/admin",
+
   },
   
   // {
