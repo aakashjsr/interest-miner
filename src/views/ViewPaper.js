@@ -237,10 +237,10 @@ toggle = (id) => {
                     this.state.data.length ? 
                     this.state.data.map((value,index)=>(
                       <tr key={value.id}>
-                          <th scope="row"> {value.title} </th>
-                          <td>{value.url}</td>
+                          <th scope="row"> {`${value.title.slice(0, 35)} ...`} </th>
+                          <td>{`${value.url.slice(0, 35)} ...`}</td>
                           <td>{value.year}</td>
-                          <td> {`${value.abstract.slice(0, 15)} ...`}</td>
+                          <td  scope="col"> {`${value.abstract.slice(0, 35)} ...`}</td>
                       
                       <td className="text-right">
                         <UncontrolledDropdown>
@@ -352,9 +352,9 @@ toggle = (id) => {
       <Modal isOpen={this.state.modal} toggle={this.toggle} >
         <ModalHeader toggle={this.toggle}>Paper Detail</ModalHeader>
         <ModalBody>
-          <strong>Title: </strong> {this.state.paperDetail && this.state.paperDetail.title}<br/>
+          <strong>Title: </strong> <p>{this.state.paperDetail && this.state.paperDetail.title}</p><br/>
           <strong>Year: </strong> {this.state.paperDetail && this.state.paperDetail.year}<br/>
-          <strong>URL: </strong> {this.state.paperDetail && this.state.paperDetail.url}<br/>
+          <strong>URL: </strong> <p>{this.state.paperDetail && this.state.paperDetail.url}</p><br/>
           <strong>Abstract: </strong> <br/> {this.state.paperDetail && this.state.paperDetail.abstract}
 
         </ModalBody>
