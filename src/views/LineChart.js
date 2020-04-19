@@ -82,11 +82,11 @@ class LineChart extends React.Component {
                 </CardHeader>
                 <CardBody>
                 
-                  <div style={{paddingLeft: '30%'}}>
+                  {/* <div style={{paddingLeft: '30%'}}> */}
                   
                   
                   <BarChart/>
-                  </div>
+                  {/* </div> */}
                  
                 </CardBody>
               </Card>

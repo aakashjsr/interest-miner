@@ -192,6 +192,63 @@ class user {
         };
 
 
+                //** GET BLACK KEYWORD  API **//
+  static getBlackKeyword() {
+    const TOKEN = getItem("accessToken");
+    return axios({
+            method: "get",
+            url: `${BASE_URL}/api/interests/black-listed-keywords/`,
+            headers: {
+                "Content-Type": "application/json",
+                  Accept: "application/json",
+                 'Authorization' :  `Token ${TOKEN}`
+          },
+          //   data: data
+          }).then(
+              res => res
+              
+            )
+        };
+
+          //** ADD BLACK KEYWORD API **//
+  static addBlackKeyword(data) {
+    console.log('DD',data)
+    const TOKEN = getItem("accessToken");
+    return axios({
+            method: "post",
+            url: `${BASE_URL}/api/interests/black-listed-keywords/`,
+            headers: {
+                "Content-Type": "application/json",
+                  Accept: "application/json",
+                 'Authorization' :  `Token ${TOKEN}`
+          },
+            keywords: data
+          }).then(
+              res => res
+              
+            )
+        };
+    
+        
+          //** DELETE BLACK KEYWORD API **//
+  static deleteBlackKeyword(id) {
+    const TOKEN = getItem("accessToken");
+    return axios({
+            method: "delete",
+            url: `${BASE_URL}/api/interests/black-listed-keywords/${id}/`,
+            headers: {
+                "Content-Type": "application/json",
+                  Accept: "application/json",
+                 'Authorization' :  `Token ${TOKEN}`
+          },
+           
+          }).then(
+              res => res
+              
+            )
+        };
+
+
              //** PIE DATA API **//
   static pieChart(data) {
     console.log('DD',data)

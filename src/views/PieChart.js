@@ -82,11 +82,11 @@ class PieChartPage extends React.Component {
                 </CardHeader>
                 <CardBody>
               
-                  <div style={{paddingLeft: '30%'}}>
+                  {/* <div style={{paddingLeft: '30%'}}> */}
                   <PieChart/>
                   
                 
-                  </div>
+                  {/* </div> */}
                   
                     
                 </CardBody>

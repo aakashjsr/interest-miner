@@ -49,8 +49,7 @@ class BarChart extends Component {
 
   render() {
     return (
-      <div className="app">
-        <div className="row">
+      < >
         { this.state.isLoding ? 
                   (  
                     <div className="text-center" style={{padding:'20px'}}>
@@ -58,17 +57,18 @@ class BarChart extends Component {
                    </div>
                    )
                    :
-          <div className="mixed-chart">
+                   
+          <div className="mixed-chart" style={{paddingLeft: '20%'}}>
             <Chart
               options={this.state.options}
               series={this.state.series}
               type="bar"
-              width="500"
+              width="600"
             />
           </div> 
         }
-        </div>
-      </div>
+        
+      </>
     );
   }
 }
