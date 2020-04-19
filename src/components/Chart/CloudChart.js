@@ -1,5 +1,10 @@
-import React, { Component } from 'react';
-import axios from "axios";
+import React, { Component, Fragment } from 'react';
+import { toast } from 'react-toastify';
+import {Link} from 'react-router-dom'
+import Loader from 'react-loader-spinner'
+import user from 'services/api';
+
+import { handleServerErrors } from "utils/errorHandler";
 
 // import logo from './logo.svg';
 // import './App.css';
@@ -17,25 +22,25 @@ am4core.useTheme(am4themes_animated);
 // Themes end
 
 
-class CloudChart extends Component {
+class CloudChartPage extends Component {
     state = {
         mydata : []
     }
   componentDidMount() {
-// Make a request for a user with a given ID
-axios.get('https://cors-anywhere.herokuapp.com/https://3i3v521fj8.execute-api.us-east-1.amazonaws.com/long-term-interest')
-  .then(function (response) {
-    // handle success
-    console.table(response.data);
-    this.setState({
-        mydata : response.data
-    })
-    chart.data =response.data
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  })
+
+    this.setState({ isLoding: true },()=>{
+        user.cloudChart().then(response => {
+            series.data = response.data
+        console.log('CLOUD CHART',response.data)
+          this.setState({ 
+            isLoding: false,
+            // data : response.data
+          })
+      }).catch(error => {
+          this.setState({ isLoding: false })
+          handleServerErrors(error, toast.error)
+          })
+      })
   
 
 //   let container = am4core.create("container", am4core.Container);
@@ -46,58 +51,58 @@ let series = chart.series.push(new am4plugins_wordCloud.WordCloudSeries());
 series.randomness = 0.1;
 series.rotationThreshold = 0.5;
 
-series.data = [ {
-    "tag": "javascript",
-    "count": "1765836"
-}, {
-    "tag": "java",
-    "count": "1517355"
-}, {
-    "tag": "c#",
-    "count": "1287629"
-}, {
-    "tag": "php",
-    "count": "1263946"
-}, {
-    "tag": "android",
-    "count": "1174721"
-}, {
-    "tag": "python",
-    "count": "1116769"
-}, {
-    "tag": "jquery",
-    "count": "944983"
-}, {
-    "tag": "html",
-    "count": "805679"
-}, {
-    "tag": "c++",
-    "count": "606051"
-}, {
-    "tag": "ios",
-    "count": "591410"
-}, {
-    "tag": "css",
-    "count": "574684"
-}, {
-    "tag": "mysql",
-    "count": "550916"
-}, {
-    "tag": "sql",
-    "count": "479892"
-}, {
-    "tag": "asp.net",
-    "count": "343092"
-}, {
-    "tag": "ruby-on-rails",
-    "count": "303311"
-}, {
-    "tag": "c",
-    "count": "296963"
-} ];
+// series.data = [ {
+//     "tag": "javascript",
+//     "count": "1765836"
+// }, {
+//     "tag": "java",
+//     "count": "1517355"
+// }, {
+//     "tag": "c#",
+//     "count": "1287629"
+// }, {
+//     "tag": "php",
+//     "count": "1263946"
+// }, {
+//     "tag": "android",
+//     "count": "1174721"
+// }, {
+//     "tag": "python",
+//     "count": "1116769"
+// }, {
+//     "tag": "jquery",
+//     "count": "944983"
+// }, {
+//     "tag": "html",
+//     "count": "805679"
+// }, {
+//     "tag": "c++",
+//     "count": "606051"
+// }, {
+//     "tag": "ios",
+//     "count": "591410"
+// }, {
+//     "tag": "css",
+//     "count": "574684"
+// }, {
+//     "tag": "mysql",
+//     "count": "550916"
+// }, {
+//     "tag": "sql",
+//     "count": "479892"
+// }, {
+//     "tag": "asp.net",
+//     "count": "343092"
+// }, {
+//     "tag": "ruby-on-rails",
+//     "count": "303311"
+// }, {
+//     "tag": "c",
+//     "count": "296963"
+// } ];
 
-series.dataFields.word = "tag";
-series.dataFields.value = "count";
+series.dataFields.word = "keyword";
+series.dataFields.value = "weight";
 
 series.heatRules.push({
  "target": series.labels.template,
@@ -109,7 +114,7 @@ series.heatRules.push({
 
 // series.labels.template.url = "https://stackoverflow.com/questions/tagged/{word}";
 series.labels.template.urlTarget = "_blank";
-series.labels.template.tooltipText = "{word}: {value}";
+series.labels.template.tooltipText = "{keyword}: {weight}";
 
 let hoverState = series.labels.template.states.create("hover");
 hoverState.properties.fill = am4core.color("#FF0000");
@@ -125,9 +130,20 @@ hoverState.properties.fill = am4core.color("#FF0000");
 
   render() {
     return (
+        <Fragment>
+             { this.state.isLoding ? 
+                  (  
+                    <div className="text-center" style={{padding:'20px'}}>
+                        <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+                   </div>
+                   )
+                   :
       <div id="chartdiv" style={{ width: "100%", height: "600px" }}></div>
+
+                  }
+        </Fragment>
     );
   }
 }
 
-export default CloudChart;
+export default CloudChartPage;

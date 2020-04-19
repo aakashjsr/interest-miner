@@ -1,18 +1,24 @@
 import React from "react";
 import Chart from "react-apexcharts";
+import { toast } from 'react-toastify';
+import {Link} from 'react-router-dom'
+import Loader from 'react-loader-spinner'
+import user from 'services/api';
+
+import { handleServerErrors } from "utils/errorHandler";
 
 class PieChart extends React.Component {
         
 
           state = {
-          
+           data:[],
             series: [44, 55, 13, 43, 22],
             options: {
               chart: {
                 width: 380,
                 type: 'pie',
               },
-              labels: ['Computer', 'Math', 'Physics', 'English', 'Chemistry'],
+              labels: ["compuetr","english","math","chemis"],
               responsive: [{
                 breakpoint: 480,
                 options: {
@@ -26,19 +32,52 @@ class PieChart extends React.Component {
               }]
             },
             };
-        
+            // keyword, weight  options.labels
+
+            componentDidMount(){
+              this.setState({ isLoding: true },()=>{
+                user.pieChart().then(response => {
+                  let mydata = response.data.slice(0,20);
+                  console.log('k data++>',mydata[2].keyword)
+
+                  this.setState({ 
+                    isLoding: false,
+                    data:response.data.slice(0,20)
+                    //options : {...this.state.options.labels,mydata[2].keyword}
+                    // keyword : response.data.keyword,
+                    // series: mydata[2].keyword
+                  })
+              }).catch(error => {
+                  this.setState({ isLoding: false })
+                  handleServerErrors(error, toast.error)
+                  })
+              })
+      }
+  
+ 
 
       
 
         render() {
           return (
             <div id="chart">
-                      <Chart 
+               { this.state.isLoding ? 
+                  (  
+                    <div className="text-center" style={{padding:'20px'}}>
+                        <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+                   </div>
+                   )
+                   :
+                     this.state.data.length && 
+                     <div style={{paddingLeft: '30%'}}>
+                     <Chart 
                             options={this.state.options}    
                             series={this.state.series} 
                             type="pie" 
-                            width={500} 
+                            width={600} 
                       />
+                      </div>
+                      }
             </div>
             )
         }

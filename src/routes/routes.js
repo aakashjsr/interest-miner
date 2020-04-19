@@ -7,7 +7,12 @@ import AddPaper from "../views/AddPaper.js";
 import ViewPaper from "../views/ViewPaper.js";
 import EditPaper from "../views/EditPaper.js";
 import Keywords from "../views/Keywords.js";
+import BlackKeywords from "../views/BlackKeywords";
 import Visualization from "../views/Visualization.js";
+import CloudChartPage from "../views/CloudChart";
+import PieChartPage from "../views/PieChart";
+import LineChartPage from "../views/LineChart";
+
 
 import Tables from "../views/examples/Tables.js";
 import Icons from "../views/examples/Icons.js";
@@ -26,7 +31,7 @@ var routes = [
   {
     path: "/add-paper",
     name: "Add Paper",
-    icon: "ni ni-fat-add text-orange",
+    icon: "ni ni-fat-add text-green",
     component: AddPaper,
     layout: "/admin",
     // display: "none"
@@ -56,12 +61,49 @@ var routes = [
     layout: "/admin",
     // display: "none"
   },
-   {
-    path: "/visualization",
-    name: "Visualization",
-    icon: "fas fa-chart-pie text-green",
-    component: Visualization,
+  {
+    path: "/black-keyword",   
+    name: "Black Keyword",
+    icon: "ni ni-archive-2 text-brown",
+    component: BlackKeywords,
     layout: "/admin",
+    // display: "none"
+  },
+  //  {
+  //   path: "/visualization",
+  //   name: "Visualization",
+  //   icon: "fas fa-chart-pie text-green",
+  //   component: Visualization,
+  //   layout: "/admin",
+  //   display: "none"
+
+  // },
+  
+  {
+    path: "/pie-chart",
+    name: "Pie Chart",
+    icon: "fas fa-chart-pie text-orange",
+    component: PieChartPage,
+    layout: "/admin",
+    display: "none"
+
+  },
+  {
+    path: "/bar-chart",
+    name: "Line Chart",
+    icon: "fas fa-chart-bar text-pink",
+    component: LineChartPage,
+    layout: "/admin",
+    display: "none"
+
+  },
+  {
+    path: "/cloud-chart",
+    name: "Cloud Chart",
+    icon: "fas fa-cloud text-info",
+    component: CloudChartPage,
+    layout: "/admin",
+    display: "none"
 
   },
   

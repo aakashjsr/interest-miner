@@ -58,7 +58,7 @@ var ps;
 class Sidebar extends React.Component {
   state = {
     collapseOpen: false,
-    dropdownOpen:false
+    dropdownOpen: false
   };
   constructor(props) {
     super(props);
@@ -68,7 +68,7 @@ class Sidebar extends React.Component {
 
   toggle = () => {
     this.setState({
-      dropdownOpen : !this.state.dropdownOpen
+      dropdownOpen: !this.state.dropdownOpen
     })
   }
   // setDropdownOpen(!dropdownOpen);
@@ -92,13 +92,13 @@ class Sidebar extends React.Component {
   createLinks = routes => {
     return routes.map((prop, key) => {
       return (
-        <NavItem key={key}  style={{display : prop.display}}>
+        <NavItem key={key} style={{ display: prop.display }}>
           <NavLink
             to={prop.layout + prop.path}
             tag={NavLinkRRD}
             onClick={this.closeCollapse}
             activeClassName="active"
-           
+
           >
             <i className={prop.icon} />
             {prop.name}
@@ -147,9 +147,9 @@ class Sidebar extends React.Component {
             </NavbarBrand>
           ) : null} */}
 
-            <NavbarBrand className="pt-0" {...navbarBrandProps}>
-            <span style={{fontWeight: 'bolder',color: '#1189ef'}}>INTEREST MINER</span>
-            </NavbarBrand>
+          <NavbarBrand className="pt-0" {...navbarBrandProps}>
+            <span style={{ fontWeight: 'bolder', color: '#1189ef' }}>INTEREST MINER</span>
+          </NavbarBrand>
 
 
           {/* User */}
@@ -220,10 +220,10 @@ class Sidebar extends React.Component {
                         <img alt={logo.imgAlt} src={logo.imgSrc} />
                       </Link>
                     ) : (
-                      <a href={logo.outterLink}>
-                        <img alt={logo.imgAlt} src={logo.imgSrc} />
-                      </a>
-                    )}
+                        <a href={logo.outterLink}>
+                          <img alt={logo.imgAlt} src={logo.imgSrc} />
+                        </a>
+                      )}
                   </Col>
                 ) : null}
                 <Col className="collapse-close" xs="6">
@@ -254,9 +254,9 @@ class Sidebar extends React.Component {
                 </InputGroupAddon>
               </InputGroup>
             </Form>
-            
+
             {/* strat drop down */}
-{/*             
+            {/*             
           <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle}>
           <DropdownToggle nav caret style={{padding: '0'}}>
             <i className="fas fa-tasks" style={{minWidth: '2.25rem',color: '#5e72e4'}} />
@@ -279,8 +279,8 @@ class Sidebar extends React.Component {
         
             {/* <DropdownItem divider />
             <DropdownItem>Add Papers</DropdownItem> */}
-          {/* </DropdownMenu>
-        </Dropdown> */} 
+            {/* </DropdownMenu>
+        </Dropdown> */}
 
 
             {/* end drop down */}
@@ -289,12 +289,58 @@ class Sidebar extends React.Component {
             <h6 className="navbar-heading text-muted">Data Management</h6>
             <hr className="my-2" />
 
-           
+
             {/* Navigation */}
             <Nav navbar>{this.createLinks(routes)}</Nav>
-            <hr className="my-3" />
 
-            
+            <hr className="my-3" />
+            <h6 className="navbar-heading text-muted">Visualizations</h6>
+            <hr className="my-2" />
+
+            <Nav navbar>
+              <NavItem>
+                <NavLink
+                  to="/admin/pie-chart"
+                  tag={NavLinkRRD}
+                  onClick={this.closeCollapse}
+                  activeClassName="active"
+                >
+                  <i className="fas fa-chart-pie text-orange" />
+                  Pie Chart
+              </NavLink>
+              </NavItem>
+            </Nav>
+
+            <Nav navbar>
+              <NavItem>
+                <NavLink
+                  to="/admin/bar-chart"
+                  tag={NavLinkRRD}
+                  onClick={this.closeCollapse}
+                  activeClassName="active"
+                >
+                  <i className="fas fa-chart-bar text-pink" />
+                  Bar Chart
+              </NavLink>
+              </NavItem>
+            </Nav>
+
+            <Nav navbar>
+              <NavItem>
+                <NavLink
+                  to="/admin/cloud-chart"
+                  tag={NavLinkRRD}
+                  onClick={this.closeCollapse}
+                  activeClassName="active"
+                >
+                  <i className="fas fa-cloud text-info" />
+                  Cloud Chart
+              </NavLink>
+              </NavItem>
+            </Nav>
+
+
+
             {/* Heading */}
             {/* <h6 className="navbar-heading text-muted">Documentation</h6> */}
             {/* Navigation */}

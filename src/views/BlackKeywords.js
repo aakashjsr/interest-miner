@@ -24,7 +24,7 @@ import {
 import Header from "components/Headers/Header.js";
 
 
-class Keywords extends React.Component {
+class BlackKeywords extends React.Component {
 
   state = {
     // keywordData:[{id:'1',keyword:"computer"},{id:'2',keyword:"Mechine Learning"},{id:'3',keyword:"Coocking"}],
@@ -37,7 +37,7 @@ class Keywords extends React.Component {
 
   componentDidMount(){
     this.setState({isLoding: true},()=>{
-       user.getKeyword().then(response => {
+       user.getBlackKeyword().then(response => {
         this.setState({ 
           isLoding: false,
           keywordData : response.data.slice(0,20)
@@ -71,7 +71,7 @@ class Keywords extends React.Component {
       });
 
       this.setState({ isLoding: true },()=>{
-        user.addKeyword(this.state.keyword).then(response => {
+        user.addBlackKeyword(this.state.keyword).then(response => {
           toast.success("Add Keyword !", {
                position: toast.POSITION.TOP_RIGHT,
                autoClose: 2000
@@ -94,7 +94,7 @@ class Keywords extends React.Component {
 
    this.setState({isLoding:true},()=>{
       
-      user.deletePaper(id).then(response => {
+      user.deleteBlackKeyword(id).then(response => {
   const newvalue = this.state.keywordData.filter((v,i)=> v.id !=id );
     this.setState({ isLoding: false,
       keywordData:[...newvalue]
@@ -127,7 +127,7 @@ class Keywords extends React.Component {
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
                     <Col xs="8">
-                      <h3 className="mb-0">Keywords</h3>
+                      <h3 className="mb-0">Black Keywords</h3>
                     </Col>
                   </Row>
                 </CardHeader>
@@ -144,7 +144,7 @@ class Keywords extends React.Component {
                               className="form-control-label"
                               htmlFor="input-username"
                             >
-                              Add Keywords
+                              Add Black Keywords
                             </label>
                             <Input
                               className="form-control-alternative"
@@ -177,7 +177,7 @@ class Keywords extends React.Component {
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
                     <Col xs="8">
-                      <h3 className="mb-0">Keywords List</h3>
+                      <h3 className="mb-0">Black Keywords List</h3>
                     </Col>
                   </Row>
                 </CardHeader>
@@ -229,4 +229,4 @@ class Keywords extends React.Component {
   }
 }
 
-export default Keywords;
+export default BlackKeywords;
