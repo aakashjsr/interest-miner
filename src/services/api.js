@@ -192,6 +192,67 @@ class user {
         };
 
 
+             //** PIE DATA API **//
+  static pieChart(data) {
+    console.log('DD',data)
+    const TOKEN = getItem("accessToken");
+    return axios({
+            method: "get",
+            url: `${BASE_URL}/api/interests/short-term/`,
+            headers: {
+                "Content-Type": "application/json",
+                  Accept: "application/json",
+                 'Authorization' :  `Token ${TOKEN}`
+          },
+            keywords: data
+          }).then(
+              res => res
+              
+            )
+        };
+
+
+             //** BAR DATA API **//
+  static barChart(data) {
+    console.log('DD',data)
+    const TOKEN = getItem("accessToken");
+    return axios({
+            method: "get",
+            url: `${BASE_URL}/api/interests/activity-stats/`,
+            headers: {
+                "Content-Type": "application/json",
+                  Accept: "application/json",
+                 'Authorization' :  `Token ${TOKEN}`
+          },
+            keywords: data
+          }).then(
+              res => res
+              
+            )
+        };
+
+              //** CLOUD DATA API **//
+  static cloudChart(data) {
+    console.log('DD',data)
+    const TOKEN = getItem("accessToken");
+    return axios({
+            method: "get",
+            url: `${BASE_URL}/api/interests/long-term/`,
+            headers: {
+                "Content-Type": "application/json",
+                  Accept: "application/json",
+                 'Authorization' :  `Token ${TOKEN}`
+          },
+            keywords: data
+          }).then(
+              res => res
+              
+            )
+        };
+
+        
+
+
 
 }
 

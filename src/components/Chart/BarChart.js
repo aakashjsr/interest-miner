@@ -1,6 +1,12 @@
     
 import React, { Component } from "react";
 import Chart from "react-apexcharts";
+import { toast } from 'react-toastify';
+import {Link} from 'react-router-dom'
+import Loader from 'react-loader-spinner'
+import user from 'services/api';
+
+import { handleServerErrors } from "utils/errorHandler";
 
 class BarChart extends Component {
   constructor(props) {
@@ -24,10 +30,34 @@ class BarChart extends Component {
     };
   }
 
+
+  componentDidMount(){
+    this.setState({ isLoding: true },()=>{
+      user.barChart().then(response => {
+      console.log('BAR CHART',response.data)
+        this.setState({ 
+          isLoding: false,
+          // options: {...this.state.options.xaxis.categories,response.data}
+          data : response.data
+        })
+    }).catch(error => {
+        this.setState({ isLoding: false })
+        handleServerErrors(error, toast.error)
+        })
+    })
+}
+
   render() {
     return (
       <div className="app">
         <div className="row">
+        { this.state.isLoding ? 
+                  (  
+                    <div className="text-center" style={{padding:'20px'}}>
+                        <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+                   </div>
+                   )
+                   :
           <div className="mixed-chart">
             <Chart
               options={this.state.options}
@@ -35,7 +65,8 @@ class BarChart extends Component {
               type="bar"
               width="500"
             />
-          </div>
+          </div> 
+        }
         </div>
       </div>
     );
