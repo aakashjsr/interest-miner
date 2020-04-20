@@ -200,7 +200,7 @@ class Keywords extends React.Component {
                           <FormGroup>
                            {v.keyword}
                             <div align="right">
-                          <Button size="sm" color="danger" type="button" onClick={() => this.deleteKeyword(v.id)}> X </Button>
+                          {/* <Button size="sm" color="danger" type="button" onClick={() => this.deleteKeyword(v.id)}> X </Button> */}
                           </div>
                     <hr className="my-4" />
 

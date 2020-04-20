@@ -46,8 +46,6 @@ class PieChart extends React.Component {
                 user.pieChart().then(response => {
                   let mydata = response.data.slice(0,15).map(val => val.keyword);
                   let values = response.data.slice(0,15).map(val => val.weight);
-                  console.log('k data++>',mydata[2].keyword)
-                  debugger;
 
                   this.setState({ 
                     isLoding: false,

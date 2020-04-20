@@ -114,7 +114,7 @@ series.heatRules.push({
 
 // series.labels.template.url = "https://stackoverflow.com/questions/tagged/{word}";
 series.labels.template.urlTarget = "_blank";
-series.labels.template.tooltipText = "{keyword}: {weight}";
+series.labels.template.tooltipText = "{source}";
 
 let hoverState = series.labels.template.states.create("hover");
 hoverState.properties.fill = am4core.color("#FF0000");
