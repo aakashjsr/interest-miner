@@ -12,13 +12,20 @@ class PieChart extends React.Component {
 
           state = {
            data:[],
-            series: [44, 55, 13, 43, 22],
+            series: [],
+            
             options: {
+              colors: ['#e53a64','#3bce15','#cab805','#eb013f','#5ae2f2','#707a9d','#ad2aba','#4c4bb4','#b49b0a','#FF5733','#FFE633','#D4FF33','#33FFA8','#0CF3E1','#0C56F3'],
               chart: {
                 width: 380,
                 type: 'pie',
               },
-              labels: ["compuetr","english","math","chemis"],
+              fill: {
+                colors: ['#e53a64','#3bce15','#cab805','#eb013f','#5ae2f2','#707a9d','#ad2aba','#4c4bb4','#b49b0a','#FF5733','#FFE633','#D4FF33','#33FFA8','#0CF3E1','#0C56F3']
+              },
+             
+              
+              labels: [],
               responsive: [{
                 breakpoint: 480,
                 options: {
@@ -37,12 +44,19 @@ class PieChart extends React.Component {
             componentDidMount(){
               this.setState({ isLoding: true },()=>{
                 user.pieChart().then(response => {
-                  let mydata = response.data.slice(0,20);
+                  let mydata = response.data.slice(0,15).map(val => val.keyword);
+                  let values = response.data.slice(0,15).map(val => val.weight);
                   console.log('k data++>',mydata[2].keyword)
+                  debugger;
 
                   this.setState({ 
                     isLoding: false,
-                    data:response.data.slice(0,20)
+                    series: values,
+                    options: {
+                      ...this.state.options,
+                      labels:mydata,
+
+                    }
                     //options : {...this.state.options.labels,mydata[2].keyword}
                     // keyword : response.data.keyword,
                     // series: mydata[2].keyword
@@ -68,7 +82,7 @@ class PieChart extends React.Component {
                    </div>
                    )
                    :
-                     this.state.data.length && 
+                     
                      <div style={{paddingLeft: '30%'}}>
                      <Chart 
                             options={this.state.options}    
