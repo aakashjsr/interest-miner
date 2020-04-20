@@ -339,7 +339,21 @@ class Sidebar extends React.Component {
               </NavItem>
             </Nav>
 
+            <Nav navbar>
+              <NavItem>
+                <NavLink
+                  to="/admin/concept-chart"
+                  tag={NavLinkRRD}
+                  onClick={this.closeCollapse}
+                  activeClassName="active"
+                >
+                  <i className="fas fa-brain text-blue"/>
+                  Concept Map Chart
+              </NavLink>
+              </NavItem>
+            </Nav>
 
+            
 
             {/* Heading */}
             {/* <h6 className="navbar-heading text-muted">Documentation</h6> */}

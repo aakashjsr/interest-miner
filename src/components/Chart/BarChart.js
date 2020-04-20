@@ -18,13 +18,13 @@ class BarChart extends Component {
           id: "basic-bar"
         },
         xaxis: {
-          categories: ['Computer', 'Math', 'Physics', 'English', 'Chemistry']
+          categories: []
         }
       },
       series: [
         {
           name: "Keyword",
-          data: [30, 40, 45, 50, 49, 60, 70, 91]
+          data: [1,2,3]
         }
       ]
     };
@@ -34,11 +34,15 @@ class BarChart extends Component {
   componentDidMount(){
     this.setState({ isLoding: true },()=>{
       user.barChart().then(response => {
-      console.log('BAR CHART',response.data)
+      let categorieList = Object.keys(response.data.papers);
+      let value = Object.values(response.data.papers);
         this.setState({ 
           isLoding: false,
           // options: {...this.state.options.xaxis.categories,response.data}
-          data : response.data
+          data : response.data,
+          options: { ...this.state.options, ...this.state.options.xaxis, ...this.state.options.xaxis.categories=categorieList },
+          //  series: { ...this.state.series, ...this.state.series[0], ...this.state.series[0].data=value }
+          
         })
     }).catch(error => {
         this.setState({ isLoding: false })
@@ -48,6 +52,7 @@ class BarChart extends Component {
 }
 
   render() {
+    console.log(this.state)
     return (
       < >
         { this.state.isLoding ? 

@@ -10,6 +10,8 @@ import Keywords from "../views/Keywords.js";
 import BlackKeywords from "../views/BlackKeywords";
 import Visualization from "../views/Visualization.js";
 import CloudChartPage from "../views/CloudChart";
+import ConceptChartPage from "../views/ConceptChart";
+
 import PieChartPage from "../views/PieChart";
 import LineChartPage from "../views/LineChart";
 
@@ -102,6 +104,15 @@ var routes = [
     name: "Cloud Chart",
     icon: "fas fa-cloud text-info",
     component: CloudChartPage,
+    layout: "/admin",
+    display: "none"
+
+  },
+  {
+    path: "/concept-chart",
+    name: "Concept Chart",
+    icon: "fas fa-cloud text-info",
+    component: ConceptChartPage,
     layout: "/admin",
     display: "none"
 
