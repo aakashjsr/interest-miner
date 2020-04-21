@@ -52,8 +52,8 @@ class BarChart extends Component {
           // options: {...this.state.options.xaxis.categories,response.data}
           data : response.data,
           options: { ...this.state.options, ...this.state.options.xaxis, ...this.state.options.xaxis.categories=categorieList },
-          series: [{name: "Keyword", data: [...value]}],
-          tweetseries:[{name: "Keyword", data: [...tweetsvalue]}],
+          series: [{name: "Paper", data: [...value]}],
+          tweetseries:[{name: "Tweet", data: [...tweetsvalue]}],
           tweetoptions:{ ...this.state.tweetoptions, ...this.state.tweetoptions.xaxis, ...this.state.tweetoptions.xaxis.categories=tweetscategorieList },
 
         })

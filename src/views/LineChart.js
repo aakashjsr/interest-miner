@@ -75,7 +75,7 @@ class LineChart extends React.Component {
                       <h6 className="text-uppercase text-light1 ls-1 mb-1">
                         Overview
                       </h6>
-                      <h2 className="text-white1 mb-0">Line Chart</h2>
+                      <h2 className="text-white1 mb-0">Bar Chart</h2>
                     </div>
                    
                   </Row>

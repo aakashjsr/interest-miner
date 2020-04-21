@@ -99,7 +99,7 @@ var routes = [
   },
   {
     path: "/bar-chart",
-    name: "Line Chart",
+    name: "Bar Chart",
     icon: "fas fa-chart-bar text-pink",
     component: LineChartPage,
     layout: "/admin",
