@@ -11,6 +11,13 @@ import BlackKeywords from "../views/BlackKeywords";
 import Visualization from "../views/Visualization.js";
 import CloudChartPage from "../views/CloudChart";
 import ConceptChartPage from "../views/ConceptChart";
+import StreamChartPage from "../views/StreamChart";
+import SearchUserProfile from "../views/SearchUserProfile";
+
+
+
+
+
 
 import PieChartPage from "../views/PieChart";
 import LineChartPage from "../views/LineChart";
@@ -117,6 +124,15 @@ var routes = [
     display: "none"
 
   },
+  {
+    path: "/stream-chart",
+    name: "Stream Chart",
+    icon: "fas fa-cloud text-info",
+    component: StreamChartPage,
+    layout: "/admin",
+    display: "none"
+
+  },
   
   // {
   //   path: "/maps",
@@ -132,6 +148,15 @@ var routes = [
     name: "User Profile",
     icon: "ni ni-single-02 text-green",
     component: Profile,
+    layout: "/admin",
+    display: "none"
+
+  },
+  {
+    path: "/search-profile/:id",
+    name: "User Account Details",
+    icon: "ni ni-single-02 text-green",
+    component: SearchUserProfile,
     layout: "/admin",
     display: "none"
 

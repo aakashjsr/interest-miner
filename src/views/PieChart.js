@@ -9,6 +9,7 @@ import { Line, Bar } from "react-chartjs-2";
 // reactstrap components
 import ConceptMap from "../components/ConceptMap"
 import PieChart from "../components/Chart/PieChart"
+
 // import BarChart from "../components/Chart/BarChart"
 // import CloudChart from "../components/Chart/CloudChart"
 
@@ -83,6 +84,8 @@ class PieChartPage extends React.Component {
                 <CardBody>
               
                   {/* <div style={{paddingLeft: '30%'}}> */}
+                
+
                   <PieChart/>
                   
                 

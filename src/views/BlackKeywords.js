@@ -63,7 +63,7 @@ class BlackKeywords extends React.Component {
   _handleSubmit = e => {
     e.preventDefault();
       // let data = {
-      //   Keywords: this.state.keyword,
+      //   blacklisted_keywords: this.state.keyword,
       // };
 
       this.setState({

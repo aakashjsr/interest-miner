@@ -3,6 +3,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import {logout} from "../../helper/index";
 import { getItem } from "utils/localStorage";
+import { BASE_URL } from "../../constants";
+import axios from "axios";
+import Suggestion from '../suggestion'
+
+import SearchUserHeader from '../Headers/SearchUserHeader'
 
 // reactstrap components
 import {
@@ -23,6 +28,48 @@ import {
 } from "reactstrap";
 
 class AdminNavbar extends React.Component {
+
+  
+  state = {
+    query: '', 
+    results: []
+  }
+
+
+  
+
+  getInfo = () => {
+    const TOKEN = getItem("accessToken");
+    axios({
+      method: "get",
+      url: `${BASE_URL}/api/accounts/user-search/${this.state.query}/`,
+      headers: {
+          "Content-Type": "application/json",
+            Accept: "application/json",
+           'Authorization' :  `Token ${TOKEN}`
+    }
+    }).then(({ data }) => {
+        this.setState({
+          results: data,
+        })
+      })
+  }
+ 
+  handleInputChange = (e) => {
+    console.log('SERC',e.target.value)
+
+    this.setState({
+      query: e.target.value
+    }, () => {
+      if (this.state.query && this.state.query.length > 1) {
+        if (this.state.query.length % 2 === 0) {
+          this.getInfo()
+        }
+      } 
+    })
+  }
+
+
   render() {
     return (
       <>
@@ -34,7 +81,8 @@ class AdminNavbar extends React.Component {
             >
               {this.props.brandText}
             </Link>
-            {/* <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+            {/* <SearchUserHeader/> */}
+            <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
               <FormGroup className="mb-0">
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
@@ -42,10 +90,20 @@ class AdminNavbar extends React.Component {
                       <i className="fas fa-search" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input placeholder="Search" type="text" />
+                  <Input 
+                      placeholder="Search for..." type="text" 
+                      name='query'
+                      value={this.state.query}
+                      // ref={input => this.search = input}
+                      onChange={this.handleInputChange} 
+                  />
                 </InputGroup>
               </FormGroup>
-            </Form> */}
+
+
+            </Form>
+            <Suggestion results={this.state.results} />
+
             <Nav className="align-items-center d-none d-md-flex" navbar>
               <UncontrolledDropdown nav>
                 <DropdownToggle className="pr-0" nav>
