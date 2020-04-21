@@ -22,11 +22,20 @@ class BarChart extends Component {
         }
       },
       series: [
-        {
-          name: "Keyword",
-          data: [1,2,3]
+        // {
+        //   name: "Keyword",
+        //   data: [1,2,3]
+        // }
+      ],
+      tweetoptions: {
+        chart: {
+          id: "basic-bar"
+        },
+        xaxis: {
+          categories: []
         }
-      ]
+      },
+      tweetseries: [ ]
     };
   }
 
@@ -36,13 +45,17 @@ class BarChart extends Component {
       user.barChart().then(response => {
       let categorieList = Object.keys(response.data.papers);
       let value = Object.values(response.data.papers);
+      let tweetscategorieList = Object.keys(response.data.tweets);
+      let tweetsvalue = Object.values(response.data.tweets);
         this.setState({ 
           isLoding: false,
           // options: {...this.state.options.xaxis.categories,response.data}
           data : response.data,
           options: { ...this.state.options, ...this.state.options.xaxis, ...this.state.options.xaxis.categories=categorieList },
-          //  series: { ...this.state.series, ...this.state.series[0], ...this.state.series[0].data=value }
-          
+          series: [{name: "Keyword", data: [...value]}],
+          tweetseries:[{name: "Keyword", data: [...tweetsvalue]}],
+          tweetoptions:{ ...this.state.tweetoptions, ...this.state.tweetoptions.xaxis, ...this.state.tweetoptions.xaxis.categories=tweetscategorieList },
+
         })
     }).catch(error => {
         this.setState({ isLoding: false })
@@ -64,9 +77,18 @@ class BarChart extends Component {
                    :
                    
           <div className="mixed-chart" style={{paddingLeft: '20%'}}>
+            <h1>Paper Data</h1>
             <Chart
               options={this.state.options}
               series={this.state.series}
+              type="bar"
+              width="600"
+            />
+            <hr/>
+            <h1>Tweet Data</h1>
+            <Chart
+              options={this.state.tweetoptions}
+              series={this.state.tweetseries}
               type="bar"
               width="600"
             />
