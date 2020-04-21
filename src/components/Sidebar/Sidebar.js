@@ -306,7 +306,7 @@ class Sidebar extends React.Component {
                   activeClassName="active"
                 >
                   <i className="fas fa-chart-pie text-orange" />
-                  Pie Chart
+                  Short Term Interest
               </NavLink>
               </NavItem>
             </Nav>
@@ -320,7 +320,7 @@ class Sidebar extends React.Component {
                   activeClassName="active"
                 >
                   <i className="fas fa-chart-bar text-pink" />
-                  Bar Chart
+                  Activities
               </NavLink>
               </NavItem>
             </Nav>
@@ -334,7 +334,7 @@ class Sidebar extends React.Component {
                   activeClassName="active"
                 >
                   <i className="fas fa-cloud text-info" />
-                  Cloud Chart
+                  Long Term Interest
               </NavLink>
               </NavItem>
             </Nav>
@@ -349,6 +349,21 @@ class Sidebar extends React.Component {
                 >
                   <i className="fas fa-brain text-blue"/>
                   Concept Map Chart
+              </NavLink>
+              </NavItem>
+            </Nav>
+
+            <Nav navbar>
+              <NavItem>
+                <NavLink
+                  to="/admin/stream-chart"
+                  tag={NavLinkRRD}
+                  onClick={this.closeCollapse}
+                  activeClassName="active"
+                >
+                  <i class="fas fa-wave-square text-green"></i>
+                 
+                  Interests
               </NavLink>
               </NavItem>
             </Nav>

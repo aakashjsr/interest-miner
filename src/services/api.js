@@ -212,7 +212,7 @@ class user {
 
           //** ADD BLACK KEYWORD API **//
   static addBlackKeyword(data) {
-    console.log('DD',data)
+    
     const TOKEN = getItem("accessToken");
     return axios({
             method: "post",
@@ -222,7 +222,9 @@ class user {
                   Accept: "application/json",
                  'Authorization' :  `Token ${TOKEN}`
           },
-            blacklisted_keywords: [data]
+            data: {
+                    blacklisted_keywords : [data]
+                }
           }).then(
               res => res
               
@@ -307,7 +309,22 @@ class user {
             )
         };
 
-        
+             //** GET SEARCH USER PROFILE DATA API **//
+  static getUserProfile(id) {
+    const TOKEN = getItem("accessToken");
+    return axios({
+            method: "get",
+            url: `${BASE_URL}/api/accounts/public-profile/${id}/`,
+            headers: {
+                "Content-Type": "application/json",
+                 Accept: "application/json",
+                'Authorization' :  `Token ${TOKEN}`
+          },
+          }).then(
+              res => res
+               )
+        };
+           
 
 
 

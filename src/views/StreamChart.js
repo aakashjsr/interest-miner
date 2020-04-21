@@ -10,7 +10,7 @@ import { Line, Bar } from "react-chartjs-2";
 import ConceptMap from "../components/ConceptMap"
 import PieChart from "../components/Chart/PieChart"
 import BarChart from "../components/Chart/BarChart"
-// import StreamChart from "../components/Chart/StreamChart"
+import StreamChart from "../components/Chart/StreamChart"
 
 
 
@@ -41,7 +41,7 @@ import {
 
 import Header from "components/Headers/Header.js";
 
-class LineChart extends React.Component {
+class StreamChartPage extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -75,7 +75,7 @@ class LineChart extends React.Component {
                       <h6 className="text-uppercase text-light1 ls-1 mb-1">
                         Overview
                       </h6>
-                      <h2 className="text-white1 mb-0">Line Chart</h2>
+                      <h2 className="text-white1 mb-0">Stream Chart</h2>
                     </div>
                    
                   </Row>
@@ -83,8 +83,8 @@ class LineChart extends React.Component {
                 <CardBody>
                 
                   {/* <div style={{paddingLeft: '30%'}}> */}
-                  {/* <StreamChart/> */}
-                  <BarChart/>
+                  <StreamChart/>
+                  {/* <BarChart/> */}
                   {/* </div> */}
                  
                 </CardBody>
@@ -98,4 +98,4 @@ class LineChart extends React.Component {
   }
 }
 
-export default LineChart;
+export default StreamChartPage;

@@ -43,7 +43,7 @@ class Admin extends React.Component {
         return routes[i].name;
       }
     }
-    return "Edit Page";
+    return "";
   };
   render() {
     return (
