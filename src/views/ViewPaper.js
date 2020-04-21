@@ -25,7 +25,7 @@ import {
   Table,
   Container,
   Row,
-  UncontrolledTooltip, 
+  UncontrolledTooltip,
   // Card,
   // CardHeader,
   CardBody,
@@ -63,7 +63,7 @@ class ViewPaper extends React.Component {
 //** GET ALL PAPERS **//
   getPaperData=()=>{
     user.getListPaper().then(response => {
-        this.setState({ 
+        this.setState({
           isLoding: false,
           data : response.data
         })
@@ -77,7 +77,7 @@ class ViewPaper extends React.Component {
   deleteEnquiry = (id)=>{
 
    this.setState({isLoding:true},()=>{
-      
+
       user.deletePaper(id).then(response => {
   const newvalue = this.state.data.filter((v,i)=> v.id !=id );
     this.setState({ isLoding: false,
@@ -88,14 +88,14 @@ class ViewPaper extends React.Component {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000
         });
-       
+
       }).catch(error => {
         this.setState({ isLoding: false })
         handleServerErrors(error, toast.error)
-        
+
       })
    })
-    
+
   }
 
 
@@ -112,9 +112,9 @@ class ViewPaper extends React.Component {
           paperDetail:paperdata
     });
 // user.getPaper(id).then(response => {
-//         // loder false ka code 
+//         // loder false ka code
 //         console.log('GET A PAPER RES:++>',response.data)
-//         this.setState({ 
+//         this.setState({
 //           isLoding: false,
 //           modal : !this.state.modal,
 //           paperDetail : response.data
@@ -123,8 +123,8 @@ class ViewPaper extends React.Component {
 //       }).catch(error => {
 //         this.setState({ isLoding: false })
 //         handleServerErrors(error, toast.error)
-        
-        
+
+
 //       })
   }
 
@@ -160,7 +160,7 @@ toggle = (id) => {
         year: this.state.year,
         abstract: this.state.abstract,
       };
-      
+
       this.setState(
           {
             isLoding:true,editmodal : !this.state.editmodal
@@ -200,7 +200,7 @@ toggle = (id) => {
     console.log(this.state.isLoding)
     return (
       <>
-      
+
         <Header />
         {/* Page content */}
         <Container className="mt--7" fluid>
@@ -225,23 +225,23 @@ toggle = (id) => {
 
                   {/* START LOADER */}
 
-                { this.state.isLoding ? 
-                  (  
+                { this.state.isLoding ?
+                  (
                     <tr className="text-center" style={{padding:'20px'}}><td></td><td></td>
                         <td style={{textAlign: 'center'}}> <Loader type="Puff" color="#00BFFF" height={100} width={100} /></td>
                    </tr>
                    )
                    :
-                
-                   ( 
-                    this.state.data.length ? 
+
+                   (
+                    this.state.data.length ?
                     this.state.data.map((value,index)=>(
                       <tr key={value.id}>
-                          <th scope="row"> {`${value.title.slice(0, 35)} ...`} </th>
-                          <td>{`${value.url.slice(0, 35)} ...`}</td>
+                          <th scope="row"> {`${(value.title || "").slice(0, 35)} ...`} </th>
+                          <td>{`${(value.url || "").slice(0, 35)} ...`}</td>
                           <td>{value.year}</td>
-                          <td  scope="col"> {`${value.abstract.slice(0, 35)} ...`}</td>
-                      
+                          <td  scope="col"> {`${(value.abstract || "").slice(0, 35)} ...`}</td>
+
                       <td className="text-right">
                         <UncontrolledDropdown>
                           <DropdownToggle
@@ -260,9 +260,9 @@ toggle = (id) => {
                             >
                               View
                             </DropdownItem>
-                            
+
                               <Link to={`/admin/edit-paper/${value.id}`}>
-                              <DropdownItem   
+                              <DropdownItem
                              //  onClick={()=>this.editEnquiry(value.id)}
                             >
                                Edit
@@ -278,20 +278,20 @@ toggle = (id) => {
                       </td>
                     </tr>
                     ))
-                   
-                    
-                   
+
+
+
                    :
-              
+
                     (
                     <tr className="text-center1" style={{padding:'20px'}}><td></td>
                         <td style={{textAlign: 'right'}}> <strong > No Papers Data</strong></td>
                    </tr>
                    )
-               
-                   
+
+
                    )}
-                    
+
                   </tbody>
                 </Table>
                 {/* <CardFooter className="py-4">
@@ -391,9 +391,9 @@ toggle = (id) => {
                               // defaultValue="lucky.jesse"
                               type="text"
                               id="input-username"
-                              name="title" defaultValue={this.state.title} value={this.state.title} onChange={this.handleChange} 
+                              name="title" defaultValue={this.state.title} value={this.state.title} onChange={this.handleChange}
                               placeholder="Title"
-                              
+
                             />
                           </FormGroup>
                         </Col>
@@ -408,7 +408,7 @@ toggle = (id) => {
                             <Input
                               className="form-control-alternative"
                               id="input-email"
-                              name="url" defaultValue={this.state.url} onChange={this.handleChange} 
+                              name="url" defaultValue={this.state.url} onChange={this.handleChange}
                               placeholder="https://www.zyz.com"
                               type="text"
                             />
@@ -428,7 +428,7 @@ toggle = (id) => {
                               className="form-control-alternative"
                               defaultValue="Lucky"
                               id="input-first-name"
-                              name="year" defaultValue={this.state.year} onChange={this.handleChange} 
+                              name="year" defaultValue={this.state.year} onChange={this.handleChange}
                               placeholder="Year"
                               type="number"
                             />
@@ -446,7 +446,7 @@ toggle = (id) => {
                               className="form-control-alternative"
                               // defaultValue="Jesse"
                               id="input-last-name"
-                              name="abstract" defaultValue={this.state.abstract} onChange={this.handleChange} 
+                              name="abstract" defaultValue={this.state.abstract} onChange={this.handleChange}
                               placeholder="Abstract"
                               type="textarea"
                             />
@@ -457,7 +457,7 @@ toggle = (id) => {
                      <Button
                         color="primary"
                         type="button"
-                        
+
                         onClick={()=>this.handleUpdate()}
                         // size="md"
                       >
@@ -465,7 +465,7 @@ toggle = (id) => {
                       </Button>
                   </Form>
                 </CardBody>
-        
+
           {/* <strong>Title: </strong> <input type="text" defaultValue={this.state.title} name="title"/><br/>
           <strong>Year: </strong> {this.state.year}<br/>
           <strong>URL: </strong> {this.state.url}<br/>
