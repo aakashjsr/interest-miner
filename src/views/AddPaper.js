@@ -51,7 +51,7 @@ class AddPaper extends React.Component {
 
       this.setState({ isLoding: true },()=>{
         user.addPaper(data).then(response => {
-          toast.success("Add Papaer !", {
+          toast.success("Paper Added !", {
                position: toast.POSITION.TOP_RIGHT,
                autoClose: 2000
            });

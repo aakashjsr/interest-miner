@@ -27,7 +27,7 @@ import Header from "components/Headers/Header.js";
 class EditPaper extends React.Component {
 
   state = {
-    
+
     title: '',
     url:'',
     year:'',
@@ -38,9 +38,9 @@ class EditPaper extends React.Component {
     // console.log('ID:<<>',this.props.match.params.id)
    this.setState({isLoding:true},()=>{
     user.getPaper(this.props.match.params.id).then(response => {
-      // loder false ka code 
+      // loder false ka code
       // console.log('GET A PAPER RES:++>',response.data)
-      this.setState({ 
+      this.setState({
         isLoding: false,
         // modal : !this.state.modal,
         id: response.data.id,
@@ -53,8 +53,8 @@ class EditPaper extends React.Component {
     }).catch(error => {
       this.setState({ isLoding: false })
       handleServerErrors(error, toast.error)
-      
-      
+
+
     })
    })
   }
@@ -76,7 +76,7 @@ class EditPaper extends React.Component {
 
       this.setState({ isLoding: true },()=>{
         user.updatePaper(data,this.state.id).then(response => {
-          toast.success("Update Papaer !", {
+          toast.success("Paper Updated! !", {
                position: toast.POSITION.TOP_RIGHT,
                autoClose: 2000
            });
@@ -87,7 +87,7 @@ class EditPaper extends React.Component {
            this.setState({ isLoding: false })
            // console.log(error)
            handleServerErrors(error, toast.error)
-           
+
          })
       })
 
@@ -111,11 +111,11 @@ class EditPaper extends React.Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  {this.state.isLoding ? 
+                  {this.state.isLoding ?
                   (<div className="text-center" style={{padding:'20px'}}>
                          <Loader type="Puff" color="#00BFFF" height={100} width={100} />
                    </div>)
-                  
+
                   :
                   <Form onSubmit={this._handleSubmit} method="post">
                     <h6 className="heading-small text-muted mb-4">
@@ -134,7 +134,7 @@ class EditPaper extends React.Component {
                             <Input
                               className="form-control-alternative"
                               id="input-username"
-                              name="title" value={this.state.title} onChange={this.handleChange} 
+                              name="title" value={this.state.title} onChange={this.handleChange}
                               placeholder="Title"
                               type="text"
                             />
@@ -151,7 +151,7 @@ class EditPaper extends React.Component {
                             <Input
                               className="form-control-alternative"
                               id="input-email"
-                              name="url" value={this.state.url} onChange={this.handleChange} 
+                              name="url" value={this.state.url} onChange={this.handleChange}
                               placeholder="https://www.zyz.com"
                               type="text"
                             />
@@ -171,7 +171,7 @@ class EditPaper extends React.Component {
                               className="form-control-alternative"
                               defaultValue="Lucky"
                               id="input-first-name"
-                              name="year" value={this.state.year} onChange={this.handleChange} 
+                              name="year" value={this.state.year} onChange={this.handleChange}
                               placeholder="Year"
                               type="number"
                             />
@@ -188,7 +188,7 @@ class EditPaper extends React.Component {
                             <Input
                               className="form-control-alternative"
                               id="input-last-name"
-                              name="abstract" value={this.state.abstract} onChange={this.handleChange} 
+                              name="abstract" value={this.state.abstract} onChange={this.handleChange}
                               placeholder="Abstract"
                               // className="form-control-alternative"
                               rows="10"
