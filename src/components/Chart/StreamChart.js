@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import Chart from "react-apexcharts";
+import { toast } from 'react-toastify';
+import {Link} from 'react-router-dom'
+import Loader from 'react-loader-spinner'
+import user from 'services/api';
 
+import { handleServerErrors } from "utils/errorHandler";
 class StreamChart extends React.Component {
     
     //   state= {
@@ -84,20 +89,53 @@ class StreamChart extends React.Component {
 
       state = {
         options: {
-          xaxis: {
-            categories: ['Month']
-          }
+          // xaxis: {
+          //   categories: ['Month']
+          // }
         },
-        series: [{
-          name: 'computer',
-          data: [0,3]
-        }, {
-          name: 'math',
-          data: [0,2]
-        }
+        series: [
+        //   {
+        //   name: 'computer',
+        //   data: [0,3]
+        // }, {
+        //   name: 'math',
+        //   data: [0,2]
+        // }
     ],
       }
     
+      
+      componentDidMount(){
+        this.setState({ isLoding: true },()=>{
+          user.pieChart().then(response => {
+            let mydata = response.data.slice(0,15).map(val => val.keyword);
+            let values = response.data.slice(0,15).map(val => val.weight);
+
+            this.setState({ 
+              isLoding: false,
+              // series: values,
+              options:{
+                xaxis: {
+                  categories: [...mydata]
+                }
+              },
+              series:[{name: 'computer',data: [0,3]}, { name: 'math', data: [0,2]}]
+
+              // options: {
+              //   ...this.state.options,
+              //   labels:mydata,
+
+              // }
+              //options : {...this.state.options.labels,mydata[2].keyword}
+              // keyword : response.data.keyword,
+              // series: mydata[2].keyword
+            })
+        }).catch(error => {
+            this.setState({ isLoding: false })
+            handleServerErrors(error, toast.error)
+            })
+        })
+}
 
 
     //   this.state = {
