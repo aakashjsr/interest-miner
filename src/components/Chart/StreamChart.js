@@ -107,7 +107,7 @@ class StreamChart extends React.Component {
       
       componentDidMount(){
         this.setState({ isLoding: true },()=>{
-          user.pieChart().then(response => {
+          user.streamChart().then(response => {
             let mydata = response.data.slice(0,15).map(val => val.keyword);
             let values = response.data.slice(0,15).map(val => val.weight);
 

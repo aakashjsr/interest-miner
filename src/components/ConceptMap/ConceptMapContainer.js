@@ -4,6 +4,12 @@ import './style.css';
 import Konva from 'konva';
 import { Stage, Layer, Rect, Text, Circle, Line } from 'react-konva';
 import axios from "axios";
+import { toast } from 'react-toastify';
+import {Link} from 'react-router-dom'
+import Loader from 'react-loader-spinner'
+import user from 'services/api';
+
+import { handleServerErrors } from "utils/errorHandler";
 
 
 class ConceptMapContainer extends Component {
@@ -68,23 +74,38 @@ class ConceptMapContainer extends Component {
 //     console.log(error);
 //   })}
 
+   componentDidMount(){
+         this.setState({ isLoding: true },()=>{
+           user.conceptChart().then(response => {
 
-    componentDidMount() {
-        axios.get('https://cors-anywhere.herokuapp.com/https://3i3v521fj8.execute-api.us-east-1.amazonaws.com/long-term-interest')
-  .then(res=> res)
-  .then(response=> {
-    this.setState({
-        data : response.data
+             this.setState({ 
+               isLoding: false,
+                data : response.data.slice(0,5)
+              })
+             this.extractNodes(response.data.slice(0,5));
+        }).catch(error => {
+             this.setState({ isLoding: false })
+             handleServerErrors(error, toast.error)
+             })
+         })
+ }
 
-    })
-    this.extractNodes(response.data);
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  })
-        // this.extractNodes();
-    }
+//     componentDidMount() {
+//         axios.get('https://cors-anywhere.herokuapp.com/https://3i3v521fj8.execute-api.us-east-1.amazonaws.com/long-term-interest')
+//   .then(res=> res)
+//   .then(response=> {
+//     this.setState({
+//         data : response.data
+
+//     })
+//     this.extractNodes(response.data.slice(0,5));
+//   })
+//   .catch(function (error) {
+//     // handle error
+//     console.log(error);
+//   })
+//         // this.extractNodes();
+//     }
 
     extractNodes = (datas) => {
         const  data  = datas;
