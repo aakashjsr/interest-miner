@@ -13,13 +13,13 @@ class user {
             data: data
           }).then(
               res => res
-              
+
             )
         };
 
            //** SIGNUP API **//
   static userSignIn(data) {
-    
+
     return axios({
             method: "post",
             url: `${BASE_URL}/api/accounts/login/`,
@@ -43,7 +43,7 @@ class user {
             data: data
           }).then(
               res => res
-              
+
             )
         };
 
@@ -78,7 +78,7 @@ class user {
               res => res
                )
         };
-     
+
         //** DELETE A PAPER API **//
   static deletePaper(id) {
     const TOKEN = getItem("accessToken");
@@ -110,10 +110,10 @@ class user {
             data: data
           }).then(
               res => res
-              
+
             )
         };
- 
+
 
           //** GET USER PROFILE DATA API **//
   static getUserData() {
@@ -129,7 +129,7 @@ class user {
           //   data: data
           }).then(
               res => res
-              
+
             )
         };
 
@@ -148,11 +148,11 @@ class user {
             data: data
           }).then(
               res => res
-              
+
             )
         };
 
-        
+
 
             //** GET KEYWORD DATA API **//
   static getKeyword() {
@@ -168,7 +168,7 @@ class user {
           //   data: data
           }).then(
               res => res
-              
+
             )
         };
 
@@ -187,7 +187,7 @@ class user {
             keywords: [data]
           }).then(
               res => res
-              
+
             )
         };
 
@@ -206,13 +206,13 @@ class user {
           //   data: data
           }).then(
               res => res
-              
+
             )
         };
 
           //** ADD BLACK KEYWORD API **//
   static addBlackKeyword(data) {
-    
+
     const TOKEN = getItem("accessToken");
     return axios({
             method: "post",
@@ -227,11 +227,11 @@ class user {
                 }
           }).then(
               res => res
-              
+
             )
         };
-    
-        
+
+
           //** DELETE BLACK KEYWORD API **//
   static deleteBlackKeyword(id) {
     const TOKEN = getItem("accessToken");
@@ -243,10 +243,10 @@ class user {
                   Accept: "application/json",
                  'Authorization' :  `Token ${TOKEN}`
           },
-           
+
           }).then(
               res => res
-              
+
             )
         };
 
@@ -266,13 +266,13 @@ class user {
             keywords: data
           }).then(
               res => res
-              
+
             )
         };
 
                    //** STREAM DATA API **//
   static streamChart() {
-    
+
     const TOKEN = getItem("accessToken");
     return axios({
             method: "get",
@@ -284,17 +284,17 @@ class user {
           },
           }).then(
               res => res
-              
+
             )
         };
 
                          //** CONCEPT DATA API **//
   static conceptChart() {
-    
+
     const TOKEN = getItem("accessToken");
     return axios({
             method: "get",
-            url: `https://cors-anywhere.herokuapp.com/https://3i3v521fj8.execute-api.us-east-1.amazonaws.com/long-term-interest`,
+            url: `${BASE_URL}/api/interests/long-term/`,
             headers: {
                 "Content-Type": "application/json",
                   Accept: "application/json",
@@ -302,12 +302,12 @@ class user {
           },
           }).then(
               res => res
-              
+
             )
         };
 
 
-        
+
 
 
              //** BAR DATA API **//
@@ -325,7 +325,7 @@ class user {
             keywords: data
           }).then(
               res => res
-              
+
             )
         };
 
@@ -344,7 +344,7 @@ class user {
             keywords: data
           }).then(
               res => res
-              
+
             )
         };
 
@@ -363,7 +363,7 @@ class user {
               res => res
                )
         };
-           
+
 
 
 

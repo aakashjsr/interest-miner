@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import {Link} from 'react-router-dom'
 import Loader from 'react-loader-spinner'
 import user from 'services/api';
+import { Jumbotron } from 'reactstrap';
 
 import { handleServerErrors } from "utils/errorHandler";
 
@@ -17,7 +18,7 @@ class ConceptMapContainer extends Component {
     constructor(props) {
         super(props);
 
-        this.stageHeight = 600;
+        this.stageHeight = 500;
         this.stageWidth = 600;
 
         this.keywordNodeSize = 20;
@@ -33,56 +34,44 @@ class ConceptMapContainer extends Component {
         this.rectStrokeColor = "black";
         this.rectFillColor = "#dd5182";
         this.circleStrokeColor = "black";
-        this.circleFillColor = "#a05195";
+        this.circleFillColor = "#E5AE19";
 
         this.highlightColor = "#ffa600";
 
         this.textFontFamily = '-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif';
 
         this.state = {
-            data:[]
-            // data: [
-            //     { "keyword": "Computer science", "rank": 1, "source": "twitter", "category": ["Major", "Subject"] },
-            //     { "keyword": "Math", "rank": 2, "source": "scholar", "category": ["Major", "Subject"] },
-            //     { "keyword": "Literature", "rank": 3, "source": "twitter", "category": ["Major", "Subject", "Biopic"] },
-            //     { "keyword": "Machine Learning", "rank": 4, "source": "scholar", "category": ["Major", "Subject", "Coding"] },
-            //     { "keyword": "Cooking", "rank": 5, "source": "scholar", "category": ["Major", "Subject", "Hobby"] },
-            //     { "keyword": "Engineering", "rank": 3, "source": "twitter", "category": ["Major"] },
-            //     { "keyword": "Cars", "rank": 2, "source": "twitter", "category": ["Major", "Item", "Automobile"] },
-            //     { "keyword": "Facebook", "rank": 2, "source": "scholar", "category": ["Social Media", "Marketing"] },
-            //     { "keyword": "Research", "rank": 4, "source": "twitter", "category": ["Major"] },
-            //     { "keyword": "Investment", "rank": 5, "source": "scholar", "category": ["Major", "Finance"] }
-            // ]
+            data:[],
+            isLoading: true
         }
     }
 
+    toTitleCase = (phrase) => {
+      return phrase
+        .toLowerCase()
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+    };
 
-   
-//   componentDidMount() {
-// // Make a request for a user with a given ID
-// axios.get('https://cors-anywhere.herokuapp.com/https://3i3v521fj8.execute-api.us-east-1.amazonaws.com/long-term-interest')
-//   .then(function (response) {
-//     // handle success
-//     console.table(response.data);
-//     this.setState({
-//         mydata : response.data
-//     })
-//     chart.data =response.data
-//   })
-//   .catch(function (error) {
-//     // handle error
-//     console.log(error);
-//   })}
 
    componentDidMount(){
          this.setState({ isLoding: true },()=>{
            user.conceptChart().then(response => {
+             let chartData = [];
+             let dataLength = Math.min(response.data.length, 5);
+             for (let index=0; index < dataLength; index++) {
+               chartData.push({
+                 keyword: response.data[index].keyword,
+                 rank: response.data[index].weight,
+                 source: response.data[index].source,
+                 category: response.data[index].categories.map(item=>item.name)
+               });
+             }
+             this.setState({
+               isLoding: false, data : chartData
+             }, this.extractNodes);
 
-             this.setState({ 
-               isLoding: false,
-                data : response.data.slice(0,5)
-              })
-             this.extractNodes(response.data.slice(0,5));
         }).catch(error => {
              this.setState({ isLoding: false })
              handleServerErrors(error, toast.error)
@@ -90,25 +79,8 @@ class ConceptMapContainer extends Component {
          })
  }
 
-//     componentDidMount() {
-//         axios.get('https://cors-anywhere.herokuapp.com/https://3i3v521fj8.execute-api.us-east-1.amazonaws.com/long-term-interest')
-//   .then(res=> res)
-//   .then(response=> {
-//     this.setState({
-//         data : response.data
-
-//     })
-//     this.extractNodes(response.data.slice(0,5));
-//   })
-//   .catch(function (error) {
-//     // handle error
-//     console.log(error);
-//   })
-//         // this.extractNodes();
-//     }
-
-    extractNodes = (datas) => {
-        const  data  = datas;
+    extractNodes = () => {
+        const  {data}  = this.state;
         let categories = {};
         let keywords = {};
         let links = {};
@@ -185,7 +157,7 @@ class ConceptMapContainer extends Component {
                     stroke={(keywords[keyword].highlight) ? this.highlightColor : this.circleFillColor} />
             )
             nodes.push(
-                <Text key={keyword + "text"} x={10} y={keywords[keyword].y - 5} text={keyword} fontFamily={this.textFontFamily} />
+                <Text key={keyword + "text"} x={10} y={keywords[keyword].y - 5} text={this.toTitleCase(keyword)} fontFamily={this.textFontFamily} />
             )
         }
 
@@ -199,15 +171,25 @@ class ConceptMapContainer extends Component {
                     strokeWidth="3"
                     stroke={categories[category].highlight ? this.highlightColor : this.rectFillColor} />
             )
+            // add ellipsis to text after 10 chars
+            let categoryText = category.length > 10 ? category.slice(0, 10) + "..." : category;
             nodes.push(
-                <Text key={category + "text"} x={categories[category].x + 10} y={categories[category].y + 10} text={category} fontFamily={this.textFontFamily} stroke="white" strokeWidth="1" />
+                <Text key={category + "text"}
+                  x={categories[category].x + 10}
+                  y={categories[category].y + 10}
+                  onMouseOver={e => this.mouseOverEvent(e, 'category', category)}
+                  onMouseOut={e => this.mouseOutEvent(e, 'category', category)}
+                  text={categoryText} fontFamily={this.textFontFamily} stroke="white" strokeWidth="1" />
             )
+
+
         }
         return nodes;
     }
 
     mouseOverEvent = (event, nodeType, nodeKey) => {
-        const container = event.target.getStage().container();
+        const stage = event.target.getStage();
+        const container = stage.container();
         container.style.cursor = "pointer";
 
         let { categories, keywords, links } = this.state;
@@ -228,6 +210,8 @@ class ConceptMapContainer extends Component {
                     keywords[keyword].highlight = true;
                 }
             }
+
+
         }
 
         this.setState({ categories, keywords });
@@ -246,22 +230,36 @@ class ConceptMapContainer extends Component {
             keywords[keyword].highlight = false;
         }
 
-        this.setState({ categories, keywords });
+        this.setState({ categories, keywords});
     }
 
     render() {
-            console.log("DAL+++<>",this.state.data)
+      const containerDiv = document.querySelectorAll(".card-body")[0]
+      const width = containerDiv ? containerDiv.clientWidth: this.stageWidth;
+      const {categories} = this.state;
+      let highlighedCategory = [];
+      if (categories) {
+          highlighedCategory = Object.keys(categories).filter(item=>categories[item].highlight);
+      }
+
+
+
         return (
             <div id="conceptMapWrapper">
-            {this.state.data.length== 0 ? <strong>Loading...</strong>
-            : 
-            <Stage width={this.stageWidth} height={this.stageHeight} >
-                    <Layer>
-                        {this.getNodes()}
-                    </Layer>
-            </Stage>
+            {this.state.isLoding? <div className="text-center" style={{padding:'20px'}}>
+                   <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+             </div>
+            :
+            <div>
+              <Stage width={width} height={this.stageHeight} >
+                      <Layer>
+                          {this.getNodes()}
+                      </Layer>
+              </Stage>
+              <div align="center">{highlighedCategory.length ? highlighedCategory[0]: ""}</div>
+            </div>
             }
-                
+
             </div>
         );
     }

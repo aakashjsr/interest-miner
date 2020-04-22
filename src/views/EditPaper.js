@@ -2,7 +2,7 @@
 import React from "react";
 // react plugin used to create google maps
 import { toast } from 'react-toastify';
-import Loader from 'react-loader-spinner'
+import Loader from 'react-loader-spinner';
 import { handleServerErrors } from "utils/errorHandler";
 import user from '../services/api';
 
