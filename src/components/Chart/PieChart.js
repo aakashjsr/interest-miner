@@ -44,6 +44,7 @@ class PieChart extends React.Component {
             componentDidMount(){
               this.setState({ isLoding: true },()=>{
                 user.pieChart().then(response => {
+                  
                   // let mydata = response.data.slice(0,15).map(val => val.keyword);
                   // let values = response.data.slice(0,15).map(val => val.weight);
                    let mydata = response.data.map(val => val.keyword);
@@ -51,6 +52,7 @@ class PieChart extends React.Component {
 
                   this.setState({ 
                     isLoding: false,
+                    data: response.data,
                     series: values,
                     options: {
                       ...this.state.options,
@@ -82,15 +84,17 @@ class PieChart extends React.Component {
                    </div>
                    )
                    :
-                     
-                    //  <div style={{paddingLeft: '30%'}}>
+                    this.state.data.length ?  
+                     <div style={{maxWidth: '560px',margin: '35px auto'}}>
                      <Chart 
                             options={this.state.options}    
                             series={this.state.series} 
                             type="pie" 
                             // width={600} 
                       />
-                      // </div>
+                      </div>
+                      : <div className="text-center"><strong>No data available</strong></div>
+                      
                       }
             </div>
             )
