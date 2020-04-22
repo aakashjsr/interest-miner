@@ -270,6 +270,45 @@ class user {
             )
         };
 
+                   //** STREAM DATA API **//
+  static streamChart() {
+    
+    const TOKEN = getItem("accessToken");
+    return axios({
+            method: "get",
+            url: `${BASE_URL}/api/interests/stream-graph/`,
+            headers: {
+                "Content-Type": "application/json",
+                  Accept: "application/json",
+                 'Authorization' :  `Token ${TOKEN}`
+          },
+          }).then(
+              res => res
+              
+            )
+        };
+
+                         //** CONCEPT DATA API **//
+  static conceptChart() {
+    
+    const TOKEN = getItem("accessToken");
+    return axios({
+            method: "get",
+            url: `https://cors-anywhere.herokuapp.com/https://3i3v521fj8.execute-api.us-east-1.amazonaws.com/long-term-interest`,
+            headers: {
+                "Content-Type": "application/json",
+                  Accept: "application/json",
+                 'Authorization' :  `Token ${TOKEN}`
+          },
+          }).then(
+              res => res
+              
+            )
+        };
+
+
+        
+
 
              //** BAR DATA API **//
   static barChart(data) {

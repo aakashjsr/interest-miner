@@ -14,11 +14,18 @@ class BarChart extends Component {
 
     this.state = {
       options: {
+        
         chart: {
           id: "basic-bar"
         },
+        
+        fill: {
+        colors: ['#9C27B0'],
+        
+        },
         xaxis: {
-          categories: []
+          categories: [],
+          
         }
       },
       series: [
