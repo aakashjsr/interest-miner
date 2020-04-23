@@ -37,17 +37,21 @@ class BlackKeywords extends React.Component {
 
   componentDidMount(){
     this.setState({isLoding: true},()=>{
-       user.getBlackKeyword().then(response => {
-        this.setState({ 
-          isLoding: false,
-          keywordData : response.data.slice(0,20)
-        })
-    }).catch(error => {
-        this.setState({ isLoding: false })
-        handleServerErrors(error, toast.error)
-        })
+      this.getBlackKeyword();
       
     })
+  }
+
+  getBlackKeyword =()=>{
+    user.getBlackKeyword().then(response => {
+      this.setState({ 
+        isLoding: false,
+        keywordData : response.data
+      })
+  }).catch(error => {
+      this.setState({ isLoding: false })
+      handleServerErrors(error, toast.error)
+      })
   }
 
 
@@ -77,6 +81,8 @@ class BlackKeywords extends React.Component {
                autoClose: 2000
            });
            this.setState({isLoding: false , keyword:'' })
+      this.getBlackKeyword();
+
             // this.props.history.push("/admin/view-paper");
 
          }).catch(error => {
