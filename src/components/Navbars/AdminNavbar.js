@@ -6,6 +6,7 @@ import { getItem } from "utils/localStorage";
 import { BASE_URL } from "../../constants";
 import axios from "axios";
 import Suggestion from '../suggestion'
+import Select from 'react-select';
 
 import SearchUserHeader from '../Headers/SearchUserHeader'
 
@@ -123,6 +124,7 @@ _onFocus=()=> {
 
             </Form>
             <Suggestion results={this.state.results} />
+            
 
             <Nav className="align-items-center d-none d-md-flex" navbar>
               <UncontrolledDropdown nav>

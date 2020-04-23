@@ -37,19 +37,22 @@ class Keywords extends React.Component {
 
   componentDidMount(){
     this.setState({isLoding: true},()=>{
-       user.getKeyword().then(response => {
-        this.setState({ 
-          isLoding: false,
-          keywordData : response.data.slice(0,20)
-        })
-    }).catch(error => {
-        this.setState({ isLoding: false })
-        handleServerErrors(error, toast.error)
-        })
+      this.getKeywords();
       
     })
   }
 
+  getKeywords =()=>{
+    user.getKeyword().then(response => {
+      this.setState({ 
+        isLoding: false,
+        keywordData : response.data
+      })
+  }).catch(error => {
+      this.setState({ isLoding: false })
+      handleServerErrors(error, toast.error)
+      })
+  }
 
 
 
@@ -77,6 +80,7 @@ class Keywords extends React.Component {
                autoClose: 2000
            });
            this.setState({isLoding: false , keyword:'' })
+           this.getKeywords();
             // this.props.history.push("/admin/view-paper");
 
          }).catch(error => {

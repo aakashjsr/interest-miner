@@ -184,7 +184,9 @@ class user {
                   Accept: "application/json",
                  'Authorization' :  `Token ${TOKEN}`
           },
-            keywords: [data]
+          data: {
+            keywords : [data]
+        }
           }).then(
               res => res
 
@@ -222,9 +224,9 @@ class user {
                   Accept: "application/json",
                  'Authorization' :  `Token ${TOKEN}`
           },
-            data: {
-                    blacklisted_keywords : [data]
-                }
+          data: {
+            keywords : [data]
+        }
           }).then(
               res => res
 
