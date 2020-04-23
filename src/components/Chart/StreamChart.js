@@ -89,18 +89,18 @@ class StreamChart extends React.Component {
 
       state = {
         options: {
-          // xaxis: {
-          //   categories: ['Month']
-          // }
+          xaxis: {
+            categories: ['Jan 2020','Feb 2020','March 2020','April 2020']
+          }
         },
         series: [
-        //   {
-        //   name: 'computer',
-        //   data: [0,3]
-        // }, {
-        //   name: 'math',
-        //   data: [0,2]
-        // }
+          {
+          name: 'computer',
+          data: [0,3]
+        }, {
+          name: 'math',
+          data: [0,2]
+        }
     ],
       }
     
@@ -108,18 +108,20 @@ class StreamChart extends React.Component {
       componentDidMount(){
         this.setState({ isLoding: true },()=>{
           user.streamChart().then(response => {
-            let mydata = response.data.slice(0,15).map(val => val.keyword);
-            let values = response.data.slice(0,15).map(val => val.weight);
+            console.log('so>><<',Object.keys(response.data))
+            let categoriesList = Object.keys(response.data);
+            // let mydata = response.data.slice(0,15).map(val => val.keyword);
+            // let values = response.data.slice(0,15).map(val => val.weight);
 
             this.setState({ 
               isLoding: false,
               // series: values,
-              options:{
-                xaxis: {
-                  categories: [...mydata]
-                }
-              },
-              series:[{name: 'computer',data: [0,3]}, { name: 'math', data: [0,2]}]
+              // options:{
+              //   xaxis: {
+              //     categories: [...categoriesList]
+              //   }
+              // },
+              // series:[{name: 'computer',data: [0,3]}, { name: 'math', data: [0,2]}]
 
               // options: {
               //   ...this.state.options,
