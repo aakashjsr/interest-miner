@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 
 const Suggestions = (props) => {
   const options = props.results.map(r => (
-    <a href={`/admin/search-profile/${r.id}`}>
+    <a href={`/admin/profile/${r.id}`}>
     <li key={r.id} style={{padding:'10px',width: '19em',background: 'white',listStyleType: 'none'}}>
       {`${r.first_name} ${r.last_name}`}
     </li>
