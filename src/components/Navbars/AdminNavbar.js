@@ -69,6 +69,24 @@ class AdminNavbar extends React.Component {
     })
   }
 
+  _onBlur=()=> {
+    setTimeout(() => {
+        if (this.state.query) {
+            this.setState({
+                query: '',
+                // results:[]
+            });
+        }
+    }, 1);
+}
+_onFocus=()=> {
+    if (!this.state.query) {
+        this.setState({
+            query: '',
+            // results:[]
+        });
+    }
+  }
 
   render() {
     return (
@@ -91,11 +109,13 @@ class AdminNavbar extends React.Component {
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input 
-                      placeholder="Search for..." type="text" 
+                      placeholder="Search for users.." type="text" 
                       name='query'
                       value={this.state.query}
                       // ref={input => this.search = input}
                       onChange={this.handleInputChange} 
+                      onFocus={this._onFocus}
+                        onBlur={this._onBlur}
                   />
                 </InputGroup>
               </FormGroup>

@@ -153,7 +153,7 @@ var routes = [
 
   },
   {
-    path: "/search-profile/:id",
+    path: "/profile/:id",
     name: "User Account Details",
     icon: "ni ni-single-02 text-green",
     component: SearchUserProfile,
