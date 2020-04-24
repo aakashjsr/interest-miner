@@ -367,7 +367,24 @@ class user {
         };
 
 
+                   //** GET SCORE SEARCH USER PROFILE DATA API **//
+  static getScore(id) {
+    const TOKEN = getItem("accessToken");
+    return axios({
+            method: "get",
+            url: `${BASE_URL}/api/interests/similarity/${id}/`,
+            headers: {
+                "Content-Type": "application/json",
+                 Accept: "application/json",
+                'Authorization' :  `Token ${TOKEN}`
+          },
+          }).then(
+              res => res
+               )
+        };
 
+
+        
 
 }
 

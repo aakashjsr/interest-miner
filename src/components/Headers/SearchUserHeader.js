@@ -16,7 +16,10 @@ class SearchUserHeader extends React.Component {
 
   state = {
     query: '', 
-    results: []
+    results: [],
+    activeSuggestion: 0,
+    showSuggestions: false,
+    popupVisible: false
   }
 
 
@@ -35,6 +38,7 @@ class SearchUserHeader extends React.Component {
     }).then(({ data }) => {
         this.setState({
           results: data,
+          popupVisible: !this.state.popupVisible,
         })
       })
   }
