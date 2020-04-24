@@ -33,7 +33,9 @@ class SearchUserProfile extends React.Component {
     paper_count: '',
     tweet_count: '',
     keyword_count: '',
-    isLoding: false
+    score:'',
+    isLoding: false,
+    isLoding1:false
   }
   componentDidMount() {
     this.setState({ isLoding: true }, () => {
@@ -61,6 +63,34 @@ class SearchUserProfile extends React.Component {
     })
   };
 
+  componentDidUpdate(prevPro){
+
+    if(prevPro.match.params.id !== this.props.match.params.id){
+    this.setState({ isLoding: true }, () => {
+      user.getUserProfile(this.props.match.params.id).then(response => {
+        console.log('GET USER PROFILE DATA:++>', response.data)
+        this.setState({
+          isLoding: false,
+          id :response.data.id,
+          first_name: response.data.first_name,
+          email: response.data.email,
+          last_name: response.data.last_name,
+          twitter_account_id: response.data.twitter_account_id,
+          author_id: response.data.author_id,
+          paper_count: response.data.paper_count,
+          tweet_count: response.data.tweet_count,
+          keyword_count: response.data.keyword_count
+        })
+
+      }).catch(error => {
+        this.setState({ isLoding: false })
+        handleServerErrors(error, toast.error)
+
+
+      })
+    })
+  }
+  }
 
   handleChange = e => {
     console.log(e.target.value)
@@ -99,6 +129,25 @@ class SearchUserProfile extends React.Component {
 
   };
 
+  getScore=()=>{
+    this.setState({ isLoding1: true }, () => {
+      user.getScore(this.props.match.params.id).then(response => {
+        toast.success("Update Profile Data !", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000
+        });
+        this.setState({ isLoding1: false,  })
+        // this.props.history.push("/admin/view-paper");
+
+      }).catch(error => {
+        this.setState({ isLoding1: false })
+        // console.log(error)
+        handleServerErrors(error, toast.error)
+
+      })
+    })
+    
+  }
 
 
   render() {
@@ -115,27 +164,33 @@ class SearchUserProfile extends React.Component {
             <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
               <Card className="card-profile shadow">
                 <Row className="justify-content-center">
-                  <Col className="order-lg-2" lg="3">
+                  <Col className="order-lg-2" lg="6">
                     <div className="card-profile-image">
-                      <a href="#pablo" onClick={e => e.preventDefault()}>
+                      <Button onClick={this.getScore} style={{marginTop: '30px'}}color="primary">Get Similarity Score</Button>
+                      {this.state.isLoding1 ?
+                    (<div className="text-center" style={{ padding: '20px' }}>
+                      <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+                    </div>)
+                    : <h1 className="rounded-circle" style={{color:'#5e72e4',textAlign:'center'}}>{this.state.score}</h1>}
+                      {/* <a href="#pablo" onClick={e => e.preventDefault()}>
                         <img
                           alt="..."
                           className="rounded-circle"
                           src={require("assets/img/theme/team-4-800x800.jpg")}
                         />
-                      </a>
+                      </a> */}
                     </div>
                   </Col>
                 </Row>
-                <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                {/* <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                   <div className="d-flex justify-content-between">
                   
                   </div>
-                </CardHeader>
+                </CardHeader> */}
                 <CardBody className="pt-0 pt-md-4">
                   <Row>
                     <div className="col">
-                      <div className="card-profile-stats d-flex justify-content-center mt-md-5">
+                      <div className="card-profile-stats d-flex justify-content-center " style={{marginTop: '0px !important'}}>
                         <div>
                           <span className="heading">{this.state.data && paper_count}</span>
                           <span className="description">Papers</span>
@@ -197,7 +252,7 @@ class SearchUserProfile extends React.Component {
                     (<div className="text-center" style={{ padding: '20px' }}>
                       <Loader type="Puff" color="#00BFFF" height={100} width={100} />
                     </div>)
-                    :
+                    : 
                     <Form onSubmit={this._handleSubmit} method="post">
                       <h6 className="heading-small text-muted mb-4">
                         User information

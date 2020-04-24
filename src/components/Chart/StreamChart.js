@@ -83,9 +83,12 @@ class StreamChart extends React.Component {
           user.streamChart().then(response => {
             // let mydata = response.data.map(val => val.weight);
             let data = Object.values(response.data);
-            let keyword = data[0].map(val => val.keyword__name);
-            let weight = data[0].map(val => val.weight);
-            let graphdata = data[0].map(val => {
+            
+            let dataArray = data.map(val=>val);
+            
+            // let keyword = data[0].map(val => val.keyword__name);
+            // let weight = data[0].map(val => val.weight);
+            let graphdata = dataArray.map(val => {
                return { name: val.keyword__name, data: [val.weight,0]}
             });
             let categoriesList = Object.keys(response.data);

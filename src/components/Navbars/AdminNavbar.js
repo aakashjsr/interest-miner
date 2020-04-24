@@ -6,7 +6,6 @@ import { getItem } from "utils/localStorage";
 import { BASE_URL } from "../../constants";
 import axios from "axios";
 import Suggestion from '../suggestion'
-import Select from 'react-select';
 
 import SearchUserHeader from '../Headers/SearchUserHeader'
 
@@ -33,7 +32,10 @@ class AdminNavbar extends React.Component {
   
   state = {
     query: '', 
-    results: []
+    results: [],
+    activeSuggestion: 0,
+    showSuggestions: false,
+    popupVisible: false
   }
 
 
@@ -52,15 +54,29 @@ class AdminNavbar extends React.Component {
     }).then(({ data }) => {
         this.setState({
           results: data,
+          popupVisible: !this.state.popupVisible,
         })
       })
   }
+
+  
  
   handleInputChange = (e) => {
     console.log('SERC',e.target.value)
+    if (!this.state.popupVisible) {
+      // attach/remove event handler
+      document.addEventListener('click', this.handleOutsideClick, false);
+    } else {
+      document.removeEventListener('click', this.handleOutsideClick, false);
+    }
+
+    // this.setState(prevState => ({
+    //    popupVisible: !prevState.popupVisible,
+    // }));
 
     this.setState({
-      query: e.target.value
+      query: e.currentTarget.value,
+     
     }, () => {
       if (this.state.query && this.state.query.length > 1) {
         if (this.state.query.length % 2 === 0) {
@@ -70,26 +86,80 @@ class AdminNavbar extends React.Component {
     })
   }
 
+ 
+
+  // onKeyDown = e => {
+  //   const { activeSuggestion, results } = this.state;
+
+  //   if (e.keyCode === 13) {
+  //     this.setState({
+  //       activeSuggestion: 0,
+  //       showSuggestions: false,
+  //       query: results[activeSuggestion]
+  //     });
+  //   } else if (e.keyCode === 38) {
+  //     if (activeSuggestion === 0) {
+  //       return;
+  //     }
+
+  //     this.setState({ activeSuggestion: activeSuggestion - 1 });
+  //   } else if (e.keyCode === 40) {
+  //     if (activeSuggestion - 1 === results.length) {
+  //       return;
+  //     }
+
+  //     this.setState({ activeSuggestion: activeSuggestion + 1 });
+  //   }
+  // };
+
+  handleClick=()=> {
+    if (!this.state.popupVisible) {
+      // attach/remove event handler
+      document.addEventListener('click', this.handleOutsideClick, false);
+    } else {
+      document.removeEventListener('click', this.handleOutsideClick, false);
+    }
+
+    this.setState(prevState => ({
+       popupVisible: !prevState.popupVisible,
+       results:[]
+    }));
+  }
+
+  handleOutsideClick=(e)=> {
+    // ignore clicks on the component itself
+    // if (this.node.contains(e.target)) {
+    //   return;
+    // }
+    
+    this.handleClick();
+    
+  }
+
   _onBlur=()=> {
     setTimeout(() => {
         if (this.state.query) {
             this.setState({
                 query: '',
+                // activeSuggestion: 0,
+                // showSuggestions: true,
                 // results:[]
             });
         }
-    }, 1);
+    }, 0);
 }
-_onFocus=()=> {
-    if (!this.state.query) {
-        this.setState({
-            query: '',
-            // results:[]
-        });
-    }
-  }
+// _onFocus=()=> {
+//   console.log('FOCUS')
+//     // if (!this.state.query) {
+//     //     this.setState({
+//     //         query: '',
+//     //         // results:[]
+//     //     });
+//     // }
+//   }
 
   render() {
+    console.log('asa',this.state)
     return (
       <>
         <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -101,7 +171,7 @@ _onFocus=()=> {
               {this.props.brandText}
             </Link>
             {/* <SearchUserHeader/> */}
-            <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+            <Form  className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
               <FormGroup className="mb-0">
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
@@ -113,17 +183,29 @@ _onFocus=()=> {
                       placeholder="Search for users.." type="text" 
                       name='query'
                       value={this.state.query}
+                      // onKeyDown={this.onKeyDown}
                       // ref={input => this.search = input}
                       onChange={this.handleInputChange} 
-                      onFocus={this._onFocus}
+                      // onFocus={this._onFocus}
                         onBlur={this._onBlur}
                   />
+
+
+                  
                 </InputGroup>
               </FormGroup>
 
 
             </Form>
-            <Suggestion results={this.state.results} />
+
+            <div className="popover-container" ref={node => { this.node = node; }}>
+       
+        {this.state.popupVisible && (
+            <Suggestion results={this.state.results} myClick={this.handleOutsideClick}  />
+          // </div>
+         )}
+      </div>
+            
             
 
             <Nav className="align-items-center d-none d-md-flex" navbar>
