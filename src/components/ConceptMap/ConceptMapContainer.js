@@ -14,7 +14,7 @@ class ConceptMapContainer extends Component {
     constructor(props) {
         super(props);
 
-        this.stageHeight = 500;
+        this.stageHeight = 600;
         this.stageWidth = 600;
 
         this.keywordNodeSize = 20;
@@ -22,7 +22,7 @@ class ConceptMapContainer extends Component {
         this.KeywordNodeX = 150;
 
         this.categoryNodeHeight = 30;
-        this.categoryNodeWidth = 100;
+        this.categoryNodeWidth = 200;
         this.categoryNodeSpacing = 20;
         this.categoryNodeX = this.stageWidth - this.categoryNodeWidth - 150;
 
@@ -168,7 +168,7 @@ class ConceptMapContainer extends Component {
                     stroke={categories[category].highlight ? this.highlightColor : this.rectFillColor} />
             )
             // add ellipsis to text after 10 chars
-            let categoryText = category.length > 10 ? category.slice(0, 10) + "..." : category;
+            let categoryText = category.length > 35 ? category.slice(0, 35) + "..." : category;
             nodes.push(
                 <Text key={category + "text"}
                   x={categories[category].x + 10}
