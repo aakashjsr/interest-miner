@@ -77,7 +77,8 @@ class SearchUserProfile extends React.Component {
           author_id: response.data.author_id,
           paper_count: response.data.paper_count,
           tweet_count: response.data.tweet_count,
-          keyword_count: response.data.keyword_count
+          keyword_count: response.data.keyword_count,
+          score:''
         })
 
       }).catch(error => {
