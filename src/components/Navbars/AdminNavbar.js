@@ -6,7 +6,8 @@ import { getItem } from "utils/localStorage";
 import { BASE_URL } from "../../constants";
 import axios from "axios";
 import Suggestion from '../suggestion'
-
+import Autosuggest from 'react-autosuggest';
+import './AdminNav.css'
 import SearchUserHeader from '../Headers/SearchUserHeader'
 
 // reactstrap components
@@ -27,6 +28,22 @@ import {
   Media
 } from "reactstrap";
 
+function getSuggestionValue(suggestion) {
+  // debugger;
+  return suggestion.first_name;
+}
+
+function renderSuggestion(suggestion) {
+  // debugger;
+
+  return (
+    <Link to={`/admin/profile/${suggestion.id}`} >
+
+    <div style={{padding:'10px 20px',borderBottom:'1px solid'}}>{`${suggestion.first_name} ${suggestion.last_name}`}</div>
+    </Link>
+  );
+}
+
 class AdminNavbar extends React.Component {
 
   
@@ -35,7 +52,9 @@ class AdminNavbar extends React.Component {
     results: [],
     activeSuggestion: 0,
     showSuggestions: false,
-    popupVisible: false
+    popupVisible: false,
+    suggestions:[],
+    value:''
   }
 
 
@@ -45,7 +64,7 @@ class AdminNavbar extends React.Component {
     const TOKEN = getItem("accessToken");
     axios({
       method: "get",
-      url: `${BASE_URL}/api/accounts/user-search/${this.state.query}/`,
+      url: `${BASE_URL}/api/accounts/user-search/${this.state.value}/`,
       headers: {
           "Content-Type": "application/json",
             Accept: "application/json",
@@ -53,7 +72,7 @@ class AdminNavbar extends React.Component {
     }
     }).then(({ data }) => {
         this.setState({
-          results: data,
+          suggestions: data,
           popupVisible: !this.state.popupVisible,
         })
       })
@@ -137,16 +156,22 @@ class AdminNavbar extends React.Component {
   }
 
   _onBlur=()=> {
-    setTimeout(() => {
-        if (this.state.query) {
-            this.setState({
-                query: '',
-                // activeSuggestion: 0,
-                // showSuggestions: true,
-                // results:[]
-            });
-        }
-    }, 0);
+    this.setState({
+      value: '',
+      // activeSuggestion: 0,
+      // showSuggestions: true,
+      // results:[]
+  });
+    // setTimeout(() => {
+    //     if (this.state.value) {
+    //         this.setState({
+    //             vlaue: '',
+    //             // activeSuggestion: 0,
+    //             // showSuggestions: true,
+    //             // results:[]
+    //         });
+    //     }
+    // }, 0);
 }
 // _onFocus=()=> {
 //   console.log('FOCUS')
@@ -158,8 +183,39 @@ class AdminNavbar extends React.Component {
 //     // }
 //   }
 
+//** START SUGGESTION**//
+onChange = (event, { newValue, method }) => {
+  this.setState({
+    value: newValue
+  });
+};
+
+onSuggestionsFetchRequested = ({ value }) => {
+  this.getInfo();
+  // this.setState({
+  //   suggestions: getSuggestions(value)
+  // });
+};
+
+onSuggestionsClearRequested = () => {
+  this.setState({
+    suggestions: []
+  });
+};
+
+
+
+
+//**END SUGGESTION *//
   render() {
     console.log('asa',this.state)
+    const { value, suggestions } = this.state;
+    const inputProps = {
+      placeholder: "Search for users..",
+      value,
+      onChange: this.onChange,
+      onBlur:this._onBlur
+    };
     return (
       <>
         <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -179,7 +235,7 @@ class AdminNavbar extends React.Component {
                       <i className="fas fa-search" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input 
+                  {/* <Input 
                       placeholder="Search for users.." type="text" 
                       name='query'
                       value={this.state.query}
@@ -188,9 +244,15 @@ class AdminNavbar extends React.Component {
                       onChange={this.handleInputChange} 
                       // onFocus={this._onFocus}
                         onBlur={this._onBlur}
-                  />
+                  /> */}
 
-
+<Autosuggest 
+        suggestions={suggestions}
+        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+        getSuggestionValue={getSuggestionValue}
+        renderSuggestion={renderSuggestion}
+        inputProps={inputProps} />
                   
                 </InputGroup>
               </FormGroup>
@@ -198,13 +260,15 @@ class AdminNavbar extends React.Component {
 
             </Form>
 
-            <div className="popover-container" ref={node => { this.node = node; }}>
+           
+        
+            {/* <div className="popover-container" ref={node => { this.node = node; }}>
        
-        {this.state.popupVisible && (
-            <Suggestion results={this.state.results} myClick={this.handleOutsideClick}  />
+        {this.state.popupVisible && ('s'
+            // <Suggestion results={this.state.results} myClick={this.handleOutsideClick}  />
           // </div>
          )}
-      </div>
+      </div> */}
             
             
 
