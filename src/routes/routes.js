@@ -1,6 +1,5 @@
 import Index from "../views/Index.js";
-import Profile from "../views/examples/Profile.js";
-import Maps from "../views/examples/Maps.js";
+import Profile from "../views/Profile.js";
 import Register from "../views/Register.js";
 import Login from "../views/Login.js";
 import AddPaper from "../views/AddPaper.js";
@@ -8,23 +7,14 @@ import ViewPaper from "../views/ViewPaper.js";
 import EditPaper from "../views/EditPaper.js";
 import Keywords from "../views/Keywords.js";
 import BlackKeywords from "../views/BlackKeywords";
-import Visualization from "../views/Visualization.js";
 import CloudChartPage from "../views/CloudChart";
 import ConceptChartPage from "../views/ConceptChart";
 import StreamChartPage from "../views/StreamChart";
 import SearchUserProfile from "../views/SearchUserProfile";
 
-
-
-
-
-
 import PieChartPage from "../views/PieChart";
-import LineChartPage from "../views/LineChart";
+import BarChartPage from "../views/BarChart";
 
-
-import Tables from "../views/examples/Tables.js";
-import Icons from "../views/examples/Icons.js";
 
 
 var routes = [
@@ -33,7 +23,7 @@ var routes = [
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: Index,
-    layout: "/admin",
+    layout: "/app",
     display: "none"
 
   },
@@ -42,7 +32,7 @@ var routes = [
     name: "Add Paper",
     icon: "ni ni-fat-add text-green",
     component: AddPaper,
-    layout: "/admin",
+    layout: "/app",
     // display: "none"
   },
   {
@@ -50,7 +40,7 @@ var routes = [
     name: "Edit Paper",
     icon: "ni ni-fat-add text-orange",
     component: EditPaper,
-    layout: "/admin",
+    layout: "/app",
     display: "none"
   },
    {
@@ -58,7 +48,7 @@ var routes = [
     name: "My Papers",
     icon: "fas fa-tasks text-blue",
     component: ViewPaper,
-    layout: "/admin",
+    layout: "/app",
     // display: "none"
   },
   
@@ -67,7 +57,7 @@ var routes = [
     name: "Keyword",
     icon: "ni ni-archive-2 text-yellow",
     component: Keywords,
-    layout: "/admin",
+    layout: "/app",
     // display: "none"
   },
   {
@@ -75,25 +65,17 @@ var routes = [
     name: "Black Keyword",
     icon: "ni ni-archive-2 text-brown",
     component: BlackKeywords,
-    layout: "/admin",
+    layout: "/app",
     // display: "none"
   },
-  //  {
-  //   path: "/visualization",
-  //   name: "Visualization",
-  //   icon: "fas fa-chart-pie text-green",
-  //   component: Visualization,
-  //   layout: "/admin",
-  //   display: "none"
-
-  // },
+ 
   
   {
     path: "/pie-chart",
     name: "Pie Chart",
     icon: "fas fa-chart-pie text-orange",
     component: PieChartPage,
-    layout: "/admin",
+    layout: "/app",
     display: "none"
 
   },
@@ -101,8 +83,8 @@ var routes = [
     path: "/bar-chart",
     name: "Bar Chart",
     icon: "fas fa-chart-bar text-pink",
-    component: LineChartPage,
-    layout: "/admin",
+    component: BarChartPage,
+    layout: "/app",
     display: "none"
 
   },
@@ -111,7 +93,7 @@ var routes = [
     name: "Cloud Chart",
     icon: "fas fa-cloud text-info",
     component: CloudChartPage,
-    layout: "/admin",
+    layout: "/app",
     display: "none"
 
   },
@@ -120,7 +102,7 @@ var routes = [
     name: "Concept Chart",
     icon: "fas fa-cloud text-info",
     component: ConceptChartPage,
-    layout: "/admin",
+    layout: "/app",
     display: "none"
 
   },
@@ -129,26 +111,17 @@ var routes = [
     name: "Stream Chart",
     icon: "fas fa-cloud text-info",
     component: StreamChartPage,
-    layout: "/admin",
+    layout: "/app",
     display: "none"
 
   },
-  
-  // {
-  //   path: "/maps",
-  //   name: "Maps",
-  //   icon: "ni ni-pin-3 text-orange",
-  //   component: Maps,
-  //   layout: "/admin",
-  //   display: "none"
-
-  // },
+ 
   {
     path: "/user-profile",
     name: "User Profile",
     icon: "ni ni-single-02 text-green",
     component: Profile,
-    layout: "/admin",
+    layout: "/app",
     display: "none"
 
   },
@@ -157,19 +130,11 @@ var routes = [
     name: "User Account Details",
     icon: "ni ni-single-02 text-green",
     component: SearchUserProfile,
-    layout: "/admin",
+    layout: "/app",
     display: "none"
 
   },
-  {
-    path: "/tables",
-    name: "Tables",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: Tables,
-    layout: "/admin",
-    display: "none"
-
-  },
+  
   {
     path: "/login",
     name: "Login",

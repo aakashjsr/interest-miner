@@ -1,8 +1,6 @@
 import React from 'react';
 import { getItem } from "../utils/localStorage";
-
 import { Route, Redirect } from 'react-router-dom';
-import { Theme } from 'App';
 
 
 

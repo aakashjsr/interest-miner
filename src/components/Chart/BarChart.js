@@ -2,9 +2,8 @@
 import React, { Component } from "react";
 import Chart from "react-apexcharts";
 import { toast } from 'react-toastify';
-import {Link} from 'react-router-dom'
 import Loader from 'react-loader-spinner'
-import user from 'services/api';
+import RestAPI from 'services/api';
 
 import { handleServerErrors } from "utils/errorHandler";
 
@@ -49,14 +48,13 @@ class BarChart extends Component {
 
   componentDidMount(){
     this.setState({ isLoding: true },()=>{
-      user.barChart().then(response => {
+      RestAPI.barChart().then(response => {
       let categorieList = Object.keys(response.data.papers);
       let value = Object.values(response.data.papers);
       let tweetscategorieList = Object.keys(response.data.tweets);
       let tweetsvalue = Object.values(response.data.tweets);
         this.setState({ 
           isLoding: false,
-          // options: {...this.state.options.xaxis.categories,response.data}
           data : response.data,
           options: { ...this.state.options, ...this.state.options.xaxis, ...this.state.options.xaxis.categories=categorieList },
           series: [{name: "Paper", data: [...value]}],
@@ -72,7 +70,6 @@ class BarChart extends Component {
 }
 
   render() {
-    console.log(this.state)
     return (
       < >
         { this.state.isLoding ? 

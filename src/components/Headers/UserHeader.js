@@ -3,7 +3,7 @@ import React from "react";
 import { getItem } from "utils/localStorage";
 
 // reactstrap components
-import { Button, Container, Row, Col } from "reactstrap";
+import {  Container, Row, Col } from "reactstrap";
 
 class UserHeader extends React.Component {
   render() {
@@ -31,13 +31,6 @@ class UserHeader extends React.Component {
                 <p className="text-white mt-0 mb-5">
                 This is your profile page.
                 </p>
-                {/* <Button
-                  color="info"
-                  href="#pablo"
-                  onClick={e => e.preventDefault()}
-                >
-                  Edit profile
-                </Button> */}
               </Col>
             </Row>
           </Container>

@@ -1,9 +1,8 @@
 import React from "react";
 import Chart from "react-apexcharts";
 import { toast } from 'react-toastify';
-import {Link} from 'react-router-dom'
 import Loader from 'react-loader-spinner'
-import user from 'services/api';
+import RestAPI from 'services/api';
 
 import { handleServerErrors } from "utils/errorHandler";
 
@@ -39,14 +38,10 @@ class PieChart extends React.Component {
               }]
             },
             };
-            // keyword, weight  options.labels
 
             componentDidMount(){
               this.setState({ isLoding: true },()=>{
-                user.pieChart().then(response => {
-                  
-                  // let mydata = response.data.slice(0,15).map(val => val.keyword);
-                  // let values = response.data.slice(0,15).map(val => val.weight);
+                RestAPI.pieChart().then(response => {
                    let mydata = response.data.map(val => val.keyword);
                   let values = response.data.map(val => val.weight);
 
@@ -59,9 +54,6 @@ class PieChart extends React.Component {
                       labels:mydata,
 
                     }
-                    //options : {...this.state.options.labels,mydata[2].keyword}
-                    // keyword : response.data.keyword,
-                    // series: mydata[2].keyword
                   })
               }).catch(error => {
                   this.setState({ isLoding: false })
@@ -70,11 +62,7 @@ class PieChart extends React.Component {
               })
       }
   
- 
-
-      
-
-        render() {
+   render() {
           return (
             <div id="chart">
                { this.state.isLoding ? 
@@ -90,7 +78,6 @@ class PieChart extends React.Component {
                             options={this.state.options}    
                             series={this.state.series} 
                             type="pie" 
-                            // width={600} 
                       />
                       </div>
                       : <div className="text-center"><strong>No data available</strong></div>
@@ -104,50 +91,3 @@ class PieChart extends React.Component {
           
     export default PieChart;
 
-
-    
-// import React, { Component } from "react";
-// import Chart from "react-apexcharts";
-
-// class App extends Component {
-//   constructor(props) {
-//     super(props);
-
-//     this.state = {
-//       options: {
-//         chart: {
-//           id: "basic-bar"
-//         },
-//         xaxis: {
-//           categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
-//         }
-//       },
-//       series: [
-//         {
-//           name: "series-1",
-//           data: [30, 40, 45, 50, 49, 60, 70, 91]
-//         }
-//       ]
-//     };
-//   }
-
-//   render() {
-//     return (
-//       <div className="app">
-//         <div className="row">
-//           <div className="mixed-chart">
-//             <Chart
-//               options={this.state.options}
-//               series={this.state.series}
-//               type="bar"
-//               width="500"
-//             />
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
-
-// export default App;
-    

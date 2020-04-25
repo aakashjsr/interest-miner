@@ -1,32 +1,12 @@
 
 import React from "react";
-// node.js library that concatenates classes (strings)
-import classnames from "classnames";
-// javascipt plugin for creating charts
 import Chart from "chart.js";
-// react plugin used to create charts
-import { Line, Bar } from "react-chartjs-2";
-// reactstrap components
-import ConceptMap from "../components/ConceptMap"
 import PieChart from "../components/Chart/PieChart"
-
-// import BarChart from "../components/Chart/BarChart"
-// import CloudChart from "../components/Chart/CloudChart"
-
-
-
-
-
 import {
   Button,
   Card,
   CardHeader,
   CardBody,
-  NavItem,
-  NavLink,
-  Nav,
-  Progress,
-  Table,
   Container,
   Row,
   Col
@@ -36,8 +16,6 @@ import {
 import {
   chartOptions,
   parseOptions,
-  chartExample1,
-  chartExample2
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
@@ -82,16 +60,7 @@ class PieChartPage extends React.Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-              
-                  {/* <div style={{paddingLeft: '30%'}}> */}
-                
-
                   <PieChart/>
-                  
-                
-                  {/* </div> */}
-                  
-                    
                 </CardBody>
               </Card>
             </Col>

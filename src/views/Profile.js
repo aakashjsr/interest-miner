@@ -19,7 +19,7 @@ import UserHeader from "components/Headers/UserHeader.js";
 import { toast } from 'react-toastify';
 import Loader from 'react-loader-spinner'
 import { handleServerErrors } from "utils/errorHandler";
-import user from '../../services/api';
+import user from '../services/api';
 
 class Profile extends React.Component {
   state = {
@@ -38,7 +38,6 @@ class Profile extends React.Component {
   componentDidMount() {
     this.setState({ isLoding: true }, () => {
       user.getUserData().then(response => {
-        console.log('GET USER PROFILE DATA:++>', response.data)
         this.setState({
           isLoding: false,
           id :response.data.id,
@@ -63,7 +62,6 @@ class Profile extends React.Component {
 
 
   handleChange = e => {
-    console.log(e.target.value)
     let getValue = e.target.value;
     let getName = e.target.name;
     this.setState(() => ({ [getName]: getValue }))
@@ -91,7 +89,6 @@ class Profile extends React.Component {
 
       }).catch(error => {
         this.setState({ isLoding: false })
-        // console.log(error)
         handleServerErrors(error, toast.error)
 
       })

@@ -1,16 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import { toast } from 'react-toastify';
-import {Link} from 'react-router-dom'
 import Loader from 'react-loader-spinner'
-import user from 'services/api';
+import RestAPI from 'services/api';
 
 import { handleServerErrors } from "utils/errorHandler";
-
-// import logo from './logo.svg';
-// import './App.css';
-/* Imports */
 import * as am4core from "@amcharts/amcharts4/core";
-import * as am4charts from "@amcharts/amcharts4/charts";
 
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import * as am4plugins_wordCloud from "@amcharts/amcharts4/plugins/wordCloud"; 
@@ -29,9 +23,8 @@ class CloudChartPage extends Component {
   componentDidMount() {
 
     this.setState({ isLoding: true },()=>{
-        user.cloudChart().then(response => {
+      RestAPI.cloudChart().then(response => {
             series.data = response.data
-        console.log('CLOUD CHART',response.data)
           this.setState({ 
             isLoding: false,
             // data : response.data

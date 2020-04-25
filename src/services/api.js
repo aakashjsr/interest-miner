@@ -2,7 +2,7 @@ import { getItem } from "../utils/localStorage";
 import { BASE_URL } from "../constants";
 import axios from "axios";
 
-class user {
+class RestAPI {
 
     //** SIGNUP API **//
   static userSignup(data) {
@@ -98,7 +98,6 @@ class user {
           //** UPDATE PAPER API **//
   static updatePaper(data,id) {
     const TOKEN = getItem("accessToken");
-    // console.log('SKD',data)
     return axios({
             method: "patch",
             url: `${BASE_URL}/api/interests/papers/${id}/`,
@@ -136,7 +135,6 @@ class user {
             //** UPDATE USER PROFILE API **//
   static updateUserProfile(data,id) {
     const TOKEN = getItem("accessToken");
-    // console.log('SKD',data)
     return axios({
             method: "patch",
             url: `${BASE_URL}/api/accounts/profile/`,
@@ -174,7 +172,6 @@ class user {
 
           //** ADD KEYWORD DATA API **//
   static addKeyword(data) {
-    console.log('DD',data)
     const TOKEN = getItem("accessToken");
     return axios({
             method: "post",
@@ -255,7 +252,6 @@ class user {
 
              //** PIE DATA API **//
   static pieChart(data) {
-    console.log('DD',data)
     const TOKEN = getItem("accessToken");
     return axios({
             method: "get",
@@ -314,7 +310,6 @@ class user {
 
              //** BAR DATA API **//
   static barChart(data) {
-    console.log('DD',data)
     const TOKEN = getItem("accessToken");
     return axios({
             method: "get",
@@ -333,7 +328,6 @@ class user {
 
               //** CLOUD DATA API **//
   static cloudChart(data) {
-    console.log('DD',data)
     const TOKEN = getItem("accessToken");
     return axios({
             method: "get",
@@ -388,4 +382,4 @@ class user {
 
 }
 
-export default user;
+export default RestAPI;

@@ -4,7 +4,7 @@ import React from "react";
 import { toast } from 'react-toastify';
 import Loader from 'react-loader-spinner';
 import { handleServerErrors } from "utils/errorHandler";
-import user from '../services/api';
+import RestAPI from '../services/api';
 
 // reactstrap components
 import {
@@ -35,14 +35,10 @@ class EditPaper extends React.Component {
     isLoding: false
   }
   componentDidMount(){
-    // console.log('ID:<<>',this.props.match.params.id)
    this.setState({isLoding:true},()=>{
-    user.getPaper(this.props.match.params.id).then(response => {
-      // loder false ka code
-      // console.log('GET A PAPER RES:++>',response.data)
+    RestAPI.getPaper(this.props.match.params.id).then(response => {
       this.setState({
         isLoding: false,
-        // modal : !this.state.modal,
         id: response.data.id,
         title: response.data.title,
         url: response.data.url,
@@ -75,17 +71,16 @@ class EditPaper extends React.Component {
       };
 
       this.setState({ isLoding: true },()=>{
-        user.updatePaper(data,this.state.id).then(response => {
+        RestAPI.updatePaper(data,this.state.id).then(response => {
           toast.success("Paper Updated! !", {
                position: toast.POSITION.TOP_RIGHT,
                autoClose: 2000
            });
            this.setState({isLoding: false , title:'', url:'',year:'',abstract:'' })
-            this.props.history.push("/admin/view-paper");
+            this.props.history.push("/app/view-paper");
 
          }).catch(error => {
            this.setState({ isLoding: false })
-           // console.log(error)
            handleServerErrors(error, toast.error)
 
          })

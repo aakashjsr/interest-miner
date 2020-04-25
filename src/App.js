@@ -20,14 +20,3 @@ const App = () => {
 };
 
 export default App
-
-// ReactDOM.render(
-//   <BrowserRouter>
-//     <Switch>
-//       <Route path="/admin" render={props => <AdminLayout {...props} />} />
-//       <Route path="/auth" render={props => <AuthLayout {...props} />} />
-//       <Redirect from="/" to="/admin/index" />
-//     </Switch>
-//   </BrowserRouter>,
-//   document.getElementById("root")
-// );
