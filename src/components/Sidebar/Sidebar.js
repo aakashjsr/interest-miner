@@ -112,11 +112,11 @@ class Sidebar extends React.Component {
   _onBlur = () => {
     this.setState({
       value: '',
-  
+
     });
   }
-  
-  
+
+
   //** START SUGGESTION**//
   getInfo = () => {
     const TOKEN = getItem("accessToken");
@@ -140,11 +140,11 @@ class Sidebar extends React.Component {
       value: newValue
     });
   };
-  
+
   onSuggestionsFetchRequested = ({ value }) => {
     this.getInfo();
   };
-  
+
   onSuggestionsClearRequested = () => {
     this.setState({
       suggestions: []
@@ -424,14 +424,14 @@ class Sidebar extends React.Component {
                   onClick={this.closeCollapse}
                   activeClassName="active"
                 >
-                  <i class="fas fa-wave-square text-green"></i>
-                 
+                  <i className="fas fa-wave-square text-green"></i>
+
                   Interests
               </NavLink>
               </NavItem>
             </Nav>
 
-            
+
 
           </Collapse>
         </Container>

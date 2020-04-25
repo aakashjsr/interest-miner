@@ -193,7 +193,7 @@ class AdminNavbar extends React.Component {
                 <DropdownToggle className="pr-0" nav>
                   <Media className="align-items-center">
                     <span className="avatar avatar-sm rounded-circle">
-                      <i class="fas fa-user-tie"></i>
+                      <i className="fas fa-user-tie"></i>
 
                     </span>
                     <Media className="ml-2 d-none d-lg-block">
