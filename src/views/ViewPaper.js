@@ -261,7 +261,7 @@ class ViewPaper extends React.Component {
 
                           (
                             <tr className="text-center1" style={{ padding: '20px' }}><td></td>
-                              <td style={{ textAlign: 'right' }}> <strong > No Papers Data</strong></td>
+                              <td style={{ textAlign: 'right' }}> <strong > No Papers Found</strong></td>
                             </tr>
                           )
 

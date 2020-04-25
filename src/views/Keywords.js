@@ -33,18 +33,18 @@ class Keywords extends React.Component {
     keyword: '',
     isLoding: false
   }
-  
+
 
   componentDidMount(){
     this.setState({isLoding: true},()=>{
       this.getKeywords();
-      
+
     })
   }
 
   getKeywords =()=>{
     RestAPI.getKeyword().then(response => {
-      this.setState({ 
+      this.setState({
         isLoding: false,
         keywordData : response.data
       })
@@ -75,7 +75,7 @@ class Keywords extends React.Component {
 
       this.setState({ isLoding: true },()=>{
         RestAPI.addKeyword(this.state.keyword).then(response => {
-          toast.success("Add Keyword !", {
+          toast.success("Keyword Added!", {
                position: toast.POSITION.TOP_RIGHT,
                autoClose: 2000
            });
@@ -96,25 +96,25 @@ class Keywords extends React.Component {
   deleteKeyword = (id)=>{
 
    this.setState({isLoding:true},()=>{
-      
+
     RestAPI.deletePaper(id).then(response => {
   const newvalue = this.state.keywordData.filter((v,i)=> v.id !=id );
     this.setState({ isLoding: false,
       keywordData:[...newvalue]
          })
 
-       toast.success("Delete Papaer !", {
+       toast.success("Paper Deleted!", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000
         });
-       
+
       }).catch(error => {
         this.setState({ isLoding: false })
         handleServerErrors(error, toast.error)
-        
+
       })
    })
-    
+
   }
 
 
@@ -158,7 +158,7 @@ class Keywords extends React.Component {
                             />
                           </FormGroup>
                         </Col>
-                        
+
                       </Row>
                     </div>
                     {/* <hr className="my-4" /> */}
@@ -166,7 +166,7 @@ class Keywords extends React.Component {
                      <Button color="primary" type="submit"> Save </Button>
                    </div>
                   </Form>
-                  
+
                 </CardBody>
               </Card>
             </Col>
@@ -210,9 +210,9 @@ class Keywords extends React.Component {
                           </FormGroup>
                         </Col>
                </Row>
-               
+
             ):
-          
+
           <div className="text-center1" style={{padding:'20px'}}>
                 <div style={{textAlign: 'center'}}> <strong > No Keywords Data</strong></div>
           </div>
@@ -221,9 +221,9 @@ class Keywords extends React.Component {
               </Card>
             </Col>
           </Row>
-          
-         
-          
+
+
+
 
           {/* end Table */}
         </Container>

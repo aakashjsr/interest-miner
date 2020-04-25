@@ -72,7 +72,7 @@ class EditPaper extends React.Component {
 
       this.setState({ isLoding: true },()=>{
         RestAPI.updatePaper(data,this.state.id).then(response => {
-          toast.success("Paper Updated! !", {
+          toast.success("Paper Updated!", {
                position: toast.POSITION.TOP_RIGHT,
                autoClose: 2000
            });

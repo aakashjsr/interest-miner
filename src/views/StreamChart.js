@@ -5,8 +5,6 @@ import StreamChart from "../components/Chart/StreamChart"
 
 
 
-
-
 import {
   Button,
   Card,
@@ -61,17 +59,17 @@ class StreamChartPage extends React.Component {
                       </h6>
                       <h2 className="text-white1 mb-0">Stream Chart</h2>
                     </div>
-                   
+
                   </Row>
                 </CardHeader>
                 <CardBody>
                   <StreamChart/>
-                 
+
                 </CardBody>
               </Card>
             </Col>
-          
-          </Row> 
+
+          </Row>
         </Container>
       </>
     );

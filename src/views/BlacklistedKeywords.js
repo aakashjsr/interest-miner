@@ -24,27 +24,25 @@ import {
 import Header from "components/Headers/Header.js";
 
 
-class BlackKeywords extends React.Component {
+class BlacklistedKeywords extends React.Component {
 
   state = {
-    // keywordData:[{id:'1',keyword:"computer"},{id:'2',keyword:"Mechine Learning"},{id:'3',keyword:"Coocking"}],
     keywordData:[],
-
     keyword: '',
     isLoding: false
   }
-  
+
 
   componentDidMount(){
     this.setState({isLoding: true},()=>{
       this.getBlackKeyword();
-      
+
     })
   }
 
   getBlackKeyword =()=>{
     RestAPI.getBlackKeyword().then(response => {
-      this.setState({ 
+      this.setState({
         isLoding: false,
         keywordData : response.data
       })
@@ -91,7 +89,7 @@ class BlackKeywords extends React.Component {
   deleteKeyword = (id)=>{
 
    this.setState({isLoding:true},()=>{
-      
+
     RestAPI.deleteBlackKeyword(id).then(response => {
   const newvalue = this.state.keywordData.filter((v,i)=> v.id !=id );
     this.setState({ isLoding: false,
@@ -102,14 +100,14 @@ class BlackKeywords extends React.Component {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000
         });
-       
+
       }).catch(error => {
         this.setState({ isLoding: false })
         handleServerErrors(error, toast.error)
-        
+
       })
    })
-    
+
   }
 
 
@@ -125,7 +123,7 @@ class BlackKeywords extends React.Component {
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
                     <Col xs="8">
-                      <h3 className="mb-0">Black Keywords</h3>
+                      <h3 className="mb-0">Blacklisted Keywords</h3>
                     </Col>
                   </Row>
                 </CardHeader>
@@ -153,7 +151,7 @@ class BlackKeywords extends React.Component {
                             />
                           </FormGroup>
                         </Col>
-                        
+
                       </Row>
                     </div>
                     {/* <hr className="my-4" /> */}
@@ -161,7 +159,7 @@ class BlackKeywords extends React.Component {
                      <Button color="primary" type="submit"> Save </Button>
                    </div>
                   </Form>
-                  
+
                 </CardBody>
               </Card>
             </Col>
@@ -205,9 +203,9 @@ class BlackKeywords extends React.Component {
                           </FormGroup>
                         </Col>
                </Row>
-               
+
             ):
-          
+
           <div className="text-center1" style={{padding:'20px'}}>
                 <div style={{textAlign: 'center'}}> <strong > No Keywords Data</strong></div>
           </div>
@@ -216,9 +214,9 @@ class BlackKeywords extends React.Component {
               </Card>
             </Col>
           </Row>
-          
-         
-          
+
+
+
 
           {/* end Table */}
         </Container>
@@ -227,4 +225,4 @@ class BlackKeywords extends React.Component {
   }
 }
 
-export default BlackKeywords;
+export default BlacklistedKeywords;

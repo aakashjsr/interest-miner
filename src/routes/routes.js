@@ -6,7 +6,7 @@ import AddPaper from "../views/AddPaper.js";
 import ViewPaper from "../views/ViewPaper.js";
 import EditPaper from "../views/EditPaper.js";
 import Keywords from "../views/Keywords.js";
-import BlackKeywords from "../views/BlackKeywords";
+import BlacklistedKeywords from "../views/BlacklistedKeywords";
 import CloudChartPage from "../views/CloudChart";
 import ConceptChartPage from "../views/ConceptChart";
 import StreamChartPage from "../views/StreamChart";
@@ -22,7 +22,7 @@ var routes = [
     path: "/index",
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
-    component: Index,
+    component: ViewPaper,
     layout: "/app",
     display: "none"
 
@@ -51,9 +51,9 @@ var routes = [
     layout: "/app",
     // display: "none"
   },
-  
+
    {
-    path: "/keyword",   
+    path: "/keyword",
     name: "Keyword",
     icon: "ni ni-archive-2 text-yellow",
     component: Keywords,
@@ -61,15 +61,15 @@ var routes = [
     // display: "none"
   },
   {
-    path: "/black-keyword",   
-    name: "Black Keyword",
+    path: "/blacklisted-keywords",
+    name: "Blacklisted Keyword",
     icon: "ni ni-archive-2 text-brown",
-    component: BlackKeywords,
+    component: BlacklistedKeywords,
     layout: "/app",
     // display: "none"
   },
- 
-  
+
+
   {
     path: "/pie-chart",
     name: "Pie Chart",
@@ -115,7 +115,7 @@ var routes = [
     display: "none"
 
   },
- 
+
   {
     path: "/user-profile",
     name: "User Profile",
@@ -134,7 +134,7 @@ var routes = [
     display: "none"
 
   },
-  
+
   {
     path: "/login",
     name: "Login",
@@ -150,7 +150,7 @@ var routes = [
     component: Register,
     layout: "/auth",
     display: "none"
-    
+
   }
 ];
 export default routes;

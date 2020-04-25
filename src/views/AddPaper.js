@@ -51,7 +51,7 @@ class AddPaper extends React.Component {
 
       this.setState({ isLoding: true },()=>{
         RestAPI.addPaper(data).then(response => {
-          toast.success("Paper Added !", {
+          toast.success("Paper Added!", {
                position: toast.POSITION.TOP_RIGHT,
                autoClose: 2000
            });
@@ -143,7 +143,7 @@ class AddPaper extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="Lucky"
+                              defaultValue="2020"
                               id="input-first-name"
                               name="year" value={this.state.year} onChange={this.handleChange}
                               placeholder="Year"

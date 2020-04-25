@@ -125,9 +125,9 @@ class AdminNavbar extends React.Component {
 
 
   //** START SUGGESTION**//
-  onChange = (event, { newValue, method }) => {
+  onChange = (event) => {
     this.setState({
-      value: newValue
+      value: event.target.value
     });
   };
 
