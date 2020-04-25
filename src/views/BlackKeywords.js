@@ -4,7 +4,7 @@ import React from "react";
 import { toast } from 'react-toastify';
 import Loader from 'react-loader-spinner'
 import { handleServerErrors } from "utils/errorHandler";
-import user from '../services/api';
+import RestAPI from '../services/api';
 
 // reactstrap components
 import {
@@ -43,7 +43,7 @@ class BlackKeywords extends React.Component {
   }
 
   getBlackKeyword =()=>{
-    user.getBlackKeyword().then(response => {
+    RestAPI.getBlackKeyword().then(response => {
       this.setState({ 
         isLoding: false,
         keywordData : response.data
@@ -55,9 +55,6 @@ class BlackKeywords extends React.Component {
   }
 
 
-
-
-
   handleChange = e => {
     let getValue = e.target.value;
     let getName = e.target.name;
@@ -66,16 +63,13 @@ class BlackKeywords extends React.Component {
 
   _handleSubmit = e => {
     e.preventDefault();
-      // let data = {
-      //   blacklisted_keywords: this.state.keyword,
-      // };
 
       this.setState({
         keywordData: [...this.state.keywordData,this.state.keyword]
       });
 
       this.setState({ isLoding: true },()=>{
-        user.addBlackKeyword(this.state.keyword).then(response => {
+        RestAPI.addBlackKeyword(this.state.keyword).then(response => {
           toast.success("Add Keyword !", {
                position: toast.POSITION.TOP_RIGHT,
                autoClose: 2000
@@ -83,11 +77,9 @@ class BlackKeywords extends React.Component {
            this.setState({isLoding: false , keyword:'' })
       this.getBlackKeyword();
 
-            // this.props.history.push("/admin/view-paper");
 
          }).catch(error => {
            this.setState({ isLoding: false })
-           // console.log(error)
            handleServerErrors(error, toast.error)
 
          })
@@ -100,7 +92,7 @@ class BlackKeywords extends React.Component {
 
    this.setState({isLoding:true},()=>{
       
-      user.deleteBlackKeyword(id).then(response => {
+    RestAPI.deleteBlackKeyword(id).then(response => {
   const newvalue = this.state.keywordData.filter((v,i)=> v.id !=id );
     this.setState({ isLoding: false,
       keywordData:[...newvalue]

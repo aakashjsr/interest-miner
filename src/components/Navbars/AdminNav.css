@@ -9,10 +9,13 @@
     font-family: Helvetica, sans-serif;
     font-weight: 300;
     font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    background: #00ffff00;
+    background: #2196f3b3;
     color: white;
+    border-radius: 16px;
+    border: none; 
+    /* border-radius: 4px;
+    background: #00ffff00;
+    color: white;  */
   }
   .react-autosuggest__input::placeholder{
       color: white;
@@ -35,7 +38,7 @@
     display: block;
     position: absolute;
     top: 41px;
-    width: 200px;
+    width: 240px;
     border: 1px solid #aaa;
     background-color: #fff;
     font-family: Helvetica, sans-serif;

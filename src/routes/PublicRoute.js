@@ -9,7 +9,7 @@ export const PublicRoute = ({isAuthanicated, component: Component, ...rest}) => 
     return (
         <Route {...rest} component={(props) => (
         TOKEN ? (
-                <Redirect to="/admin/index" />
+                <Redirect to="/app/index" />
             ) : (
                     <Component {...props} />
                 )

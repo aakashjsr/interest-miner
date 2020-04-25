@@ -4,7 +4,7 @@ import React from "react";
 import { toast } from 'react-toastify';
 import Loader from 'react-loader-spinner'
 import { handleServerErrors } from "utils/errorHandler";
-import user from '../services/api';
+import RestAPI from '../services/api';
 
 // reactstrap components
 import {
@@ -50,17 +50,16 @@ class AddPaper extends React.Component {
       };
 
       this.setState({ isLoding: true },()=>{
-        user.addPaper(data).then(response => {
+        RestAPI.addPaper(data).then(response => {
           toast.success("Paper Added !", {
                position: toast.POSITION.TOP_RIGHT,
                autoClose: 2000
            });
            this.setState({isLoding: false , title:'', url:'',year:'',abstract:'' })
-            this.props.history.push("/admin/view-paper");
+            this.props.history.push("/app/view-paper");
 
          }).catch(error => {
            this.setState({ isLoding: false })
-           // console.log(error)
            handleServerErrors(error, toast.error)
 
          })

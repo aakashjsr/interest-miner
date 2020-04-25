@@ -4,7 +4,7 @@ import React from "react";
 import { toast } from 'react-toastify';
 import Loader from 'react-loader-spinner'
 import { handleServerErrors } from "utils/errorHandler";
-import user from '../services/api';
+import RestAPI from '../services/api';
 
 // reactstrap components
 import {
@@ -43,7 +43,7 @@ class Keywords extends React.Component {
   }
 
   getKeywords =()=>{
-    user.getKeyword().then(response => {
+    RestAPI.getKeyword().then(response => {
       this.setState({ 
         isLoding: false,
         keywordData : response.data
@@ -74,7 +74,7 @@ class Keywords extends React.Component {
       });
 
       this.setState({ isLoding: true },()=>{
-        user.addKeyword(this.state.keyword).then(response => {
+        RestAPI.addKeyword(this.state.keyword).then(response => {
           toast.success("Add Keyword !", {
                position: toast.POSITION.TOP_RIGHT,
                autoClose: 2000
@@ -85,7 +85,6 @@ class Keywords extends React.Component {
 
          }).catch(error => {
            this.setState({ isLoding: false })
-           // console.log(error)
            handleServerErrors(error, toast.error)
 
          })
@@ -98,7 +97,7 @@ class Keywords extends React.Component {
 
    this.setState({isLoding:true},()=>{
       
-      user.deletePaper(id).then(response => {
+    RestAPI.deletePaper(id).then(response => {
   const newvalue = this.state.keywordData.filter((v,i)=> v.id !=id );
     this.setState({ isLoding: false,
       keywordData:[...newvalue]

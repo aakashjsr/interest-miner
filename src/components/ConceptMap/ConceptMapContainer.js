@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import './style.css';
-
-import Konva from 'konva';
 import { Stage, Layer, Rect, Text, Circle, Line } from 'react-konva';
-import axios from "axios";
 import { toast } from 'react-toastify';
 import {Link} from 'react-router-dom'
 import Loader from 'react-loader-spinner'
-import user from 'services/api';
-import { Jumbotron } from 'reactstrap';
+import RestAPI from 'services/api';
 
 import { handleServerErrors } from "utils/errorHandler";
 
@@ -57,7 +53,7 @@ class ConceptMapContainer extends Component {
 
    componentDidMount(){
          this.setState({ isLoding: true },()=>{
-           user.conceptChart().then(response => {
+            RestAPI.conceptChart().then(response => {
              let chartData = [];
              let dataLength = Math.min(response.data.length, 5);
              for (let index=0; index < dataLength; index++) {

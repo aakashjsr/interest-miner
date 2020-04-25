@@ -3,14 +3,8 @@ import React from "react";
 import { getItem } from "utils/localStorage";
 import { BASE_URL } from "../../constants";
 import axios from "axios";
-import Suggestion from '../suggestion'
 // reactstrap components
-import { Button, Container, Row, Col,Form,
-  FormGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Input,
-  InputGroup, } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 
 class SearchUserHeader extends React.Component {
 
@@ -22,8 +16,6 @@ class SearchUserHeader extends React.Component {
     popupVisible: false
   }
 
-
-  
 
   getInfo = () => {
     const TOKEN = getItem("accessToken");
@@ -44,7 +36,6 @@ class SearchUserHeader extends React.Component {
   }
  
   handleInputChange = (e) => {
-    console.log('SERC',e.target.value)
 
     this.setState({
       query: e.target.value
@@ -77,21 +68,6 @@ class SearchUserHeader extends React.Component {
           <Container className="d-flex align-items-center" fluid style={{position:'absolute',top: '70px'}}>
             <Row>
               <Col lg="12" md="10">
-            
-
-                {/* <h1 className="display-2 text-white">
-                  Hello {getItem("name")? getItem("name"):'User' }
-                </h1>
-                <p className="text-white mt-0 mb-5">
-                This is your profile page.
-                </p> */}
-                {/* <Button
-                  color="info"
-                  href="#pablo"
-                  onClick={e => e.preventDefault()}
-                >
-                  Edit profile
-                </Button> */}
               </Col>
             </Row>
           </Container>

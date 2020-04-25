@@ -9,7 +9,6 @@ export const logout = () => {
 
 export const checkLogin = () => {
   const TOKEN = getItem("auth_token");
-  console.log(TOKEN);
   if (TOKEN !== undefined || TOKEN !== null) {
     return false;
   } else {

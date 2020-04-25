@@ -1,40 +1,21 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-/*eslint-disable*/
 import React from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
+import Autosuggest from 'react-autosuggest';
+import { logout } from "../../helper/index";
+import { getItem } from "utils/localStorage";
+import { BASE_URL } from "../../constants";
+import axios from "axios";
 
 // reactstrap components
 import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
   Collapse,
-  Dropdown,
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
-  FormGroup,
   Form,
   Input,
   InputGroupAddon,
@@ -46,24 +27,129 @@ import {
   NavItem,
   NavLink,
   Nav,
-  Progress,
-  Table,
   Container,
   Row,
   Col
 } from "reactstrap";
 
 var ps;
+function getSuggestionValue(suggestion) {
+  // debugger;
+  return suggestion.first_name;
+}
+
+function renderSuggestion(suggestion) {
+  // debugger;
+
+  return (
+    <Link to={`/app/profile/${suggestion.id}`} >
+
+      <div style={{ padding: '10px 20px' }}>{`${suggestion.first_name} ${suggestion.last_name}`}</div>
+    </Link>
+  );
+}
+
+
+// handleInputChange = (e) => {
+//   if (!this.state.popupVisible) {
+//     document.addEventListener('click', this.handleOutsideClick, false);
+//   } else {
+//     document.removeEventListener('click', this.handleOutsideClick, false);
+//   }
+//   this.setState({
+//     query: e.currentTarget.value,
+
+//   }, () => {
+//     if (this.state.query && this.state.query.length > 1) {
+//       if (this.state.query.length % 2 === 0) {
+//         this.getInfo()
+//       }
+//     }
+//   })
+// }
+
+
+
+// handleClick = () => {
+//   if (!this.state.popupVisible) {
+//     // attach/remove event handler
+//     document.addEventListener('click', this.handleOutsideClick, false);
+//   } else {
+//     document.removeEventListener('click', this.handleOutsideClick, false);
+//   }
+
+//   this.setState(prevState => ({
+//     popupVisible: !prevState.popupVisible,
+//     results: []
+//   }));
+// }
+
+// handleOutsideClick = (e) => {
+//   this.handleClick();
+
+// }
+
+
+
 
 class Sidebar extends React.Component {
   state = {
     collapseOpen: false,
-    dropdownOpen: false
+    dropdownOpen: false,
+    query: '',
+    results: [],
+    activeSuggestion: 0,
+    showSuggestions: false,
+    popupVisible: false,
+    suggestions: [],
+    value: ''
   };
   constructor(props) {
     super(props);
     this.activeRoute.bind(this);
   }
+
+  _onBlur = () => {
+    this.setState({
+      value: '',
+  
+    });
+  }
+  
+  
+  //** START SUGGESTION**//
+  getInfo = () => {
+    const TOKEN = getItem("accessToken");
+    axios({
+      method: "get",
+      url: `${BASE_URL}/api/accounts/user-search/${this.state.value}/`,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        'Authorization': `Token ${TOKEN}`
+      }
+    }).then(({ data }) => {
+      this.setState({
+        suggestions: data,
+        popupVisible: !this.state.popupVisible,
+      })
+    })
+  }
+  onChange = (event, { newValue, method }) => {
+    this.setState({
+      value: newValue
+    });
+  };
+  
+  onSuggestionsFetchRequested = ({ value }) => {
+    this.getInfo();
+  };
+  
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: []
+    });
+  };
   // const [dropdownOpen, setDropdownOpen] = useState(false);
 
   toggle = () => {
@@ -108,6 +194,14 @@ class Sidebar extends React.Component {
     });
   };
   render() {
+    const { value, suggestions } = this.state;
+    const inputProps = {
+      placeholder: "Search for users..",
+      value,
+      onChange: this.onChange,
+      onBlur: this._onBlur
+    };
+
     const { bgColor, routes, logo } = this.props;
     let navbarBrandProps;
     if (logo && logo.innerLink) {
@@ -136,16 +230,6 @@ class Sidebar extends React.Component {
           >
             <span className="navbar-toggler-icon" />
           </button>
-          {/* Brand */}
-          {/* {logo ? (
-            <NavbarBrand className="pt-0" {...navbarBrandProps}>
-              <img
-                alt={logo.imgAlt}
-                className="navbar-brand-img"
-                src={logo.imgSrc}
-              />
-            </NavbarBrand>
-          ) : null} */}
 
           <NavbarBrand className="pt-0" {...navbarBrandProps}>
             <span style={{ fontWeight: 'bolder', color: '#1189ef' }}>INTEREST MINER</span>
@@ -173,10 +257,10 @@ class Sidebar extends React.Component {
               <DropdownToggle nav>
                 <Media className="align-items-center">
                   <span className="avatar avatar-sm rounded-circle">
-                    <img
+                    {/* <img
                       alt="..."
                       src={require("assets/img/theme/team-1-800x800.jpg")}
-                    />
+                    /> */}
                   </span>
                 </Media>
               </DropdownToggle>
@@ -241,49 +325,27 @@ class Sidebar extends React.Component {
             {/* Form */}
             <Form className="mt-4 mb-3 d-md-none">
               <InputGroup className="input-group-rounded input-group-merge">
-                <Input
+                {/* <Input
                   aria-label="Search"
                   className="form-control-rounded form-control-prepended"
                   placeholder="Search"
                   type="search"
-                />
+                /> */}
+                <Autosuggest
+                    suggestions={suggestions}
+                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                    onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                    getSuggestionValue={getSuggestionValue}
+                    renderSuggestion={renderSuggestion}
+                    inputProps={inputProps} />
+
                 <InputGroupAddon addonType="prepend">
-                  <InputGroupText>
+                  {/* <InputGroupText>
                     <span className="fa fa-search" />
-                  </InputGroupText>
+                  </InputGroupText> */}
                 </InputGroupAddon>
               </InputGroup>
             </Form>
-
-            {/* strat drop down */}
-            {/*             
-          <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-          <DropdownToggle nav caret style={{padding: '0'}}>
-            <i className="fas fa-tasks" style={{minWidth: '2.25rem',color: '#5e72e4'}} />
-            Data Management
-          </DropdownToggle>
-          <DropdownMenu>
-          
-            
-          <NavItem >
-            <Link to="/admin/view-paper">
-            <DropdownItem>  View Papers </DropdownItem>
-          </Link>
-        </NavItem>
-
-        <NavItem >
-            <Link to="/admin/add-paper">
-            <DropdownItem>  Add Papers </DropdownItem>
-          </Link>
-        </NavItem>
-        
-            {/* <DropdownItem divider />
-            <DropdownItem>Add Papers</DropdownItem> */}
-            {/* </DropdownMenu>
-        </Dropdown> */}
-
-
-            {/* end drop down */}
 
 
             <h6 className="navbar-heading text-muted">Data Management</h6>
@@ -300,7 +362,7 @@ class Sidebar extends React.Component {
             <Nav navbar>
               <NavItem>
                 <NavLink
-                  to="/admin/pie-chart"
+                  to="/app/pie-chart"
                   tag={NavLinkRRD}
                   onClick={this.closeCollapse}
                   activeClassName="active"
@@ -314,7 +376,7 @@ class Sidebar extends React.Component {
             <Nav navbar>
               <NavItem>
                 <NavLink
-                  to="/admin/bar-chart"
+                  to="/app/bar-chart"
                   tag={NavLinkRRD}
                   onClick={this.closeCollapse}
                   activeClassName="active"
@@ -328,7 +390,7 @@ class Sidebar extends React.Component {
             <Nav navbar>
               <NavItem>
                 <NavLink
-                  to="/admin/cloud-chart"
+                  to="/app/cloud-chart"
                   tag={NavLinkRRD}
                   onClick={this.closeCollapse}
                   activeClassName="active"
@@ -342,7 +404,7 @@ class Sidebar extends React.Component {
             <Nav navbar>
               <NavItem>
                 <NavLink
-                  to="/admin/concept-chart"
+                  to="/app/concept-chart"
                   tag={NavLinkRRD}
                   onClick={this.closeCollapse}
                   activeClassName="active"
@@ -356,7 +418,7 @@ class Sidebar extends React.Component {
             <Nav navbar>
               <NavItem>
                 <NavLink
-                  to="/admin/stream-chart"
+                  to="/app/stream-chart"
                   tag={NavLinkRRD}
                   onClick={this.closeCollapse}
                   activeClassName="active"
@@ -370,37 +432,6 @@ class Sidebar extends React.Component {
 
             
 
-            {/* Heading */}
-            {/* <h6 className="navbar-heading text-muted">Documentation</h6> */}
-            {/* Navigation */}
-            {/* <Nav className="mb-md-3" navbar>
-              <NavItem>
-                <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/overview?ref=adr-admin-sidebar">
-                  <i className="ni ni-spaceship" />
-                  Getting started
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/colors?ref=adr-admin-sidebar">
-                  <i className="ni ni-palette" />
-                  Foundation
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/alerts?ref=adr-admin-sidebar">
-                  <i className="ni ni-ui-04" />
-                  Components
-                </NavLink>
-              </NavItem>
-            </Nav>
-            <Nav className="mb-md-3" navbar>
-              <NavItem className="active-pro active">
-                <NavLink href="https://www.creative-tim.com/product/argon-dashboard-pro-react?ref=adr-admin-sidebar">
-                  <i className="ni ni-spaceship" />
-                  Upgrade to PRO
-                </NavLink>
-              </NavItem>
-            </Nav> */}
           </Collapse>
         </Container>
       </Navbar>

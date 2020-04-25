@@ -19,7 +19,7 @@ import SearchUserHeader from "components/Headers/SearchUserHeader.js";
 import { toast } from 'react-toastify';
 import Loader from 'react-loader-spinner'
 import { handleServerErrors } from "utils/errorHandler";
-import user from '../services/api';
+import RestAPI from '../services/api';
 
 class SearchUserProfile extends React.Component {
   state = {
@@ -39,8 +39,7 @@ class SearchUserProfile extends React.Component {
   }
   componentDidMount() {
     this.setState({ isLoding: true }, () => {
-      user.getUserProfile(this.props.match.params.id).then(response => {
-        console.log('GET USER PROFILE DATA:++>', response.data)
+      RestAPI.getUserProfile(this.props.match.params.id).then(response => {
         this.setState({
           isLoding: false,
           id :response.data.id,
@@ -67,8 +66,7 @@ class SearchUserProfile extends React.Component {
 
     if(prevPro.match.params.id !== this.props.match.params.id){
     this.setState({ isLoding: true }, () => {
-      user.getUserProfile(this.props.match.params.id).then(response => {
-        console.log('GET USER PROFILE DATA:++>', response.data)
+      RestAPI.getUserProfile(this.props.match.params.id).then(response => {
         this.setState({
           isLoding: false,
           id :response.data.id,
@@ -93,7 +91,6 @@ class SearchUserProfile extends React.Component {
   }
 
   handleChange = e => {
-    console.log(e.target.value)
     let getValue = e.target.value;
     let getName = e.target.name;
     this.setState(() => ({ [getName]: getValue }))
@@ -111,7 +108,7 @@ class SearchUserProfile extends React.Component {
     };
 
     this.setState({ isLoding: true }, () => {
-      user.updateUserProfile(data,id).then(response => {
+      RestAPI.updateUserProfile(data,id).then(response => {
         toast.success("Update Profile Data !", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 2000
@@ -121,7 +118,6 @@ class SearchUserProfile extends React.Component {
 
       }).catch(error => {
         this.setState({ isLoding: false })
-        // console.log(error)
         handleServerErrors(error, toast.error)
 
       })
@@ -131,7 +127,7 @@ class SearchUserProfile extends React.Component {
 
   getScore=()=>{
     this.setState({ isLoding1: true }, () => {
-      user.getScore(this.props.match.params.id).then(response => {
+      RestAPI.getScore(this.props.match.params.id).then(response => {
         toast.success("Update Profile Data !", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 2000
@@ -141,7 +137,6 @@ class SearchUserProfile extends React.Component {
 
       }).catch(error => {
         this.setState({ isLoding1: false })
-        // console.log(error)
         handleServerErrors(error, toast.error)
 
       })
@@ -175,25 +170,9 @@ class SearchUserProfile extends React.Component {
                     : <h1 className="rounded-circle" style={{color:'rgb(94, 114, 228)',textAlign:'center',marginTop: '15px',
                     fontSize: '45px'}}>{this.state.score}</h1>}
                       
-                     
-    
-                      
-                      
-                      {/* <a href="#pablo" onClick={e => e.preventDefault()}>
-                        <img
-                          alt="..."
-                          className="rounded-circle"
-                          src={require("assets/img/theme/team-4-800x800.jpg")}
-                        />
-                      </a> */}
                     </div>
                   </Col>
                 </Row>
-                {/* <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                  <div className="d-flex justify-content-between">
-                  
-                  </div>
-                </CardHeader> */}
                 <CardBody className="pt-0 pt-md-4">
                   <Row>
                     <div className="col">
@@ -217,29 +196,8 @@ class SearchUserProfile extends React.Component {
                   <div className="text-center">
                     <h3>
                       {this.state.data && first_name + ' ' + last_name}
-                      {/* <span className="font-weight-light">, 27</span> */}
                     </h3>
-                    {/* <div className="h5 font-weight-300">
-                      <i className="ni location_pin mr-2" />
-                      Bucharest, Romania
-                    </div> */}
-                    {/* <div className="h5 mt-4">
-                      <i className="ni business_briefcase-24 mr-2" />
-                      Solution Manager - Creative Tim Officer
-                    </div>
-                    <div>
-                      <i className="ni education_hat mr-2" />
-                      University of Computer Science
-                    </div> */}
                     <hr className="my-4" />
-                    {/* <p>
-                      Ryan — the name taken by Melbourne-raised, Brooklyn-based
-                      Nick Murphy — writes, performs and records all of his own
-                      music.
-                    </p> */}
-                    {/* <a href="#pablo" onClick={e => e.preventDefault()}>
-                      Show more
-                    </a> */}
                   </div>
                 </CardBody>
               </Card>

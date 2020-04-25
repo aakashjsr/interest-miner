@@ -14,18 +14,10 @@ import ConceptMapContainer from "../components/ConceptMap/"
 
 
 
-
-
 import {
-  Button,
   Card,
   CardHeader,
   CardBody,
-  NavItem,
-  NavLink,
-  Nav,
-  Progress,
-  Table,
   Container,
   Row,
   Col
@@ -35,8 +27,6 @@ import {
 import {
   chartOptions,
   parseOptions,
-  chartExample1,
-  chartExample2
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
