@@ -166,12 +166,19 @@ class SearchUserProfile extends React.Component {
                 <Row className="justify-content-center">
                   <Col className="order-lg-2" lg="12">
                     <div className="card-profile-image" style={{textAlign: 'center'}}>
-                      <Button onClick={this.getScore} style={{marginTop: '30px'}}color="primary">Get Similarity Score</Button>
+                      {!this.state.score && <Button onClick={this.getScore} style={{marginTop: '30px'}}color="primary">Get Similarity Score</Button> }
+                      
                       {this.state.isLoding1 ?
                     (<div className="text-center" style={{ padding: '20px' }}>
                       <Loader type="Puff" color="#00BFFF" height={100} width={100} />
                     </div>)
-                    : <h1 className="rounded-circle" style={{color:'#5e72e4',textAlign:'center'}}>{this.state.score}</h1>}
+                    : <h1 className="rounded-circle" style={{color:'rgb(94, 114, 228)',textAlign:'center',marginTop: '15px',
+                    fontSize: '45px'}}>{this.state.score}</h1>}
+                      
+                     
+    
+                      
+                      
                       {/* <a href="#pablo" onClick={e => e.preventDefault()}>
                         <img
                           alt="..."
