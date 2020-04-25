@@ -136,7 +136,7 @@ class SearchUserProfile extends React.Component {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 2000
         });
-        this.setState({ isLoding1: false,  })
+        this.setState({ isLoding1: false, score:response.data.score })
         // this.props.history.push("/admin/view-paper");
 
       }).catch(error => {
@@ -164,8 +164,8 @@ class SearchUserProfile extends React.Component {
             <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
               <Card className="card-profile shadow">
                 <Row className="justify-content-center">
-                  <Col className="order-lg-2" lg="6">
-                    <div className="card-profile-image">
+                  <Col className="order-lg-2" lg="12">
+                    <div className="card-profile-image" style={{textAlign: 'center'}}>
                       <Button onClick={this.getScore} style={{marginTop: '30px'}}color="primary">Get Similarity Score</Button>
                       {this.state.isLoding1 ?
                     (<div className="text-center" style={{ padding: '20px' }}>
