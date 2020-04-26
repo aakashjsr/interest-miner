@@ -24,7 +24,7 @@ import user from '../services/api';
 class Profile extends React.Component {
   state = {
     data: [],
-    id:'',
+    id: '',
     email: '',
     first_name: '',
     last_name: '',
@@ -40,7 +40,7 @@ class Profile extends React.Component {
       user.getUserData().then(response => {
         this.setState({
           isLoding: false,
-          id :response.data.id,
+          id: response.data.id,
           first_name: response.data.first_name,
           email: response.data.email,
           last_name: response.data.last_name,
@@ -68,24 +68,23 @@ class Profile extends React.Component {
   };
 
   _handleSubmit = (e) => {
-    const { id,email, first_name, last_name, twitter_account_id, author_id } = this.state
+    const { id, email, first_name, last_name, twitter_account_id, author_id } = this.state
     e.preventDefault();
     let data = {
-    email: email,
-    first_name: first_name,
-    last_name: last_name,
-    twitter_account_id: twitter_account_id,
-    author_id: author_id,
+      email: email,
+      first_name: first_name,
+      last_name: last_name,
+      twitter_account_id: twitter_account_id,
+      author_id: author_id,
     };
 
     this.setState({ isLoding: true }, () => {
-      user.updateUserProfile(data,id).then(response => {
+      user.updateUserProfile(data, id).then(response => {
         toast.success("Update Profile Data !", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 2000
         });
-        this.setState({ isLoding: false,  })
-        // this.props.history.push("/admin/view-paper");
+        this.setState({ isLoding: false, })
 
       }).catch(error => {
         this.setState({ isLoding: false })
@@ -125,24 +124,7 @@ class Profile extends React.Component {
                 </Row>
                 <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                   <div className="d-flex justify-content-between">
-                    {/* <Button
-                      className="mr-4"
-                      color="info"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                      size="sm"
-                    >
-                      Connect
-                    </Button>
-                    <Button
-                      className="float-right"
-                      color="default"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                      size="sm"
-                    >
-                      Message
-                    </Button> */}
+
                   </div>
                 </CardHeader>
                 <CardBody className="pt-0 pt-md-4">
@@ -168,29 +150,10 @@ class Profile extends React.Component {
                   <div className="text-center">
                     <h3>
                       {this.state.data && first_name + ' ' + last_name}
-                      {/* <span className="font-weight-light">, 27</span> */}
                     </h3>
-                    {/* <div className="h5 font-weight-300">
-                      <i className="ni location_pin mr-2" />
-                      Bucharest, Romania
-                    </div> */}
-                    {/* <div className="h5 mt-4">
-                      <i className="ni business_briefcase-24 mr-2" />
-                      Solution Manager - Creative Tim Officer
-                    </div>
-                    <div>
-                      <i className="ni education_hat mr-2" />
-                      University of Computer Science
-                    </div> */}
+
                     <hr className="my-4" />
-                    {/* <p>
-                      Ryan — the name taken by Melbourne-raised, Brooklyn-based
-                      Nick Murphy — writes, performs and records all of his own
-                      music.
-                    </p> */}
-                    {/* <a href="#pablo" onClick={e => e.preventDefault()}>
-                      Show more
-                    </a> */}
+
                   </div>
                 </CardBody>
               </Card>
@@ -202,16 +165,6 @@ class Profile extends React.Component {
                     <Col xs="8">
                       <h3 className="mb-0">My account</h3>
                     </Col>
-                    {/* <Col className="text-right" xs="4">
-                      <Button
-                        color="primary"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
-                        size="sm"
-                      >
-                        Settings
-                      </Button>
-                    </Col> */}
                   </Row>
                 </CardHeader>
                 <CardBody>
@@ -237,7 +190,6 @@ class Profile extends React.Component {
                             </label>
                               <Input
                                 className="form-control-alternative"
-                                // defaultValue="Lucky"
                                 id="input-first-name"
                                 name="first_name" value={first_name} onChange={this.handleChange}
                                 placeholder="First name"
@@ -255,7 +207,6 @@ class Profile extends React.Component {
                             </label>
                               <Input
                                 className="form-control-alternative"
-                                // defaultValue="Jesse"
                                 id="input-last-name"
                                 name="last_name" value={last_name} onChange={this.handleChange}
                                 placeholder="Last name"
@@ -265,23 +216,6 @@ class Profile extends React.Component {
                           </Col>
                         </Row>
                         <Row>
-                          {/* <Col lg="6">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-username"
-                            >
-                              Username
-                            </label>
-                            <Input
-                              className="form-control-alternative"
-                              defaultValue="lucky.jesse"
-                              id="input-username"
-                              placeholder="Username"
-                              type="text"
-                            />
-                          </FormGroup>
-                        </Col> */}
                           <Col lg="6">
                             <FormGroup>
                               <label
@@ -308,23 +242,6 @@ class Profile extends React.Component {
                     </h6>
                       <div className="pl-lg-4">
                         <Row>
-                          {/* <Col md="12">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-address"
-                            >
-                              Address
-                            </label>
-                            <Input
-                              className="form-control-alternative"
-                              defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
-                              id="input-address"
-                              placeholder="Home Address"
-                              type="text"
-                            />
-                          </FormGroup>
-                        </Col> */}
                         </Row>
                         <Row>
                           <Col lg="6">
@@ -361,40 +278,9 @@ class Profile extends React.Component {
                               />
                             </FormGroup>
                           </Col>
-                          {/* <Col lg="4">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-country"
-                            >
-                              Postal code
-                            </label>
-                            <Input
-                              className="form-control-alternative"
-                              id="input-postal-code"
-                              placeholder="Postal code"
-                              type="number"
-                            />
-                          </FormGroup>
-                        </Col> */}
                         </Row>
                       </div>
                       <hr className="my-4" />
-                      {/* Description */}
-                      {/* <h6 className="heading-small text-muted mb-4">About me</h6>
-                    <div className="pl-lg-4">
-                      <FormGroup>
-                        <label>About Me</label>
-                        <Input
-                          className="form-control-alternative"
-                          placeholder="A few words about you ..."
-                          rows="4"
-                          defaultValue="A beautiful Dashboard for Bootstrap 4. It is Free and
-                          Open Source."
-                          type="textarea"
-                        />
-                      </FormGroup>
-                    </div> */}
                       <Button color="info" type="submit">
                         Edit profile
                       </Button>

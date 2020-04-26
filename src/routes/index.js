@@ -1,5 +1,5 @@
 
-import React,{Fragment} from "react";
+import React, { Fragment } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import AdminLayout from "../layouts/Admin.js";
 import AuthLayout from "../layouts/Auth.js";

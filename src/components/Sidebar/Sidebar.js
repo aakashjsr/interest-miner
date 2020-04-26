@@ -4,9 +4,9 @@ import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
 import Autosuggest from 'react-autosuggest';
-import { logout } from "../../helper/index";
 import { getItem } from "utils/localStorage";
 import { BASE_URL } from "../../constants";
+import { logout } from "../../helper/index";
 import axios from "axios";
 
 // reactstrap components
@@ -17,9 +17,7 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   Form,
-  Input,
   InputGroupAddon,
-  InputGroupText,
   InputGroup,
   Media,
   NavbarBrand,
@@ -32,7 +30,6 @@ import {
   Col
 } from "reactstrap";
 
-var ps;
 function getSuggestionValue(suggestion) {
   // debugger;
   return suggestion.first_name;
@@ -48,48 +45,6 @@ function renderSuggestion(suggestion) {
     </Link>
   );
 }
-
-
-// handleInputChange = (e) => {
-//   if (!this.state.popupVisible) {
-//     document.addEventListener('click', this.handleOutsideClick, false);
-//   } else {
-//     document.removeEventListener('click', this.handleOutsideClick, false);
-//   }
-//   this.setState({
-//     query: e.currentTarget.value,
-
-//   }, () => {
-//     if (this.state.query && this.state.query.length > 1) {
-//       if (this.state.query.length % 2 === 0) {
-//         this.getInfo()
-//       }
-//     }
-//   })
-// }
-
-
-
-// handleClick = () => {
-//   if (!this.state.popupVisible) {
-//     // attach/remove event handler
-//     document.addEventListener('click', this.handleOutsideClick, false);
-//   } else {
-//     document.removeEventListener('click', this.handleOutsideClick, false);
-//   }
-
-//   this.setState(prevState => ({
-//     popupVisible: !prevState.popupVisible,
-//     results: []
-//   }));
-// }
-
-// handleOutsideClick = (e) => {
-//   this.handleClick();
-
-// }
-
-
 
 
 class Sidebar extends React.Component {
@@ -118,11 +73,11 @@ class Sidebar extends React.Component {
 
 
   //** START SUGGESTION**//
-  getInfo = () => {
+  getInfo = (v) => {
     const TOKEN = getItem("accessToken");
     axios({
       method: "get",
-      url: `${BASE_URL}/api/accounts/user-search/${this.state.value}/`,
+      url: `${BASE_URL}/api/accounts/user-search/${v}/`,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -142,7 +97,7 @@ class Sidebar extends React.Component {
   };
 
   onSuggestionsFetchRequested = ({ value }) => {
-    this.getInfo();
+    this.getInfo(value);
   };
 
   onSuggestionsClearRequested = () => {
@@ -150,7 +105,6 @@ class Sidebar extends React.Component {
       suggestions: []
     });
   };
-  // const [dropdownOpen, setDropdownOpen] = useState(false);
 
   toggle = () => {
     this.setState({
@@ -202,7 +156,7 @@ class Sidebar extends React.Component {
       onBlur: this._onBlur
     };
 
-    const { bgColor, routes, logo } = this.props;
+    const { routes, logo } = this.props;
     let navbarBrandProps;
     if (logo && logo.innerLink) {
       navbarBrandProps = {
@@ -238,29 +192,12 @@ class Sidebar extends React.Component {
 
           {/* User */}
           <Nav className="align-items-center d-md-none">
-            <UncontrolledDropdown nav>
-              <DropdownToggle nav className="nav-link-icon">
-                <i className="ni ni-bell-55" />
-              </DropdownToggle>
-              <DropdownMenu
-                aria-labelledby="navbar-default_dropdown_1"
-                className="dropdown-menu-arrow"
-                right
-              >
-                <DropdownItem>Action</DropdownItem>
-                <DropdownItem>Another action</DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>Something else here</DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
+
             <UncontrolledDropdown nav>
               <DropdownToggle nav>
                 <Media className="align-items-center">
                   <span className="avatar avatar-sm rounded-circle">
-                    {/* <img
-                      alt="..."
-                      src={require("assets/img/theme/team-1-800x800.jpg")}
-                    /> */}
+
                   </span>
                 </Media>
               </DropdownToggle>
@@ -268,24 +205,12 @@ class Sidebar extends React.Component {
                 <DropdownItem className="noti-title" header tag="div">
                   <h6 className="text-overflow m-0">Welcome!</h6>
                 </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
+                <DropdownItem to="/app/user-profile" tag={Link}>
                   <i className="ni ni-single-02" />
                   <span>My profile</span>
                 </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
-                  <i className="ni ni-settings-gear-65" />
-                  <span>Settings</span>
-                </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
-                  <i className="ni ni-calendar-grid-58" />
-                  <span>Activity</span>
-                </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
-                  <i className="ni ni-support-16" />
-                  <span>Support</span>
-                </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                <DropdownItem to="/" onClick={e => logout()}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>
@@ -302,7 +227,6 @@ class Sidebar extends React.Component {
                     {logo.innerLink ? (
                       <Link to={logo.innerLink}>
                         INTEREST MINER
-                        {/* <img alt={logo.imgAlt} src={logo.imgSrc} /> */}
                       </Link>
                     ) : (
                         <a href={logo.outterLink}>
@@ -326,24 +250,17 @@ class Sidebar extends React.Component {
             {/* Form */}
             <Form className="mt-4 mb-3 d-md-none">
               <InputGroup className="input-group-rounded input-group-merge">
-                {/* <Input
-                  aria-label="Search"
-                  className="form-control-rounded form-control-prepended"
-                  placeholder="Search"
-                  type="search"
-                /> */}
+
                 <Autosuggest
-                    suggestions={suggestions}
-                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                    onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                    getSuggestionValue={getSuggestionValue}
-                    renderSuggestion={renderSuggestion}
-                    inputProps={inputProps} />
+                  suggestions={suggestions}
+                  onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                  onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                  getSuggestionValue={getSuggestionValue}
+                  renderSuggestion={renderSuggestion}
+                  inputProps={inputProps} />
 
                 <InputGroupAddon addonType="prepend">
-                  {/* <InputGroupText>
-                    <span className="fa fa-search" />
-                  </InputGroupText> */}
+
                 </InputGroupAddon>
               </InputGroup>
             </Form>
@@ -410,7 +327,7 @@ class Sidebar extends React.Component {
                   onClick={this.closeCollapse}
                   activeClassName="active"
                 >
-                  <i className="fas fa-brain text-blue"/>
+                  <i className="fas fa-brain text-blue" />
                   Concept Map Chart
               </NavLink>
               </NavItem>

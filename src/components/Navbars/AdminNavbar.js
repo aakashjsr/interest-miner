@@ -17,8 +17,6 @@ import {
   Form,
   FormGroup,
   InputGroupAddon,
-  InputGroupText,
-  Input,
   InputGroup,
   Navbar,
   Nav,
@@ -48,20 +46,17 @@ class AdminNavbar extends React.Component {
   state = {
     query: '',
     results: [],
-    activeSuggestion: 0,
-    showSuggestions: false,
-    popupVisible: false,
     suggestions: [],
     value: ''
   }
 
 
 
-  getInfo = () => {
+  getInfo = (v) => {
     const TOKEN = getItem("accessToken");
     axios({
       method: "get",
-      url: `${BASE_URL}/api/accounts/user-search/${this.state.value}/`,
+      url: `${BASE_URL}/api/accounts/user-search/${v}/`,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -76,45 +71,6 @@ class AdminNavbar extends React.Component {
   }
 
 
-
-  handleInputChange = (e) => {
-    if (!this.state.popupVisible) {
-      document.addEventListener('click', this.handleOutsideClick, false);
-    } else {
-      document.removeEventListener('click', this.handleOutsideClick, false);
-    }
-    this.setState({
-      query: e.currentTarget.value,
-
-    }, () => {
-      if (this.state.query && this.state.query.length > 1) {
-        if (this.state.query.length % 2 === 0) {
-          this.getInfo()
-        }
-      }
-    })
-  }
-
-
-
-  handleClick = () => {
-    if (!this.state.popupVisible) {
-      // attach/remove event handler
-      document.addEventListener('click', this.handleOutsideClick, false);
-    } else {
-      document.removeEventListener('click', this.handleOutsideClick, false);
-    }
-
-    this.setState(prevState => ({
-      popupVisible: !prevState.popupVisible,
-      results: []
-    }));
-  }
-
-  handleOutsideClick = (e) => {
-    this.handleClick();
-
-  }
 
   _onBlur = () => {
     this.setState({
@@ -132,7 +88,8 @@ class AdminNavbar extends React.Component {
   };
 
   onSuggestionsFetchRequested = ({ value }) => {
-    this.getInfo();
+              this.getInfo(value)
+          
   };
 
   onSuggestionsClearRequested = () => {
@@ -168,9 +125,6 @@ class AdminNavbar extends React.Component {
               <FormGroup className="mb-0">
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
-                    {/* <InputGroupText>
-                      <i className="fas fa-search" />
-                    </InputGroupText> */}
                   </InputGroupAddon>
 
                   <Autosuggest

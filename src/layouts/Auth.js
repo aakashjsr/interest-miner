@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Switch, Redirect } from "react-router-dom";
 // reactstrap components
 import { Container, Row, Col } from "reactstrap";
 
@@ -47,7 +47,7 @@ class Auth extends React.Component {
                   <Col lg="5" md="6">
                     <h1 className="text-white">Welcome!</h1>
                     <p className="text-lead text-light">
-                    Analyze your interests.
+                      Analyze your interests.
                     </p>
                   </Col>
                 </Row>

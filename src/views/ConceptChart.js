@@ -1,15 +1,6 @@
 
 import React from "react";
-// node.js library that concatenates classes (strings)
-import classnames from "classnames";
-// javascipt plugin for creating charts
 import Chart from "chart.js";
-// react plugin used to create charts
-import { Line, Bar } from "react-chartjs-2";
-// reactstrap components
-import ConceptMap from "../components/ConceptMap"
-import PieChart from "../components/Chart/PieChart"
-import BarChart from "../components/Chart/BarChart"
 import ConceptMapContainer from "../components/ConceptMap/"
 
 

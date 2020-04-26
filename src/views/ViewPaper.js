@@ -9,10 +9,8 @@ import { handleServerErrors } from "utils/errorHandler";
 // reactstrap components
 import {
   Modal, ModalHeader, ModalBody, ModalFooter, Button,
-  Badge,
   Card,
   CardHeader,
-  CardFooter,
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown,
@@ -71,7 +69,7 @@ class ViewPaper extends React.Component {
     this.setState({ isLoding: true }, () => {
 
       RestAPI.deletePaper(id).then(response => {
-        const newvalue = this.state.data.filter((v, i) => v.id != id);
+        const newvalue = this.state.data.filter((v, i) => v.id !== id);
         this.setState({
           isLoding: false,
           data: [...newvalue]
@@ -96,7 +94,7 @@ class ViewPaper extends React.Component {
   showEnquiry = (id) => {
 
     const paperdata = this.state.data.find((v, i) => {
-      return v.id == id
+      return v.id === id
     })
 
     this.setState({
@@ -108,7 +106,7 @@ class ViewPaper extends React.Component {
   //** SET VALUES IN EDIT PAPERS MODAL **//
   editEnquiry = (id) => {
     const paperdata = this.state.data.find((v, i) => {
-      return v.id == id
+      return v.id === id
     })
     this.setState({
       editmodal: !this.state.editmodal,
@@ -192,9 +190,8 @@ class ViewPaper extends React.Component {
                       <th scope="col">Title</th>
                       <th scope="col">URL</th>
                       <th scope="col">Year</th>
-                      {/* <th scope="col">Users</th> */}
                       <th scope="col">Abstract</th>
-                      <th scope="col" />
+                      <th scope="col"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -216,7 +213,7 @@ class ViewPaper extends React.Component {
                               <th scope="row"> {`${(value.title || "").slice(0, 35)} ...`} </th>
                               <td>{`${(value.url || "").slice(0, 35)} ...`}</td>
                               <td>{value.year}</td>
-                              <td scope="col"> {`${(value.abstract || "").slice(0, 35)} ...`}</td>
+                              <td > {`${(value.abstract || "").slice(0, 35)} ...`}</td>
 
                               <td className="text-right">
                                 <UncontrolledDropdown>
@@ -348,7 +345,6 @@ class ViewPaper extends React.Component {
                             </label>
                                 <Input
                                   className="form-control-alternative"
-                                  defaultValue="Lucky"
                                   id="input-first-name"
                                   name="year" defaultValue={this.state.year} onChange={this.handleChange}
                                   placeholder="Year"

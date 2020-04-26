@@ -9,7 +9,7 @@ import { Container, Row, Col } from "reactstrap";
 class SearchUserHeader extends React.Component {
 
   state = {
-    query: '', 
+    query: '',
     results: [],
     activeSuggestion: 0,
     showSuggestions: false,
@@ -23,18 +23,18 @@ class SearchUserHeader extends React.Component {
       method: "get",
       url: `${BASE_URL}/api/accounts/user-search/${this.state.query}/`,
       headers: {
-          "Content-Type": "application/json",
-            Accept: "application/json",
-           'Authorization' :  `Token ${TOKEN}`
-    }
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        'Authorization': `Token ${TOKEN}`
+      }
     }).then(({ data }) => {
-        this.setState({
-          results: data,
-          popupVisible: !this.state.popupVisible,
-        })
+      this.setState({
+        results: data,
+        popupVisible: !this.state.popupVisible,
       })
+    })
   }
- 
+
   handleInputChange = (e) => {
 
     this.setState({
@@ -44,7 +44,7 @@ class SearchUserHeader extends React.Component {
         if (this.state.query.length % 2 === 0) {
           this.getInfo()
         }
-      } 
+      }
     })
   }
 
@@ -65,7 +65,7 @@ class SearchUserHeader extends React.Component {
           {/* Mask */}
           <span className="mask bg-gradient-default opacity-8" />
           {/* Header container */}
-          <Container className="d-flex align-items-center" fluid style={{position:'absolute',top: '70px'}}>
+          <Container className="d-flex align-items-center" fluid style={{ position: 'absolute', top: '70px' }}>
             <Row>
               <Col lg="12" md="10">
               </Col>

@@ -4,17 +4,17 @@ import { getItem } from "../utils/localStorage";
 
 
 
-export const PublicRoute = ({isAuthanicated, component: Component, ...rest}) => {
+export const PublicRoute = ({ isAuthanicated, component: Component, ...rest }) => {
     const TOKEN = getItem("accessToken");
     return (
         <Route {...rest} component={(props) => (
-        TOKEN ? (
+            TOKEN ? (
                 <Redirect to="/app/index" />
             ) : (
                     <Component {...props} />
                 )
-        )} 
-    />)
+        )}
+        />)
 };
 
 

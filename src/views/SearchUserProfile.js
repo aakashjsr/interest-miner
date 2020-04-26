@@ -24,7 +24,7 @@ import RestAPI from '../services/api';
 class SearchUserProfile extends React.Component {
   state = {
     data: [],
-    id:'',
+    id: '',
     email: '',
     first_name: '',
     last_name: '',
@@ -33,16 +33,16 @@ class SearchUserProfile extends React.Component {
     paper_count: '',
     tweet_count: '',
     keyword_count: '',
-    score:'',
+    score: '',
     isLoding: false,
-    isLoding1:false
+    isLoding1: false
   }
   componentDidMount() {
     this.setState({ isLoding: true }, () => {
       RestAPI.getUserProfile(this.props.match.params.id).then(response => {
         this.setState({
           isLoding: false,
-          id :response.data.id,
+          id: response.data.id,
           first_name: response.data.first_name,
           email: response.data.email,
           last_name: response.data.last_name,
@@ -62,33 +62,33 @@ class SearchUserProfile extends React.Component {
     })
   };
 
-  componentDidUpdate(prevPro){
+  componentDidUpdate(prevPro) {
 
-    if(prevPro.match.params.id !== this.props.match.params.id){
-    this.setState({ isLoding: true }, () => {
-      RestAPI.getUserProfile(this.props.match.params.id).then(response => {
-        this.setState({
-          isLoding: false,
-          id :response.data.id,
-          first_name: response.data.first_name,
-          email: response.data.email,
-          last_name: response.data.last_name,
-          twitter_account_id: response.data.twitter_account_id,
-          author_id: response.data.author_id,
-          paper_count: response.data.paper_count,
-          tweet_count: response.data.tweet_count,
-          keyword_count: response.data.keyword_count,
-          score:''
+    if (prevPro.match.params.id !== this.props.match.params.id) {
+      this.setState({ isLoding: true }, () => {
+        RestAPI.getUserProfile(this.props.match.params.id).then(response => {
+          this.setState({
+            isLoding: false,
+            id: response.data.id,
+            first_name: response.data.first_name,
+            email: response.data.email,
+            last_name: response.data.last_name,
+            twitter_account_id: response.data.twitter_account_id,
+            author_id: response.data.author_id,
+            paper_count: response.data.paper_count,
+            tweet_count: response.data.tweet_count,
+            keyword_count: response.data.keyword_count,
+            score: ''
+          })
+
+        }).catch(error => {
+          this.setState({ isLoding: false })
+          handleServerErrors(error, toast.error)
+
+
         })
-
-      }).catch(error => {
-        this.setState({ isLoding: false })
-        handleServerErrors(error, toast.error)
-
-
       })
-    })
-  }
+    }
   }
 
   handleChange = e => {
@@ -98,23 +98,23 @@ class SearchUserProfile extends React.Component {
   };
 
   _handleSubmit = (e) => {
-    const { id,email, first_name, last_name, twitter_account_id, author_id } = this.state
+    const { id, email, first_name, last_name, twitter_account_id, author_id } = this.state
     e.preventDefault();
     let data = {
-    email: email,
-    first_name: first_name,
-    last_name: last_name,
-    twitter_account_id: twitter_account_id,
-    author_id: author_id,
+      email: email,
+      first_name: first_name,
+      last_name: last_name,
+      twitter_account_id: twitter_account_id,
+      author_id: author_id,
     };
 
     this.setState({ isLoding: true }, () => {
-      RestAPI.updateUserProfile(data,id).then(response => {
+      RestAPI.updateUserProfile(data, id).then(response => {
         toast.success("Update Profile Data !", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 2000
         });
-        this.setState({ isLoding: false,  })
+        this.setState({ isLoding: false, })
         // this.props.history.push("/admin/view-paper");
 
       }).catch(error => {
@@ -126,14 +126,14 @@ class SearchUserProfile extends React.Component {
 
   };
 
-  getScore=()=>{
+  getScore = () => {
     this.setState({ isLoding1: true }, () => {
       RestAPI.getScore(this.props.match.params.id).then(response => {
         toast.success("Update Profile Data !", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 2000
         });
-        this.setState({ isLoding1: false, score:response.data.score })
+        this.setState({ isLoding1: false, score: response.data.score })
         // this.props.history.push("/admin/view-paper");
 
       }).catch(error => {
@@ -142,7 +142,7 @@ class SearchUserProfile extends React.Component {
 
       })
     })
-    
+
   }
 
 
@@ -152,7 +152,7 @@ class SearchUserProfile extends React.Component {
       <>
         <SearchUserHeader />
         {/* Page content */}
-        
+
 
         <Container className="mt--7" fluid>
 
@@ -161,23 +161,25 @@ class SearchUserProfile extends React.Component {
               <Card className="card-profile shadow">
                 <Row className="justify-content-center">
                   <Col className="order-lg-2" lg="12">
-                    <div className="card-profile-image" style={{textAlign: 'center'}}>
-                      {!this.state.score && <Button onClick={this.getScore} style={{marginTop: '30px'}}color="primary">Get Similarity Score</Button> }
-                      
+                    <div className="card-profile-image" style={{ textAlign: 'center' }}>
+                      {!this.state.score && <Button onClick={this.getScore} style={{ marginTop: '30px' }} color="primary">Get Similarity Score</Button>}
+
                       {this.state.isLoding1 ?
-                    (<div className="text-center" style={{ padding: '20px' }}>
-                      <Loader type="Puff" color="#00BFFF" height={100} width={100} />
-                    </div>)
-                    : <h1 className="rounded-circle" style={{color:'rgb(94, 114, 228)',textAlign:'center',marginTop: '15px',
-                    fontSize: '45px'}}>{this.state.score}</h1>}
-                      
+                        (<div className="text-center" style={{ padding: '20px' }}>
+                          <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+                        </div>)
+                        : <h1 className="rounded-circle" style={{
+                          color: 'rgb(94, 114, 228)', textAlign: 'center', marginTop: '15px',
+                          fontSize: '45px'
+                        }}>{this.state.score}</h1>}
+
                     </div>
                   </Col>
                 </Row>
                 <CardBody className="pt-0 pt-md-4">
                   <Row>
                     <div className="col">
-                      <div className="card-profile-stats d-flex justify-content-center " style={{marginTop: '0px !important'}}>
+                      <div className="card-profile-stats d-flex justify-content-center " style={{ marginTop: '0px !important' }}>
                         <div>
                           <span className="heading">{this.state.data && paper_count}</span>
                           <span className="description">Papers</span>
@@ -210,7 +212,7 @@ class SearchUserProfile extends React.Component {
                     <Col xs="8">
                       <h3 className="mb-0">User Account Detils</h3>
                     </Col>
-                   
+
                   </Row>
                 </CardHeader>
                 <CardBody>
@@ -218,7 +220,7 @@ class SearchUserProfile extends React.Component {
                     (<div className="text-center" style={{ padding: '20px' }}>
                       <Loader type="Puff" color="#00BFFF" height={100} width={100} />
                     </div>)
-                    : 
+                    :
                     <Form onSubmit={this._handleSubmit} method="post">
                       <h6 className="heading-small text-muted mb-4">
                         User information
@@ -237,7 +239,7 @@ class SearchUserProfile extends React.Component {
                               <Input
                                 className="form-control-alternative"
                                 // defaultValue="Lucky"
-                              
+
                                 id="input-first-name"
                                 name="first_name" defaultValue={first_name} disabled
                                 placeholder="First name"
@@ -256,8 +258,8 @@ class SearchUserProfile extends React.Component {
                               <Input
                                 className="form-control-alternative"
                                 // defaultValue="Jesse"
-                                id="input-last-name"  disabled
-                                name="last_name" defaultValue={last_name} 
+                                id="input-last-name" disabled
+                                name="last_name" defaultValue={last_name}
                                 placeholder="Last name"
                                 type="text"
                               />
@@ -276,7 +278,7 @@ class SearchUserProfile extends React.Component {
                               <Input
                                 className="form-control-alternative"
                                 id="input-email"
-                                name="email" defaultValue={email}  disabled
+                                name="email" defaultValue={email} disabled
                                 placeholder="jesse@example.com"
                                 type="email"
                               />
@@ -304,7 +306,7 @@ class SearchUserProfile extends React.Component {
                               <Input
                                 className="form-control-alternative"
                                 id="input-city"
-                                name="author_id" defaultValue={author_id}  disabled
+                                name="author_id" defaultValue={author_id} disabled
                                 placeholder="City"
                                 type="text"
                               />
@@ -321,18 +323,18 @@ class SearchUserProfile extends React.Component {
                               <Input
                                 className="form-control-alternative"
                                 id="input-country"
-                                
-                                name="twitter_account_id" defaultValue={twitter_account_id}  disabled
+
+                                name="twitter_account_id" defaultValue={twitter_account_id} disabled
                                 placeholder="Twitter Acount id"
                                 type="text"
                               />
                             </FormGroup>
                           </Col>
-                         
+
                         </Row>
                       </div>
                       <hr className="my-4" />
-                     
+
                     </Form>
                   }
                 </CardBody>
