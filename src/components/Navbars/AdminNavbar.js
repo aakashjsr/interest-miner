@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link ,NavLink} from "react-router-dom";
 import { logout } from "../../helper/index";
 import { getItem } from "utils/localStorage";
 import { BASE_URL } from "../../constants";
@@ -33,10 +33,10 @@ function renderSuggestion(suggestion) {
   // debugger;
 
   return (
-    <Link to={`/app/profile/${suggestion.id}`} >
+    <a to={`/app/profile/${suggestion.id}`} >
 
       <div style={{ padding: '10px 20px' }}>{`${suggestion.first_name} ${suggestion.last_name}`}</div>
-    </Link>
+    </a>
   );
 }
 
