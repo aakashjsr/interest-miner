@@ -184,7 +184,7 @@ class ViewPaper extends React.Component {
                 <CardHeader className="border-0">
                   <h3 className="mb-0">Papers tables</h3>
                 </CardHeader>
-                <Table className="align-items-center table-flush">
+                <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                     <tr>
                       <th scope="col">Title</th>
