@@ -90,6 +90,7 @@ class Sidebar extends React.Component {
       })
     })
   }
+  
   onChange = (event, { newValue, method }) => {
     this.setState({
       value: newValue
