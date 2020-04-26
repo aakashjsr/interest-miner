@@ -27,31 +27,31 @@ import Header from "components/Headers/Header.js";
 class Keywords extends React.Component {
 
   state = {
-    // keywordData:[{id:'1',keyword:"computer"},{id:'2',keyword:"Mechine Learning"},{id:'3',keyword:"Coocking"}],
-    keywordData:[],
+
+    keywordData: [],
 
     keyword: '',
     isLoding: false
   }
 
 
-  componentDidMount(){
-    this.setState({isLoding: true},()=>{
+  componentDidMount() {
+    this.setState({ isLoding: true }, () => {
       this.getKeywords();
 
     })
   }
 
-  getKeywords =()=>{
+  getKeywords = () => {
     RestAPI.getKeyword().then(response => {
       this.setState({
         isLoding: false,
-        keywordData : response.data
+        keywordData: response.data
       })
-  }).catch(error => {
+    }).catch(error => {
       this.setState({ isLoding: false })
       handleServerErrors(error, toast.error)
-      })
+    })
   }
 
 
@@ -65,47 +65,43 @@ class Keywords extends React.Component {
 
   _handleSubmit = e => {
     e.preventDefault();
-      // let data = {
-      //   Keywords: this.state.keyword,
-      // };
+    this.setState({
+      keywordData: [...this.state.keywordData, this.state.keyword]
+    });
 
-      this.setState({
-        keywordData: [...this.state.keywordData,this.state.keyword]
-      });
+    this.setState({ isLoding: true }, () => {
+      RestAPI.addKeyword(this.state.keyword).then(response => {
+        toast.success("Keyword Added!", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000
+        });
+        this.setState({ isLoding: false, keyword: '' })
+        this.getKeywords();
 
-      this.setState({ isLoding: true },()=>{
-        RestAPI.addKeyword(this.state.keyword).then(response => {
-          toast.success("Keyword Added!", {
-               position: toast.POSITION.TOP_RIGHT,
-               autoClose: 2000
-           });
-           this.setState({isLoding: false , keyword:'' })
-           this.getKeywords();
-            // this.props.history.push("/admin/view-paper");
+      }).catch(error => {
+        this.setState({ isLoding: false })
+        handleServerErrors(error, toast.error)
 
-         }).catch(error => {
-           this.setState({ isLoding: false })
-           handleServerErrors(error, toast.error)
-
-         })
       })
+    })
 
   };
 
   //** DELETE A Keyword **//
-  deleteKeyword = (id)=>{
+  deleteKeyword = (id) => {
 
-   this.setState({isLoding:true},()=>{
+    this.setState({ isLoding: true }, () => {
 
-    RestAPI.deletePaper(id).then(response => {
-  const newvalue = this.state.keywordData.filter((v,i)=> v.id !=id );
-    this.setState({ isLoding: false,
-      keywordData:[...newvalue]
-         })
+      RestAPI.deletePaper(id).then(response => {
+        const newvalue = this.state.keywordData.filter((v, i) => v.id !== id);
+        this.setState({
+          isLoding: false,
+          keywordData: [...newvalue]
+        })
 
-       toast.success("Paper Deleted!", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 2000
+        toast.success("Paper Deleted!", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000
         });
 
       }).catch(error => {
@@ -113,7 +109,7 @@ class Keywords extends React.Component {
         handleServerErrors(error, toast.error)
 
       })
-   })
+    })
 
   }
 
@@ -125,7 +121,7 @@ class Keywords extends React.Component {
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>
-             <Col className="order-xl-1" xl="12">
+            <Col className="order-xl-1" xl="12">
               <Card className="bg-secondary shadow">
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
@@ -162,9 +158,9 @@ class Keywords extends React.Component {
                       </Row>
                     </div>
                     {/* <hr className="my-4" /> */}
-                   <div align="right">
-                     <Button color="primary" type="submit"> Save </Button>
-                   </div>
+                    <div align="right">
+                      <Button color="primary" type="submit"> Save </Button>
+                    </div>
                   </Form>
 
                 </CardBody>
@@ -172,10 +168,10 @@ class Keywords extends React.Component {
             </Col>
           </Row>
 
-              {/* Start Table */}
+          {/* Start Table */}
 
-               <Row style={{marginTop: '50px'}}>
-             <Col className="order-xl-1" xl="12">
+          <Row style={{ marginTop: '50px' }}>
+            <Col className="order-xl-1" xl="12">
               <Card className="bg-secondary shadow">
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
@@ -187,36 +183,36 @@ class Keywords extends React.Component {
                 <CardBody>
 
 
-                     {
-                     this.state.isLoding &&
-                          <div className="text-center" style={{padding:'20px'}}>
-                                <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+                  {
+                    this.state.isLoding &&
+                    <div className="text-center" style={{ padding: '20px' }}>
+                      <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+                    </div>
+                  }
+
+
+                  {this.state.keywordData.length ? this.state.keywordData.map((v, i) =>
+                    // <Row xl="6" >{v.keyword}</Row>
+
+                    <Row key={v.id}>
+                      <Col md="12">
+                        <FormGroup>
+                          {v.keyword}
+                          <div align="right">
+                            {/* <Button size="sm" color="danger" type="button" onClick={() => this.deleteKeyword(v.id)}> X </Button> */}
                           </div>
-                    }
+                          <hr className="my-4" />
 
+                        </FormGroup>
+                      </Col>
+                    </Row>
 
-                  {  this.state.keywordData.length ? this.state.keywordData.map((v,i)=>
-              // <Row xl="6" >{v.keyword}</Row>
+                  ) :
 
-               <Row key={v.id}>
-                        <Col md="12">
-                          <FormGroup>
-                           {v.keyword}
-                            <div align="right">
-                          {/* <Button size="sm" color="danger" type="button" onClick={() => this.deleteKeyword(v.id)}> X </Button> */}
-                          </div>
-                    <hr className="my-4" />
-
-                          </FormGroup>
-                        </Col>
-               </Row>
-
-            ):
-
-          <div className="text-center1" style={{padding:'20px'}}>
-                <div style={{textAlign: 'center'}}> <strong > No Keywords Data</strong></div>
-          </div>
-          }
+                    <div className="text-center1" style={{ padding: '20px' }}>
+                      <div style={{ textAlign: 'center' }}> <strong > No Keywords Data</strong></div>
+                    </div>
+                  }
                 </CardBody>
               </Card>
             </Col>

@@ -22,7 +22,7 @@ import {
 import Header from "components/Headers/Header.js";
 
 class BarChartPage extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       activeNav: 1,
@@ -57,16 +57,16 @@ class BarChartPage extends React.Component {
                       </h6>
                       <h2 className="text-white1 mb-0">Bar Chart</h2>
                     </div>
-                   
+
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  <BarChart/>
+                  <BarChart />
                 </CardBody>
               </Card>
             </Col>
-          
-          </Row> 
+
+          </Row>
         </Container>
       </>
     );

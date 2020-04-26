@@ -6,7 +6,6 @@ import StreamChart from "../components/Chart/StreamChart"
 
 
 import {
-  Button,
   Card,
   CardHeader,
   CardBody,
@@ -24,7 +23,7 @@ import {
 import Header from "components/Headers/Header.js";
 
 class StreamChartPage extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       activeNav: 1,
@@ -63,7 +62,7 @@ class StreamChartPage extends React.Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  <StreamChart/>
+                  <StreamChart />
 
                 </CardBody>
               </Card>

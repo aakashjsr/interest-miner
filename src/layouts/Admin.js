@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Switch, Redirect } from "react-router-dom";
 // reactstrap components
 import { Container } from "reactstrap";
 // core components
@@ -32,7 +32,7 @@ class Admin extends React.Component {
       }
     });
   };
-  
+
   getBrandText = path => {
     for (let i = 0; i < routes.length; i++) {
       if (

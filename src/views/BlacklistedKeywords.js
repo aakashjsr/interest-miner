@@ -27,29 +27,29 @@ import Header from "components/Headers/Header.js";
 class BlacklistedKeywords extends React.Component {
 
   state = {
-    keywordData:[],
+    keywordData: [],
     keyword: '',
     isLoding: false
   }
 
 
-  componentDidMount(){
-    this.setState({isLoding: true},()=>{
+  componentDidMount() {
+    this.setState({ isLoding: true }, () => {
       this.getBlackKeyword();
 
     })
   }
 
-  getBlackKeyword =()=>{
+  getBlackKeyword = () => {
     RestAPI.getBlackKeyword().then(response => {
       this.setState({
         isLoding: false,
-        keywordData : response.data
+        keywordData: response.data
       })
-  }).catch(error => {
+    }).catch(error => {
       this.setState({ isLoding: false })
       handleServerErrors(error, toast.error)
-      })
+    })
   }
 
 
@@ -62,43 +62,44 @@ class BlacklistedKeywords extends React.Component {
   _handleSubmit = e => {
     e.preventDefault();
 
-      this.setState({
-        keywordData: [...this.state.keywordData,this.state.keyword]
-      });
+    this.setState({
+      keywordData: [...this.state.keywordData, this.state.keyword]
+    });
 
-      this.setState({ isLoding: true },()=>{
-        RestAPI.addBlackKeyword(this.state.keyword).then(response => {
-          toast.success("Add Keyword !", {
-               position: toast.POSITION.TOP_RIGHT,
-               autoClose: 2000
-           });
-           this.setState({isLoding: false , keyword:'' })
-      this.getBlackKeyword();
+    this.setState({ isLoding: true }, () => {
+      RestAPI.addBlackKeyword(this.state.keyword).then(response => {
+        toast.success("Add Keyword !", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000
+        });
+        this.setState({ isLoding: false, keyword: '' })
+        this.getBlackKeyword();
 
 
-         }).catch(error => {
-           this.setState({ isLoding: false })
-           handleServerErrors(error, toast.error)
+      }).catch(error => {
+        this.setState({ isLoding: false })
+        handleServerErrors(error, toast.error)
 
-         })
       })
+    })
 
   };
 
   //** DELETE A Keyword **//
-  deleteKeyword = (id)=>{
+  deleteKeyword = (id) => {
 
-   this.setState({isLoding:true},()=>{
+    this.setState({ isLoding: true }, () => {
 
-    RestAPI.deleteBlackKeyword(id).then(response => {
-  const newvalue = this.state.keywordData.filter((v,i)=> v.id !=id );
-    this.setState({ isLoding: false,
-      keywordData:[...newvalue]
-         })
+      RestAPI.deleteBlackKeyword(id).then(response => {
+        const newvalue = this.state.keywordData.filter((v, i) => v.id !== id);
+        this.setState({
+          isLoding: false,
+          keywordData: [...newvalue]
+        })
 
-       toast.success("Delete Papaer !", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 2000
+        toast.success("Delete Papaer !", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000
         });
 
       }).catch(error => {
@@ -106,7 +107,7 @@ class BlacklistedKeywords extends React.Component {
         handleServerErrors(error, toast.error)
 
       })
-   })
+    })
 
   }
 
@@ -118,7 +119,7 @@ class BlacklistedKeywords extends React.Component {
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>
-             <Col className="order-xl-1" xl="12">
+            <Col className="order-xl-1" xl="12">
               <Card className="bg-secondary shadow">
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
@@ -129,9 +130,6 @@ class BlacklistedKeywords extends React.Component {
                 </CardHeader>
                 <CardBody>
                   <Form onSubmit={this._handleSubmit} method="post">
-                    {/* <h6 className="heading-small text-muted mb-4">
-                       Add Keywords
-                    </h6> */}
                     <div className="pl-lg-4">
                       <Row>
                         <Col lg="12">
@@ -154,10 +152,9 @@ class BlacklistedKeywords extends React.Component {
 
                       </Row>
                     </div>
-                    {/* <hr className="my-4" /> */}
-                   <div align="right">
-                     <Button color="primary" type="submit"> Save </Button>
-                   </div>
+                    <div align="right">
+                      <Button color="primary" type="submit"> Save </Button>
+                    </div>
                   </Form>
 
                 </CardBody>
@@ -165,10 +162,10 @@ class BlacklistedKeywords extends React.Component {
             </Col>
           </Row>
 
-              {/* Start Table */}
+          {/* Start Table */}
 
-               <Row style={{marginTop: '50px'}}>
-             <Col className="order-xl-1" xl="12">
+          <Row style={{ marginTop: '50px' }}>
+            <Col className="order-xl-1" xl="12">
               <Card className="bg-secondary shadow">
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
@@ -180,36 +177,35 @@ class BlacklistedKeywords extends React.Component {
                 <CardBody>
 
 
-                     {
-                     this.state.isLoding &&
-                          <div className="text-center" style={{padding:'20px'}}>
-                                <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+                  {
+                    this.state.isLoding &&
+                    <div className="text-center" style={{ padding: '20px' }}>
+                      <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+                    </div>
+                  }
+
+
+                  {this.state.keywordData.length ? this.state.keywordData.map((v, i) =>
+
+                    <Row key={v.id}>
+                      <Col md="12">
+                        <FormGroup>
+                          {v.keyword}
+                          <div align="right">
+                            <Button size="sm" color="danger" type="button" onClick={() => this.deleteKeyword(v.id)}> X </Button>
                           </div>
-                    }
+                          <hr className="my-4" />
 
+                        </FormGroup>
+                      </Col>
+                    </Row>
 
-                  {  this.state.keywordData.length ? this.state.keywordData.map((v,i)=>
-              // <Row xl="6" >{v.keyword}</Row>
+                  ) :
 
-               <Row key={v.id}>
-                        <Col md="12">
-                          <FormGroup>
-                           {v.keyword}
-                            <div align="right">
-                          <Button size="sm" color="danger" type="button" onClick={() => this.deleteKeyword(v.id)}> X </Button>
-                          </div>
-                    <hr className="my-4" />
-
-                          </FormGroup>
-                        </Col>
-               </Row>
-
-            ):
-
-          <div className="text-center1" style={{padding:'20px'}}>
-                <div style={{textAlign: 'center'}}> <strong > No Keywords Data</strong></div>
-          </div>
-          }
+                    <div className="text-center1" style={{ padding: '20px' }}>
+                      <div style={{ textAlign: 'center' }}> <strong > No Keywords Data</strong></div>
+                    </div>
+                  }
                 </CardBody>
               </Card>
             </Col>

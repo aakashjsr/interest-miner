@@ -1,4 +1,4 @@
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 export const handleServerErrors = (error, enqueueSnackbar, defaultMsg = "Something went wrong. Try again.") => {
     try {
@@ -8,17 +8,17 @@ export const handleServerErrors = (error, enqueueSnackbar, defaultMsg = "Somethi
             const error_data = getErrorData(error.response.message ? error.response.message : error);
             let error_message = defaultMsg;
             const error_key = Object.keys(error_data)[0] || "";
-            if(typeof error_data === 'object')  error_message = `${titleCase(error_key.replace(/_/g, ' '))}: ${error_data[error_key]}`;
+            if (typeof error_data === 'object') error_message = `${titleCase(error_key.replace(/_/g, ' '))}: ${error_data[error_key]}`;
             else error_message = error_data
-            enqueueSnackbar(error_message,{position: toast.POSITION.TOP_RIGHT,autoClose: 5000});
+            enqueueSnackbar(error_message, { position: toast.POSITION.TOP_RIGHT, autoClose: 5000 });
         } else {
-            enqueueSnackbar(defaultMsg,{position: toast.POSITION.TOP_RIGHT,autoClose: 5000});
+            enqueueSnackbar(defaultMsg, { position: toast.POSITION.TOP_RIGHT, autoClose: 5000 });
         }
     } catch (error) {
-        enqueueSnackbar(defaultMsg,{position: toast.POSITION.TOP_RIGHT,autoClose: 5000});
+        enqueueSnackbar(defaultMsg, { position: toast.POSITION.TOP_RIGHT, autoClose: 5000 });
     }
 
-    
+
 }
 
 const getErrorData = (error) => {
@@ -36,7 +36,7 @@ export const titleCase = (string) => {
     for (var i = 0; i < sentence.length; i++) {
         sentence[i] = sentence[i][0].toUpperCase() + sentence[i].slice(1);
     }
-    if (sentence[0] == 'Address') {
+    if (sentence[0] === 'Address') {
         return sentence[0]
     }
     else {

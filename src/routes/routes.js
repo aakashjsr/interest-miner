@@ -1,4 +1,4 @@
-import Index from "../views/Index.js";
+
 import Profile from "../views/Profile.js";
 import Register from "../views/Register.js";
 import Login from "../views/Login.js";
@@ -43,7 +43,7 @@ var routes = [
     layout: "/app",
     display: "none"
   },
-   {
+  {
     path: "/view-paper",
     name: "My Papers",
     icon: "fas fa-tasks text-blue",
@@ -52,7 +52,7 @@ var routes = [
     // display: "none"
   },
 
-   {
+  {
     path: "/keyword",
     name: "Keyword",
     icon: "ni ni-archive-2 text-yellow",

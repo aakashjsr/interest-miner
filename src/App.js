@@ -1,5 +1,5 @@
 
-import React, { Fragment,Component } from "react";
+import React, { Fragment } from "react";
 import AppRoute from "./routes/index";
 import { getItem } from "./utils/localStorage";
 import { ToastContainer } from 'react-toastify';
@@ -11,7 +11,7 @@ const App = () => {
     const state = {
         TOKEN
     }
-   return( <Fragment>
+    return (<Fragment>
         <Theme.Provider value={state}>
             <AppRoute />
             <ToastContainer autoClose={8000} />

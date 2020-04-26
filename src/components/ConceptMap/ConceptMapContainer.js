@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './style.css';
 import { Stage, Layer, Rect, Text, Circle, Line } from 'react-konva';
 import { toast } from 'react-toastify';
-import {Link} from 'react-router-dom'
 import Loader from 'react-loader-spinner'
 import RestAPI from 'services/api';
 
@@ -37,46 +36,46 @@ class ConceptMapContainer extends Component {
         this.textFontFamily = '-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif';
 
         this.state = {
-            data:[],
+            data: [],
             isLoading: true
         }
     }
 
     toTitleCase = (phrase) => {
-      return phrase
-        .toLowerCase()
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
+        return phrase
+            .toLowerCase()
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
     };
 
 
-   componentDidMount(){
-         this.setState({ isLoding: true },()=>{
+    componentDidMount() {
+        this.setState({ isLoding: true }, () => {
             RestAPI.conceptChart().then(response => {
-             let chartData = [];
-             let dataLength = Math.min(response.data.length, 5);
-             for (let index=0; index < dataLength; index++) {
-               chartData.push({
-                 keyword: response.data[index].keyword,
-                 rank: response.data[index].weight,
-                 source: response.data[index].source,
-                 category: response.data[index].categories.map(item=>item.name)
-               });
-             }
-             this.setState({
-               isLoding: false, data : chartData
-             }, this.extractNodes);
+                let chartData = [];
+                let dataLength = Math.min(response.data.length, 5);
+                for (let index = 0; index < dataLength; index++) {
+                    chartData.push({
+                        keyword: response.data[index].keyword,
+                        rank: response.data[index].weight,
+                        source: response.data[index].source,
+                        category: response.data[index].categories.map(item => item.name)
+                    });
+                }
+                this.setState({
+                    isLoding: false, data: chartData
+                }, this.extractNodes);
 
-        }).catch(error => {
-             this.setState({ isLoding: false })
-             handleServerErrors(error, toast.error)
-             })
-         })
- }
+            }).catch(error => {
+                this.setState({ isLoding: false })
+                handleServerErrors(error, toast.error)
+            })
+        })
+    }
 
     extractNodes = () => {
-        const  {data}  = this.state;
+        const { data } = this.state;
         let categories = {};
         let keywords = {};
         let links = {};
@@ -93,7 +92,7 @@ class ConceptMapContainer extends Component {
     }
 
     generateCoordinates = () => {
-        const { keywords, categories, links } = this.state;
+        const { keywords, categories } = this.state;
 
         const totalKeywords = Object.keys(keywords).length;
         const KeywordBlockTotalSize = totalKeywords * (this.keywordNodeSpacing + this.keywordNodeSize);
@@ -171,11 +170,11 @@ class ConceptMapContainer extends Component {
             let categoryText = category.length > 35 ? category.slice(0, 35) + "..." : category;
             nodes.push(
                 <Text key={category + "text"}
-                  x={categories[category].x + 10}
-                  y={categories[category].y + 10}
-                  onMouseOver={e => this.mouseOverEvent(e, 'category', category)}
-                  onMouseOut={e => this.mouseOutEvent(e, 'category', category)}
-                  text={categoryText} fontFamily={this.textFontFamily} stroke="white" strokeWidth="1" />
+                    x={categories[category].x + 10}
+                    y={categories[category].y + 10}
+                    onMouseOver={e => this.mouseOverEvent(e, 'category', category)}
+                    onMouseOut={e => this.mouseOutEvent(e, 'category', category)}
+                    text={categoryText} fontFamily={this.textFontFamily} stroke="white" strokeWidth="1" />
             )
 
 
@@ -226,35 +225,35 @@ class ConceptMapContainer extends Component {
             keywords[keyword].highlight = false;
         }
 
-        this.setState({ categories, keywords});
+        this.setState({ categories, keywords });
     }
 
     render() {
-      const containerDiv = document.querySelectorAll(".card-body")[0]
-      const width = containerDiv ? containerDiv.clientWidth: this.stageWidth;
-      const {categories} = this.state;
-      let highlighedCategory = [];
-      if (categories) {
-          highlighedCategory = Object.keys(categories).filter(item=>categories[item].highlight);
-      }
+        const containerDiv = document.querySelectorAll(".card-body")[0]
+        const width = containerDiv ? containerDiv.clientWidth : this.stageWidth;
+        const { categories } = this.state;
+        let highlighedCategory = [];
+        if (categories) {
+            highlighedCategory = Object.keys(categories).filter(item => categories[item].highlight);
+        }
 
 
 
         return (
             <div id="conceptMapWrapper">
-            {this.state.isLoding? <div className="text-center" style={{padding:'20px'}}>
-                   <Loader type="Puff" color="#00BFFF" height={100} width={100} />
-             </div>
-            :
-            <div>
-              <Stage width={width} height={this.stageHeight} >
-                      <Layer>
-                          {this.getNodes()}
-                      </Layer>
-              </Stage>
-              <div align="center">{highlighedCategory.length ? highlighedCategory[0]: ""}</div>
-            </div>
-            }
+                {this.state.isLoding ? <div className="text-center" style={{ padding: '20px' }}>
+                    <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+                </div>
+                    :
+                    <div>
+                        <Stage width={width} height={this.stageHeight} >
+                            <Layer>
+                                {this.getNodes()}
+                            </Layer>
+                        </Stage>
+                        <div align="center">{highlighedCategory.length ? highlighedCategory[0] : ""}</div>
+                    </div>
+                }
 
             </div>
         );

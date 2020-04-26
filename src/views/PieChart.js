@@ -3,7 +3,6 @@ import React from "react";
 import Chart from "chart.js";
 import PieChart from "../components/Chart/PieChart"
 import {
-  Button,
   Card,
   CardHeader,
   CardBody,
@@ -21,7 +20,7 @@ import {
 import Header from "components/Headers/Header.js";
 
 class PieChartPage extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       activeNav: 1,
@@ -56,16 +55,16 @@ class PieChartPage extends React.Component {
                       </h6>
                       <h2 className="text-white1 mb-0">Pie Chart</h2>
                     </div>
-                 
+
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  <PieChart/>
+                  <PieChart />
                 </CardBody>
               </Card>
             </Col>
-         
-          </Row> 
+
+          </Row>
         </Container>
       </>
     );

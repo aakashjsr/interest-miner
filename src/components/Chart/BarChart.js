@@ -1,4 +1,4 @@
-    
+
 import React, { Component } from "react";
 import Chart from "react-apexcharts";
 import { toast } from 'react-toastify';
@@ -13,26 +13,21 @@ class BarChart extends Component {
 
     this.state = {
       options: {
-        
+
         chart: {
           id: "basic-bar"
         },
-        
+
         fill: {
-        colors: ['#9C27B0'],
-        
+          colors: ['#9C27B0'],
+
         },
         xaxis: {
           categories: [],
-          
+
         }
       },
-      series: [
-        // {
-        //   name: "Keyword",
-        //   data: [1,2,3]
-        // }
-      ],
+      series: [],
       tweetoptions: {
         chart: {
           id: "basic-bar"
@@ -41,46 +36,46 @@ class BarChart extends Component {
           categories: []
         }
       },
-      tweetseries: [ ]
+      tweetseries: []
     };
   }
 
 
-  componentDidMount(){
-    this.setState({ isLoding: true },()=>{
+  componentDidMount() {
+    this.setState({ isLoding: true }, () => {
       RestAPI.barChart().then(response => {
-      let categorieList = Object.keys(response.data.papers);
-      let value = Object.values(response.data.papers);
-      let tweetscategorieList = Object.keys(response.data.tweets);
-      let tweetsvalue = Object.values(response.data.tweets);
-        this.setState({ 
+        let categorieList = Object.keys(response.data.papers);
+        let value = Object.values(response.data.papers);
+        let tweetscategorieList = Object.keys(response.data.tweets);
+        let tweetsvalue = Object.values(response.data.tweets);
+        this.setState({
           isLoding: false,
-          data : response.data,
-          options: { ...this.state.options, ...this.state.options.xaxis, ...this.state.options.xaxis.categories=categorieList },
-          series: [{name: "Paper", data: [...value]}],
-          tweetseries:[{name: "Tweet", data: [...tweetsvalue]}],
-          tweetoptions:{ ...this.state.tweetoptions, ...this.state.tweetoptions.xaxis, ...this.state.tweetoptions.xaxis.categories=tweetscategorieList },
+          data: response.data,
+          options: { ...this.state.options, ...this.state.options.xaxis, ...this.state.options.xaxis.categories = categorieList },
+          series: [{ name: "Paper", data: [...value] }],
+          tweetseries: [{ name: "Tweet", data: [...tweetsvalue] }],
+          tweetoptions: { ...this.state.tweetoptions, ...this.state.tweetoptions.xaxis, ...this.state.tweetoptions.xaxis.categories = tweetscategorieList },
 
         })
-    }).catch(error => {
+      }).catch(error => {
         this.setState({ isLoding: false })
         handleServerErrors(error, toast.error)
-        })
+      })
     })
-}
+  }
 
   render() {
     return (
       < >
-        { this.state.isLoding ? 
-                  (  
-                    <div className="text-center" style={{padding:'20px'}}>
-                        <Loader type="Puff" color="#00BFFF" height={100} width={100} />
-                   </div>
-                   )
-                   :
-                   
-          <div className="mixed-chart" style={{paddingLeft: '20%'}}>
+        {this.state.isLoding ?
+          (
+            <div className="text-center" style={{ padding: '20px' }}>
+              <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+            </div>
+          )
+          :
+
+          <div className="mixed-chart" style={{ paddingLeft: '20%' }}>
             <h1>Paper Data</h1>
             <Chart
               options={this.state.options}
@@ -88,7 +83,7 @@ class BarChart extends Component {
               type="bar"
               width="600"
             />
-            <hr/>
+            <hr />
             <h1>Tweet Data</h1>
             <Chart
               options={this.state.tweetoptions}
@@ -96,13 +91,12 @@ class BarChart extends Component {
               type="bar"
               width="600"
             />
-          </div> 
+          </div>
         }
-        
+
       </>
     );
   }
 }
 
 export default BarChart;
-    

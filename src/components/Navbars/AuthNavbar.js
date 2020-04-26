@@ -24,7 +24,7 @@ class AdminNavbar extends React.Component {
         >
           <Container className="px-4">
             <NavbarBrand to="/" tag={Link}>
-            <span style={{color:'white',fontSize: '2em'}}>Interest Miner</span>
+              <span style={{ color: 'white', fontSize: '2em' }}>Interest Miner</span>
             </NavbarBrand>
             <button className="navbar-toggler" id="navbar-collapse-main">
               <span className="navbar-toggler-icon" />

@@ -3,7 +3,7 @@ import React from "react";
 import { getItem } from "utils/localStorage";
 
 // reactstrap components
-import {  Container, Row, Col } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 
 class UserHeader extends React.Component {
   render() {
@@ -26,10 +26,10 @@ class UserHeader extends React.Component {
             <Row>
               <Col lg="12" md="10">
                 <h1 className="display-2 text-white">
-                  Hello {getItem("name")? getItem("name"):'User' }
+                  Hello {getItem("name") ? getItem("name") : 'User'}
                 </h1>
                 <p className="text-white mt-0 mb-5">
-                This is your profile page.
+                  This is your profile page.
                 </p>
               </Col>
             </Row>

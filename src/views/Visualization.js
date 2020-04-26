@@ -25,7 +25,7 @@ import {
 import Header from "components/Headers/Header.js";
 
 class Visualization extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       activeNav: 1,
@@ -63,17 +63,17 @@ class Visualization extends React.Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  <div style={{paddingLeft: '30%'}}>
-                  <PieChart/>
-                  
-                  <BarChart/>
+                  <div style={{ paddingLeft: '30%' }}>
+                    <PieChart />
+
+                    <BarChart />
                   </div>
-                  <CloudChart/>
+                  <CloudChart />
                 </CardBody>
               </Card>
             </Col>
-            
-          </Row> 
+
+          </Row>
         </Container>
       </>
     );
