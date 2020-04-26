@@ -33,10 +33,10 @@ function renderSuggestion(suggestion) {
   // debugger;
 
   return (
-    <a href={`/app/profile/${suggestion.id}`} >
+    <Link to={`/app/profile/${suggestion.id}`} >
 
       <div style={{ padding: '10px 20px' }}>{`${suggestion.first_name} ${suggestion.last_name}`}</div>
-    </a>
+    </Link>
   );
 }
 
@@ -80,10 +80,10 @@ class AdminNavbar extends React.Component {
   }
 
 
-  //** START SUGGESTION**//
-  onChange = (event) => {
+  
+  onChange = (event, { newValue, method }) => {
     this.setState({
-      value: event.target.value
+      value: newValue
     });
   };
 
@@ -128,12 +128,12 @@ class AdminNavbar extends React.Component {
                   </InputGroupAddon>
 
                   <Autosuggest
-                    suggestions={suggestions}
-                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                    onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                    getSuggestionValue={getSuggestionValue}
-                    renderSuggestion={renderSuggestion}
-                    inputProps={inputProps} />
+                  suggestions={suggestions}
+                  onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                  onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                  getSuggestionValue={getSuggestionValue}
+                  renderSuggestion={renderSuggestion}
+                  inputProps={inputProps} />
 
                 </InputGroup>
               </FormGroup>
