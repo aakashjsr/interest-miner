@@ -51,12 +51,29 @@ class BarChart extends Component {
         this.setState({
           isLoding: false,
           data: response.data,
-          options: { ...this.state.options, ...this.state.options.xaxis, ...this.state.options.xaxis.categories = categorieList },
           series: [{ name: "Paper", data: [...value] }],
           tweetseries: [{ name: "Tweet", data: [...tweetsvalue] }],
-          tweetoptions: { ...this.state.tweetoptions, ...this.state.tweetoptions.xaxis, ...this.state.tweetoptions.xaxis.categories = tweetscategorieList },
-
-        })
+          // options: { ...this.state.options, ...this.state.options.xaxis, ...this.state.options.xaxis.categories = categorieList },
+          // tweetoptions: { ...this.state.tweetoptions, ...this.state.tweetoptions.xaxis, ...this.state.tweetoptions.xaxis.categories = tweetscategorieList },
+         options: {  chart: {
+            id: "basic-bar"
+          },
+  
+          fill: {
+            colors: ['#9C27B0'],
+  
+          },
+          xaxis: {
+            categories: [...categorieList],
+  
+          } },
+          tweetoptions: { chart: {
+            id: "basic-bar"
+          },
+          xaxis: {
+            categories: [...tweetscategorieList]
+          } }
+         })
       }).catch(error => {
         this.setState({ isLoding: false })
         handleServerErrors(error, toast.error)

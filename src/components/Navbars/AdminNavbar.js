@@ -33,10 +33,10 @@ function renderSuggestion(suggestion) {
   // debugger;
 
   return (
-    <Link to={`/app/profile/${suggestion.id}`} >
+    <a href={`/app/profile/${suggestion.id}`} >
 
       <div style={{ padding: '10px 20px' }}>{`${suggestion.first_name} ${suggestion.last_name}`}</div>
-    </Link>
+    </a>
   );
 }
 
