@@ -287,7 +287,7 @@ class Sidebar extends React.Component {
                   activeClassName="active"
                 >
                   <i className="fas fa-chart-pie text-orange" />
-                  Short Term Interest
+                  Recent  Interests
               </NavLink>
               </NavItem>
             </Nav>
@@ -315,7 +315,7 @@ class Sidebar extends React.Component {
                   activeClassName="active"
                 >
                   <i className="fas fa-cloud text-info" />
-                  Long Term Interest
+                  Interest Overview
               </NavLink>
               </NavItem>
             </Nav>
@@ -329,7 +329,7 @@ class Sidebar extends React.Component {
                   activeClassName="active"
                 >
                   <i className="fas fa-brain text-blue" />
-                  Concept Map Chart
+                  Potential Interests
               </NavLink>
               </NavItem>
             </Nav>
@@ -344,7 +344,7 @@ class Sidebar extends React.Component {
                 >
                   <i className="fas fa-wave-square text-green"></i>
 
-                  Interests
+                  Interest Trends
               </NavLink>
               </NavItem>
             </Nav>
