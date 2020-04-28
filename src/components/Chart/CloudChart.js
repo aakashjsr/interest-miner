@@ -64,23 +64,28 @@ class CloudChartPage extends Component {
       dataField: "value",
     });
     series.labels.template.events.on("hit", (ev) => {
+      this.setState({modal:true,isModalLoader:true}, ()=> {
       if (ev.target.dataItem.dataContext.tweet_id) {
         this.setState({
-          modal:true,
           isPaperData: false,
           tweetId: ev.target.dataItem.dataContext.tweet_id,
-        });
+
+        },()=>this.setState({
+          isModalLoader:false
+        }));
       }
+    })
       if (ev.target.dataItem.dataContext.paper_db_id) {
         this.setState({
           isPaperData: true,
-          userPageID:ev.target.dataItem.dataContext.paper_db_id,
           modal:true,
+          userPageID:ev.target.dataItem.dataContext.paper_db_id,
         },()=>this.getPaper(ev.target.dataItem.dataContext.paper_db_id)
         );
       }
-    
     });
+ 
+ 
 
     series.labels.template.urlTarget = "_blank";
     series.labels.template.tooltipText = "{source}";
@@ -94,7 +99,7 @@ class CloudChartPage extends Component {
       modal: !this.state.modal,
     });
   };
-
+  
   getPaper = (userPageID) => {
     this.setState({isModalLoader:true}, ()=> {
     RestAPI.getPaper(userPageID).then(response => {
@@ -157,7 +162,7 @@ class CloudChartPage extends Component {
              </>
            ) : (
              <>
-               <ModalHeader toggle={this.toggle}>Twitter Detail</ModalHeader>
+               <ModalHeader toggle={this.toggle}>Tweet Detail</ModalHeader>
                
                <ModalBody>
                {this.state.isModalLoader ? (
