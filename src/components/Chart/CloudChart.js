@@ -96,7 +96,7 @@ class CloudChartPage extends Component {
   };
 
   getPaper = (userPageID) => {
-    this.setState({isModalLoader:true})
+    this.setState({isModalLoader:true}, ()=> {
     RestAPI.getPaper(userPageID).then(response => {
       this.setState({
         title: response.data.title,
@@ -108,7 +108,9 @@ class CloudChartPage extends Component {
     }).catch(error => {
       handleServerErrors(error, toast.error)
     })
-  }
+   }
+  )}
+
   render() {
     return (
       <Fragment>
