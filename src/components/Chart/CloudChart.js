@@ -22,9 +22,10 @@ class CloudChartPage extends Component {
   state = {
     mydata: [],
     modal: false,
-    pmodal: false,
-    TweetId: null,
-    id:'',
+    isModalLoader:false,
+    isPaperData: false,
+    tweetId: null,
+    userPageID:'',
     title:'',
     url:'',
     year:'',
@@ -34,7 +35,6 @@ class CloudChartPage extends Component {
     this.setState({ isLoding: true }, () => {
       RestAPI.cloudChart()
         .then((response) => {
-          console.log(response);
           series.data = response.data;
           this.setState({
             isLoding: false,
@@ -64,20 +64,22 @@ class CloudChartPage extends Component {
       dataField: "value",
     });
     series.labels.template.events.on("hit", (ev) => {
-      this.setState({ modal: true });
       if (ev.target.dataItem.dataContext.tweet_id) {
         this.setState({
-          pmodal: false,
-          TweetId: ev.target.dataItem.dataContext.tweet_id,
+          modal:true,
+          isPaperData: false,
+          tweetId: ev.target.dataItem.dataContext.tweet_id,
         });
       }
       if (ev.target.dataItem.dataContext.paper_db_id) {
-        this.getPaper(ev.target.dataItem.dataContext.paper_db_id);
         this.setState({
-          pmodal: true,
-          id:ev.target.dataItem.dataContext.paper_db_id,
-        });
+          isPaperData: true,
+          userPageID:ev.target.dataItem.dataContext.paper_db_id,
+          modal:true,
+        },()=>this.getPaper(ev.target.dataItem.dataContext.paper_db_id)
+        );
       }
+    
     });
 
     series.labels.template.urlTarget = "_blank";
@@ -93,16 +95,17 @@ class CloudChartPage extends Component {
     });
   };
 
-  getPaper = (id) => {
-    RestAPI.getPaper(id).then(response => {
+  getPaper = (userPageID) => {
+    this.setState({isModalLoader:true})
+    RestAPI.getPaper(userPageID).then(response => {
       this.setState({
         title: response.data.title,
         url: response.data.url,
         year: response.data.year,
-        abstract: response.data.abstract
+        abstract: response.data.abstract,
+        isModalLoader:false
       })
     }).catch(error => {
-      this.setState({ isLoding: false })
       handleServerErrors(error, toast.error)
     })
   }
@@ -115,43 +118,66 @@ class CloudChartPage extends Component {
           </div>
         ) : (
           <div id="chartdiv" style={{ width: "100%", height: "600px" }}>
-            <Modal isOpen={this.state.modal} toggle={this.toggle} size="lg">
-              {this.state.pmodal ? (
-                <>
-                  <ModalHeader toggle={this.toggle}>Paper Detail</ModalHeader>
-                  <ModalBody>
-                    <strong>Title: </strong>{" "}
-                    <p>
-                      {this.state.title}
-                    </p>
-                    <strong>Year: </strong>{" "}
-                    <p>
-                    {this.state.year}
-                    </p>
-                    <strong>URL: </strong>{" "}
-                    <p>
-                      {this.state.url}
-                    </p>
-                    <strong>Abstract: </strong> <br />{" "}
-                    {this.state.abstract}
-                  </ModalBody>
-                </>
-              ) : (
-                <>
-                  <ModalHeader toggle={this.toggle}>Twitter Detail</ModalHeader>
-                  <ModalBody>
-                    <TwitterTweetEmbed tweetId={this.state.TweetId} />
-                  </ModalBody>
-                </>
-              )}
-              <ModalFooter>
-                <Button color="primary" onClick={this.toggle}>
-                  OK
-                </Button>
-              </ModalFooter>
-            </Modal>
+           
           </div>
-        )}
+           )}
+
+           <Modal isOpen={this.state.modal} toggle={this.toggle} size="lg">
+           {this.state.isPaperData ? (
+             <>
+               <ModalHeader toggle={this.toggle}>Paper Detail</ModalHeader>
+               <ModalBody>
+               {this.state.isModalLoader ? (
+                 <div className="text-center" style={{ padding: "20px" }}>
+                   <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+                 </div>
+               ) : (
+                 <>
+                 <strong>Title: </strong> {" "}
+                 <p>
+                   {this.state.title}
+                 </p>
+                 <strong>Year: </strong>{" "}
+                 <p>
+                 {this.state.year}
+                 </p>
+                 <strong>URL: </strong>{" "}
+                 <p>
+                   {this.state.url}
+                 </p>
+                 <strong>Abstract: </strong>{" "}
+                 <p>
+                 {this.state.abstract}
+                 </p>
+                 </>
+               )}
+               </ModalBody>
+             </>
+           ) : (
+             <>
+               <ModalHeader toggle={this.toggle}>Twitter Detail</ModalHeader>
+               
+               <ModalBody>
+               {this.state.isModalLoader ? (
+                 <div className="text-center" style={{ padding: "20px" }}>
+                   <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+                 </div>
+               ) : (
+               <div style={{display:'flex',justifyContent:'center'}}>
+                 <TwitterTweetEmbed tweetId={this.state.tweetId} />
+               </div>
+               )}
+               </ModalBody>
+             </>
+           )}
+           <ModalFooter>
+             <Button color="primary" onClick={this.toggle}>
+               OK
+             </Button>
+           </ModalFooter>
+         </Modal>
+      
+       
       </Fragment>
     );
   }

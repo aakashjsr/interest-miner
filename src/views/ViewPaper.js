@@ -53,7 +53,6 @@ class ViewPaper extends React.Component {
   //** GET ALL PAPERS **//
   getPaperData = () => {
     RestAPI.getListPaper().then(response => {
-      console.log(response)
       this.setState({
         isLoding: false,
         data: response.data
