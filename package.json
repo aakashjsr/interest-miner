@@ -73,6 +73,7 @@
     "react-spring": "^8.0.27",
     "react-super-select": "^1.0.23",
     "react-toastify": "^5.5.0",
+    "react-twitter-embed": "^3.0.3",
     "reactstrap": "8.4.1",
     "toasted-notes": "^3.2.0",
     "webpack": "^4.42.0",
