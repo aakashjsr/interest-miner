@@ -25,8 +25,8 @@ class CloudChartPage extends Component {
     isModalLoader: false,
     isTweetData: false,
     isPaperData: false,
-    tweetId: [],
-    userPageID: [],
+    tweetIds: [],
+    userPageIDs: [],
     isData:true,
     title: "",
     url: "",
@@ -38,7 +38,7 @@ class CloudChartPage extends Component {
     this.setState({ isLoding: true }, () => {
       RestAPI.cloudChart()
         .then((response) => {
-          if(response.data.length === 0){
+          if(response.data.length===0){
             this.setState({
               isData:false
             })
@@ -77,7 +77,7 @@ class CloudChartPage extends Component {
         if (ev.target.dataItem.dataContext.tweet_ids) {
           this.setState({
             isTweetData: true,
-            tweetId: ev.target.dataItem.dataContext.tweet_ids,
+            tweetIds: ev.target.dataItem.dataContext.tweet_ids,
           });
           if (ev.target.dataItem.dataContext.tweet_ids.length === 0) {
             this.setState({
@@ -88,7 +88,7 @@ class CloudChartPage extends Component {
         if (ev.target.dataItem.dataContext.papers) {
           this.setState({
             isPaperData: true,
-            userPageID: ev.target.dataItem.dataContext.papers,
+            userPageIDs: ev.target.dataItem.dataContext.papers,
           });
 
           if (ev.target.dataItem.dataContext.papers.length === 0) {
@@ -151,7 +151,7 @@ class CloudChartPage extends Component {
                   <>
                     {this.state.isPaperData ? (
                       <>
-                        {this.state.userPageID.map((data, idx) => (
+                        {this.state.userPageIDs.map((data, idx) => (
                           <>
                             <strong>Title: </strong> <p>{data.title}</p>
                             <strong>Year: </strong> <p>{data.year}</p>
@@ -185,7 +185,7 @@ class CloudChartPage extends Component {
                   <>
                     {this.state.isTweetData ? (
                       <>
-                        {this.state.tweetId.map((data, idx) => (
+                        {this.state.tweetIds.map((data, idx) => (
                           <div
                             style={{
                               display: "flex",
