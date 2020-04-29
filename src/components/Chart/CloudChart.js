@@ -8,10 +8,11 @@ import * as am4core from "@amcharts/amcharts4/core";
 
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import * as am4plugins_wordCloud from "@amcharts/amcharts4/plugins/wordCloud";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
-import {
-  TwitterTweetEmbed,
-} from "react-twitter-embed";
+import { Modal, ModalBody, ModalFooter, Button } from "reactstrap";
+import { TwitterTweetEmbed } from "react-twitter-embed";
+
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
 
 /* Chart code */
 // Themes begin
@@ -21,20 +22,28 @@ am4core.useTheme(am4themes_animated);
 class CloudChartPage extends Component {
   state = {
     mydata: [],
-    modal: false,
-    isModalLoader:false,
+    isModalLoader: false,
+    isTweetData: false,
     isPaperData: false,
-    tweetId: null,
-    userPageID:'',
-    title:'',
-    url:'',
-    year:'',
-    abstract:'',
+    tweetIds: [],
+    userPageIDs: [],
+    isData:true,
+    title: "",
+    url: "",
+    year: "",
+    abstract: "",
+
   };
   componentDidMount() {
     this.setState({ isLoding: true }, () => {
       RestAPI.cloudChart()
         .then((response) => {
+          if(response.data.length===0){
+            this.setState({
+              isData:false
+            })
+          }
+
           series.data = response.data;
           this.setState({
             isLoding: false,
@@ -64,22 +73,34 @@ class CloudChartPage extends Component {
       dataField: "value",
     });
     series.labels.template.events.on("hit", (ev) => {
-      if (ev.target.dataItem.dataContext.tweet_id) {
+      this.setState({ modal: true, isModalLoader: true }, () => {
+        if (ev.target.dataItem.dataContext.tweet_ids) {
+          this.setState({
+            isTweetData: true,
+            tweetIds: ev.target.dataItem.dataContext.tweet_ids,
+          });
+          if (ev.target.dataItem.dataContext.tweet_ids.length === 0) {
+            this.setState({
+              isTweetData: false,
+            });
+          }
+        }
+        if (ev.target.dataItem.dataContext.papers) {
+          this.setState({
+            isPaperData: true,
+            userPageIDs: ev.target.dataItem.dataContext.papers,
+          });
+
+          if (ev.target.dataItem.dataContext.papers.length === 0) {
+            this.setState({
+              isPaperData: false,
+            });
+          }
+        }
         this.setState({
-          modal:true,
-          isPaperData: false,
-          tweetId: ev.target.dataItem.dataContext.tweet_id,
+          isModalLoader: false,
         });
-      }
-      if (ev.target.dataItem.dataContext.paper_db_id) {
-        this.setState({
-          isPaperData: true,
-          userPageID:ev.target.dataItem.dataContext.paper_db_id,
-          modal:true,
-        },()=>this.getPaper(ev.target.dataItem.dataContext.paper_db_id)
-        );
-      }
-    
+      });
     });
 
     series.labels.template.urlTarget = "_blank";
@@ -95,91 +116,116 @@ class CloudChartPage extends Component {
     });
   };
 
-  getPaper = (userPageID) => {
-    this.setState({isModalLoader:true}, ()=> {
-    RestAPI.getPaper(userPageID).then(response => {
-      this.setState({
-        title: response.data.title,
-        url: response.data.url,
-        year: response.data.year,
-        abstract: response.data.abstract,
-        isModalLoader:false
-      })
-    }).catch(error => {
-      handleServerErrors(error, toast.error)
-    })
-   }
-  )}
-
   render() {
     return (
       <Fragment>
-        {this.state.isLoding ? (
+        {this.state.isLoding ? 
           <div className="text-center" style={{ padding: "20px" }}>
             <Loader type="Puff" color="#00BFFF" height={100} width={100} />
           </div>
-        ) : (
-          <div id="chartdiv" style={{ width: "100%", height: "600px" }}>
-           
-          </div>
-           )}
-
-           <Modal isOpen={this.state.modal} toggle={this.toggle} size="lg">
-           {this.state.isPaperData ? (
-             <>
-               <ModalHeader toggle={this.toggle}>Paper Detail</ModalHeader>
-               <ModalBody>
-               {this.state.isModalLoader ? (
-                 <div className="text-center" style={{ padding: "20px" }}>
-                   <Loader type="Puff" color="#00BFFF" height={100} width={100} />
-                 </div>
-               ) : (
-                 <>
-                 <strong>Title: </strong> {" "}
-                 <p>
-                   {this.state.title}
-                 </p>
-                 <strong>Year: </strong>{" "}
-                 <p>
-                 {this.state.year}
-                 </p>
-                 <strong>URL: </strong>{" "}
-                 <p>
-                   {this.state.url}
-                 </p>
-                 <strong>Abstract: </strong>{" "}
-                 <p>
-                 {this.state.abstract}
-                 </p>
-                 </>
-               )}
-               </ModalBody>
-             </>
-           ) : (
-             <>
-               <ModalHeader toggle={this.toggle}>Twitter Detail</ModalHeader>
-               
-               <ModalBody>
-               {this.state.isModalLoader ? (
-                 <div className="text-center" style={{ padding: "20px" }}>
-                   <Loader type="Puff" color="#00BFFF" height={100} width={100} />
-                 </div>
-               ) : (
-               <div style={{display:'flex',justifyContent:'center'}}>
-                 <TwitterTweetEmbed tweetId={this.state.tweetId} />
-               </div>
-               )}
-               </ModalBody>
-             </>
-           )}
-           <ModalFooter>
-             <Button color="primary" onClick={this.toggle}>
-               OK
-             </Button>
-           </ModalFooter>
-         </Modal>
+         :
+         this.state.isData ?
+         <div id="chartdiv" style={{ width: "100%", height: "600px" }}></div>
+         :<div id="chartdiv" style={{textAlign:"center"}}>No Data Found</div>
       
-       
+          }
+        <Modal isOpen={this.state.modal} toggle={this.toggle} size="lg">
+          <ModalBody>
+            <Tabs>
+              <TabList>
+                <Tab>Papers</Tab>
+                <Tab>Tweets</Tab>
+              </TabList>
+              <TabPanel>
+                {this.state.isModalLoader ? (
+                  <div className="text-center" style={{ padding: "20px" }}>
+                    <Loader
+                      type="Puff"
+                      color="#00BFFF"
+                      height={100}
+                      width={100}
+                      timeout={1000}
+                    />
+                  </div>
+                ) : (
+                  <>
+                    {this.state.isPaperData ? (
+                      <>
+                        {this.state.userPageIDs.map((data, idx) => (
+                          <>
+                            <strong>Title: </strong> <p>{data.title}</p>
+                            <strong>Year: </strong> <p>{data.year}</p>
+                            <strong>URL: </strong> <p>{data.url}</p>
+                            <strong>Abstract: </strong> <p>{data.abstract}</p>
+                          </>
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        <p style={{ textAlign: "center" }}>
+                          No matching papers found
+                        </p>
+                      </>
+                    )}
+                  </>
+                )}
+              </TabPanel>
+              <TabPanel>
+                {this.state.isModalLoader ? (
+                  <div className="text-center" style={{ padding: "20px" }}>
+                    <Loader
+                      type="Puff"
+                      color="#00BFFF"
+                      height={100}
+                      width={100}
+                      timeout={3000}
+                    />
+                  </div>
+                ) : (
+                  <>
+                    {this.state.isTweetData ? (
+                      <>
+                        {this.state.tweetIds.map((data, idx) => (
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <TwitterTweetEmbed
+                              tweetId={data}
+                              placeholder={
+                                <Loader
+                                  type="Puff"
+                                  color="#00BFFF"
+                                  height={100}
+                                  style={{
+                                    padding: "200px 0px",
+                                  }}
+                                  width={100}
+                                />
+                              }
+                            />
+                          </div>
+                        ))}
+                      </>
+                    ) : (
+                      <p style={{ textAlign: "center" }}>
+                        No matching tweets found{" "}
+                      </p>
+                    )}
+                  </>
+                )}
+              </TabPanel>
+            </Tabs>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button color="primary" onClick={this.toggle}>
+              OK
+            </Button>
+          </ModalFooter>
+        </Modal>
       </Fragment>
     );
   }
