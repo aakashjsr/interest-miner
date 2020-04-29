@@ -32,6 +32,7 @@ class CloudChartPage extends Component {
     url: "",
     year: "",
     abstract: "",
+
   };
   componentDidMount() {
     this.setState({ isLoding: true }, () => {
@@ -42,6 +43,7 @@ class CloudChartPage extends Component {
               isData:false
             })
           }
+
           series.data = response.data;
           this.setState({
             isLoding: false,
