@@ -38,7 +38,7 @@ class CloudChartPage extends Component {
     this.setState({ isLoding: true }, () => {
       RestAPI.cloudChart()
         .then((response) => {
-          if(response.data.length==0){
+          if(response.data.length === 0){
             this.setState({
               isData:false
             })
@@ -79,7 +79,7 @@ class CloudChartPage extends Component {
             isTweetData: true,
             tweetId: ev.target.dataItem.dataContext.tweet_ids,
           });
-          if (ev.target.dataItem.dataContext.tweet_ids.length == 0) {
+          if (ev.target.dataItem.dataContext.tweet_ids.length === 0) {
             this.setState({
               isTweetData: false,
             });
@@ -91,7 +91,7 @@ class CloudChartPage extends Component {
             userPageID: ev.target.dataItem.dataContext.papers,
           });
 
-          if (ev.target.dataItem.dataContext.papers.length == 0) {
+          if (ev.target.dataItem.dataContext.papers.length === 0) {
             this.setState({
               isPaperData: false,
             });

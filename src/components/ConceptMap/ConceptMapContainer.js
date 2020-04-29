@@ -37,7 +37,8 @@ class ConceptMapContainer extends Component {
 
         this.state = {
             data: [],
-            isLoading: true
+            isLoading: true,
+            isData: true,
         }
     }
 
@@ -53,6 +54,12 @@ class ConceptMapContainer extends Component {
     componentDidMount() {
         this.setState({ isLoding: true }, () => {
             RestAPI.conceptChart().then(response => {
+                console.log(response)
+                if(response.data.length === 0){
+                    this.setState({
+                        isData:false
+                    })
+                }
                 let chartData = [];
                 let dataLength = Math.min(response.data.length, 5);
                 for (let index = 0; index < dataLength; index++) {
@@ -245,6 +252,7 @@ class ConceptMapContainer extends Component {
                     <Loader type="Puff" color="#00BFFF" height={100} width={100} />
                 </div>
                     :
+                    this.state.isData ?
                     <div>
                         <Stage width={width} height={this.stageHeight} >
                             <Layer>
@@ -253,6 +261,8 @@ class ConceptMapContainer extends Component {
                         </Stage>
                         <div align="center">{highlighedCategory.length ? highlighedCategory[0] : ""}</div>
                     </div>
+                    : 
+                    <div style={{textAlign:"center"}}>No data is available at the moment</div>
                 }
 
             </div>
