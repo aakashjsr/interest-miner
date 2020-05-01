@@ -2,6 +2,7 @@
 import React from "react";
 import Chart from "chart.js";
 import CloudChart from "../components/Chart/CloudChart"
+import { Link } from 'react-router-dom';
 
 
 import {
@@ -51,11 +52,12 @@ class CloudChartPage extends React.Component {
               <Card className="bg-gradient-default1 shadow">
                 <CardHeader className="bg-transparent">
                   <Row className="align-items-center">
-                    <div className="col">
-                      <h6 className="text-uppercase text-light1 ls-1 mb-1">
-                        {/* Overview */}
-                      </h6>
+                    <div className="col" style={{display:"flex",justifyContent:"space-between"}}>
                       <h2 className="text-white1 mb-0">Cloud Chart</h2>
+                      <Link to="/app/Keyword" className=" ls-1 mb-1" style={{lineHeight:"2"}}>
+                      Edit Keywords
+                      </Link>
+                    
                     </div>
 
                   </Row>
