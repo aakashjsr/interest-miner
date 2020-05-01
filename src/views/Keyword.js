@@ -39,13 +39,6 @@ class Keyword extends React.Component {
   }
 
   handleChangeWeight = (idx) => (e) => {
-    console.log(e.target.value);
-    if (e.target.value > 5) {
-      toast.error("Enter The Number Below Equal to or Below 5", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
-    }
     const newKeywords = this.state.rows.map((data, sidx) => {
       if (idx !== sidx) return data;
       return { ...data, weight: e.target.value };
@@ -85,7 +78,6 @@ class Keyword extends React.Component {
   getKeywords = () => {
     RestAPI.cloudChart()
       .then((response) => {
-        console.log(response);
         let rowArray = [];
         if (response && response.data) {
           for (let i = 0; i < response.data.length; i++) {
@@ -106,6 +98,7 @@ class Keyword extends React.Component {
             inputs[i].disabled = true;
           }
         }
+        this.handleAddRow()
       })
       .catch((error) => {
         this.setState({ isLoding: false });
@@ -134,7 +127,6 @@ class Keyword extends React.Component {
     this.setState({ isLoding: true }, () => {
       RestAPI.deletekeyword(id)
         .then((response) => {
-          console.log(response);
           const newvalue = this.state.keywordData.filter((v, i) => v.id !== id);
           this.setState({
             isLoding: false,
