@@ -44,7 +44,7 @@ class CloudChartPage extends Component {
             })
           }
 
-          series.data = response.data;
+          series.data = response.data.slice(0,15);
           this.setState({
             isLoding: false,
             // data : response.data
