@@ -53,7 +53,7 @@ class CloudChartPage extends React.Component {
                 <CardHeader className="bg-transparent">
                   <Row className="align-items-center">
                     <div className="col" style={{display:"flex",justifyContent:"space-between"}}>
-                      <h2 className="text-white1 mb-0">Cloud Chart</h2>
+                      <h2 className="text-white1 mb-0">Interest Overview</h2>
                       <Link to="/app/Keyword" className=" ls-1 mb-1" style={{lineHeight:"2"}}>
                       Edit Keywords
                       </Link>

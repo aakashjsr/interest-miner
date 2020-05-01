@@ -186,6 +186,7 @@ class RestAPI {
 
   //** ADD KEYWORD DATA API **//
   static addKeyword(data) {
+    console.log("Data",data)
     const TOKEN = getItem("accessToken");
     return axios({
       method: "post",
