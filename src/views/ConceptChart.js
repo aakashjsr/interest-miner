@@ -56,7 +56,7 @@ class ConceptPage extends React.Component {
                       <h6 className="text-uppercase text-light1 ls-1 mb-1">
                         {/* Overview */}
                       </h6>
-                      <h2 className="text-white1 mb-0">Concept Map Chart</h2>
+                      <h2 className="text-white1 mb-0">Potential Interests</h2>
                     </div>
 
                   </Row>

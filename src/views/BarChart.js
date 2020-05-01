@@ -55,7 +55,7 @@ class BarChartPage extends React.Component {
                       <h6 className="text-uppercase text-light1 ls-1 mb-1">
                         Overview
                       </h6>
-                      <h2 className="text-white1 mb-0">Bar Chart</h2>
+                      <h2 className="text-white1 mb-0">Activities</h2>
                     </div>
 
                   </Row>
