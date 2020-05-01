@@ -129,10 +129,6 @@ class SearchUserProfile extends React.Component {
   getScore = () => {
     this.setState({ isLoding1: true }, () => {
       RestAPI.getScore(this.props.match.params.id).then(response => {
-        toast.success("Update Profile Data !", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000
-        });
         this.setState({ isLoding1: false, score: response.data.score })
         // this.props.history.push("/admin/view-paper");
 
