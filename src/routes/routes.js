@@ -5,12 +5,12 @@ import Login from "../views/Login.js";
 import AddPaper from "../views/AddPaper.js";
 import ViewPaper from "../views/ViewPaper.js";
 import EditPaper from "../views/EditPaper.js";
-import Keywords from "../views/Keywords.js";
-import BlacklistedKeywords from "../views/BlacklistedKeywords";
 import CloudChartPage from "../views/CloudChart";
 import ConceptChartPage from "../views/ConceptChart";
 import StreamChartPage from "../views/StreamChart";
 import SearchUserProfile from "../views/SearchUserProfile";
+import Keyword from "../views/Keyword.js"
+import BlacklistedKeywords from "../views/BlacklistedKeywords.js"
 
 import PieChartPage from "../views/PieChart";
 import BarChartPage from "../views/BarChart";
@@ -56,9 +56,9 @@ var routes = [
     path: "/keyword",
     name: "Keyword",
     icon: "ni ni-archive-2 text-yellow",
-    component: Keywords,
+    component: Keyword,
     layout: "/app",
-    // display: "none"
+    display: "none"
   },
   {
     path: "/blacklisted-keywords",
@@ -66,7 +66,7 @@ var routes = [
     icon: "ni ni-archive-2 text-brown",
     component: BlacklistedKeywords,
     layout: "/app",
-    // display: "none"
+    display: "none"
   },
 
 

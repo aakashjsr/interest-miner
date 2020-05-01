@@ -94,6 +94,21 @@ class RestAPI {
     )
   };
 
+  static deletekeyword(id) {
+    const TOKEN = getItem("accessToken");
+    return axios({
+      method: "DELETE",
+      url: `${BASE_URL}/api/interests/long-term/${id}/`,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        'Authorization': `Token ${TOKEN}`
+      },
+    }).then(
+      res => res
+    )
+  };
+
   //** UPDATE PAPER API **//
   static updatePaper(data, id) {
     const TOKEN = getItem("accessToken");
@@ -171,17 +186,19 @@ class RestAPI {
 
   //** ADD KEYWORD DATA API **//
   static addKeyword(data) {
+    console.log("Data",data)
     const TOKEN = getItem("accessToken");
     return axios({
       method: "post",
-      url: `${BASE_URL}/api/interests/keywords/`,
+      url: `${BASE_URL}/api/interests/long-term/`,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
         'Authorization': `Token ${TOKEN}`
       },
+      
       data: {
-        keywords: [data]
+        keywords:data
       }
     }).then(
       res => res
