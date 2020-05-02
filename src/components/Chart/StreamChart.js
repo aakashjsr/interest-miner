@@ -4,9 +4,11 @@ import { toast } from 'react-toastify';
 import Loader from 'react-loader-spinner'
 import RestAPI from 'services/api';
 
+
 import { handleServerErrors } from "utils/errorHandler";
 class StreamChart extends React.Component {
 
+  
 
   state = {
     chartOptions: {
@@ -74,7 +76,24 @@ class StreamChart extends React.Component {
   render() {
     let graphOptions = {
       chart: {
-        height: 500,
+        toolbar: {
+          show: true,
+          offsetX: 0,
+          offsetY: 0,
+          tools: {
+            download: false,
+            selection: true,
+            zoom: true,
+            zoomin: true,
+            zoomout: true,
+            pan: true,
+            reset: true | '<img src="/static/icons/reset.png" width="20">',
+            customIcons: []
+          },
+          autoSelected: 'zoom' 
+        },
+   
+   
         type: 'area',
         stacked: true
       },
@@ -105,7 +124,6 @@ class StreamChart extends React.Component {
                 type="area"
                 series={this.state.chartOptions.twitterSeries}
                 options={twitterGraphOptions}
-                height={500}
               />
             </div>
 

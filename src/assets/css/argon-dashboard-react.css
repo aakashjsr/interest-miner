@@ -261,6 +261,10 @@ input[type="datetime-local"],
 input[type="month"] {
   -webkit-appearance: listbox; }
 
+  .apexcharts-toolbar{
+    display: block !important;
+  }
+
 textarea {
   overflow: auto;
   resize: vertical; }
@@ -14330,3 +14334,4 @@ button:focus, :focus {
 
 .table .badge i {
   margin-right: 10px; }
+
