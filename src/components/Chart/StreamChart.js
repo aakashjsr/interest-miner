@@ -76,6 +76,7 @@ class StreamChart extends React.Component {
       chart: {
         height: 500,
         type: 'area',
+        stacked: true
       },
       colors: ["#1F85DE", "#D81FDE", "#DE1F85", "#DE781F", "#DE1F26", "#BFDE1F", "#6C0D5D", "#0D6C1C", "#25DE1F", "#3E1FDE"],
       dataLabels: { enabled: true },
@@ -83,6 +84,7 @@ class StreamChart extends React.Component {
         curve: 'smooth',
         width: 1
       },
+      fill: {type: "solid"},
       xaxis: {},
     }
     let twitterGraphOptions = JSON.parse(JSON.stringify(graphOptions));
