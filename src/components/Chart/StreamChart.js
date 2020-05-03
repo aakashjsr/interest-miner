@@ -83,11 +83,11 @@ class StreamChart extends React.Component {
           tools: {
             download: false,
             selection: true,
-            zoom: true,
+            zoom: false,
             zoomin: true,
             zoomout: true,
             pan: true,
-            reset: true | '<img src="/static/icons/reset.png" width="20">',
+            reset: false,
             customIcons: [],
           },
           autoSelected: "zoom",
@@ -108,7 +108,7 @@ class StreamChart extends React.Component {
         "#25DE1F",
         "#3E1FDE",
       ],
-      dataLabels: { enabled: true },
+      dataLabels: { enabled: false },
       stroke: {
         curve: "smooth",
         width: 1,
@@ -147,13 +147,7 @@ class StreamChart extends React.Component {
                 height={500}
               />
             </div>
-            <p>
-              {" "}
-              In this chart you can observe how your interest evolves in the
-              past periods. The abscissa represents timescale and the size of
-              each individual stream shape is proportional to the values in each
-              interest.
-            </p>
+            
           </>
         )}
       </div>

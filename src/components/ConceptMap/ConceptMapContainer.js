@@ -295,7 +295,8 @@ class ConceptMapContainer extends Component {
 
   render() {
     const containerDiv = document.querySelectorAll(".card-body")[0];
-    const width = containerDiv ? containerDiv.clientWidth : this.stageWidth;
+    // const width = containerDiv ? containerDiv.clientWidth : this.stageWidth;
+    const width = this.stageWidth;
     const { categories } = this.state;
     let highlighedCategory = [];
     if (categories) {
@@ -320,11 +321,6 @@ class ConceptMapContainer extends Component {
                 {highlighedCategory.length ? highlighedCategory[0] : ""}
               </div>
             </div>
-            <p>
-              {" "}
-              This chart uses your top 5 interests to infer your potential
-              interests. You can see them on the right side of the graph.
-            </p>
           </>
         ) : (
           <div style={{ textAlign: "center" }}>

@@ -57,6 +57,12 @@ class StreamChartPage extends React.Component {
                         Overview
                       </h6>
                       <h2 className="text-white1 mb-0">Interest Trends</h2>
+                      <p>
+                        In this chart you can observe how your interest evolves in the
+                        past periods. The abscissa represents timescale and the size of
+                        each individual stream shape is proportional to the values in each
+                        interest.
+                      </p>
                     </div>
 
                   </Row>

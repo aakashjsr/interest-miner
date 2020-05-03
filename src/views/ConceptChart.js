@@ -57,6 +57,7 @@ class ConceptPage extends React.Component {
                         {/* Overview */}
                       </h6>
                       <h2 className="text-white1 mb-0">Potential Interests</h2>
+                      <p>This chart uses your top 5 interests to infer your potential interests. You can see them on the right side of the graph.</p>
                     </div>
 
                   </Row>
