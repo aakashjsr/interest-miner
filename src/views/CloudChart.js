@@ -58,8 +58,8 @@ class CloudChartPage extends React.Component {
                     </div>
                   </Row>
                 </CardHeader>
+
                 <CardBody>
-                  <CloudChart />
                   <div>Word Cloud</div>
                   <p>
                     This word cloud shows the top 15 interests based on your
@@ -67,6 +67,7 @@ class CloudChartPage extends React.Component {
                     to see its source. You can also click the word to see from
                     which paper/tweet we got this interest.
                   </p>
+                  <CloudChart />
                 </CardBody>
               </Card>
             </Col>

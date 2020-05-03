@@ -129,6 +129,12 @@ class StreamChart extends React.Component {
           </div>
         ) : (
           <>
+            <p>
+              In this chart you can observe how your interest evolves in the
+              past periods. The abscissa represents timescale and the size of
+              each individual stream shape is proportional to the values in each
+              interest.
+            </p>
             <div align="center">Twitter Keyword Trends</div>
             <div id="chart">
               <Chart
@@ -147,13 +153,6 @@ class StreamChart extends React.Component {
                 height={500}
               />
             </div>
-            <p>
-              {" "}
-              In this chart you can observe how your interest evolves in the
-              past periods. The abscissa represents timescale and the size of
-              each individual stream shape is proportional to the values in each
-              interest.
-            </p>
           </>
         )}
       </div>
