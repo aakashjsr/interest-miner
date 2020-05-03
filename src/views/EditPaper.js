@@ -1,10 +1,9 @@
-
 import React from "react";
 // react plugin used to create google maps
-import { toast } from 'react-toastify';
-import Loader from 'react-loader-spinner';
+import { toast } from "react-toastify";
+import Loader from "react-loader-spinner";
 import { handleServerErrors } from "utils/errorHandler";
-import RestAPI from '../services/api';
+import RestAPI from "../services/api";
 
 // reactstrap components
 import {
@@ -17,51 +16,55 @@ import {
   Input,
   Container,
   Row,
-  Col
+  Col,
 } from "reactstrap";
 
 // core components
 import Header from "components/Headers/Header.js";
 
-
 class EditPaper extends React.Component {
-
   state = {
-
-    title: '',
-    url: '',
-    year: '',
-    abstract: '',
-    isLoding: false
-  }
+    title: "",
+    url: "",
+    year: "",
+    abstract: "",
+    isLoding: false,
+  };
   componentDidMount() {
     this.setState({ isLoding: true }, () => {
-      RestAPI.getPaper(this.props.match.params.id).then(response => {
-        this.setState({
-          isLoding: false,
-          id: response.data.id,
-          title: response.data.title,
-          url: response.data.url,
-          year: response.data.year,
-          abstract: response.data.abstract
+      RestAPI.getPaper(this.props.match.params.id)
+        .then((response) => {
+          this.setState({
+            isLoding: false,
+            id: response.data.id,
+            title: response.data.title,
+            url: response.data.url,
+            year: response.data.year,
+            abstract: response.data.abstract,
+          });
         })
-
-      }).catch(error => {
-        this.setState({ isLoding: false })
-        handleServerErrors(error, toast.error)
-
-
-      })
-    })
+        .catch((error) => {
+          this.setState({ isLoding: false });
+          handleServerErrors(error, toast.error);
+        });
+    });
   }
 
-  handleChange = e => {
+  handleChange = (e) => {
     let getValue = e.target.value;
     let getName = e.target.name;
-    this.setState(() => ({ [getName]: getValue }))
+    this.setState(() => ({ [getName]: getValue }));
   };
 
-  _handleSubmit = e => {
+  infoshow = () => {
+    document.getElementById("p-info").style.display = "block";
+  };
+
+  infohide = () => {
+    document.getElementById("p-info").style.display = "none";
+  };
+
+  _handleSubmit = (e) => {
     e.preventDefault();
     let data = {
       title: this.state.title,
@@ -71,23 +74,27 @@ class EditPaper extends React.Component {
     };
 
     this.setState({ isLoding: true }, () => {
-      RestAPI.updatePaper(data, this.state.id).then(response => {
-        toast.success("Paper Updated!", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000
+      RestAPI.updatePaper(data, this.state.id)
+        .then((response) => {
+          toast.success("Paper Updated!", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+          });
+          this.setState({
+            isLoding: false,
+            title: "",
+            url: "",
+            year: "",
+            abstract: "",
+          });
+          this.props.history.push("/app/view-paper");
+        })
+        .catch((error) => {
+          this.setState({ isLoding: false });
+          handleServerErrors(error, toast.error);
         });
-        this.setState({ isLoding: false, title: '', url: '', year: '', abstract: '' })
-        this.props.history.push("/app/view-paper");
-
-      }).catch(error => {
-        this.setState({ isLoding: false })
-        handleServerErrors(error, toast.error)
-
-      })
-    })
-
+    });
   };
-
 
   render() {
     return (
@@ -106,16 +113,20 @@ class EditPaper extends React.Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  {this.state.isLoding ?
-                    (<div className="text-center" style={{ padding: '20px' }}>
-                      <Loader type="Puff" color="#00BFFF" height={100} width={100} />
-                    </div>)
-
-                    :
+                  {this.state.isLoding ? (
+                    <div className="text-center" style={{ padding: "20px" }}>
+                      <Loader
+                        type="Puff"
+                        color="#00BFFF"
+                        height={100}
+                        width={100}
+                      />
+                    </div>
+                  ) : (
                     <Form onSubmit={this._handleSubmit} method="post">
                       <h6 className="heading-small text-muted mb-4">
                         Edit Paper information
-                    </h6>
+                      </h6>
                       <div className="pl-lg-4">
                         <Row>
                           <Col lg="6">
@@ -125,11 +136,13 @@ class EditPaper extends React.Component {
                                 htmlFor="input-username"
                               >
                                 Title
-                            </label>
+                              </label>
                               <Input
                                 className="form-control-alternative"
                                 id="input-username"
-                                name="title" value={this.state.title} onChange={this.handleChange}
+                                name="title"
+                                value={this.state.title}
+                                onChange={this.handleChange}
                                 placeholder="Title"
                                 type="text"
                               />
@@ -142,11 +155,13 @@ class EditPaper extends React.Component {
                                 htmlFor="input-email"
                               >
                                 URL
-                            </label>
+                              </label>
                               <Input
                                 className="form-control-alternative"
                                 id="input-email"
-                                name="url" value={this.state.url} onChange={this.handleChange}
+                                name="url"
+                                value={this.state.url}
+                                onChange={this.handleChange}
                                 placeholder="https://www.zyz.com"
                                 type="text"
                               />
@@ -161,12 +176,14 @@ class EditPaper extends React.Component {
                                 htmlFor="input-first-name"
                               >
                                 Year
-                            </label>
+                              </label>
                               <Input
                                 className="form-control-alternative"
                                 defaultValue="Lucky"
                                 id="input-first-name"
-                                name="year" value={this.state.year} onChange={this.handleChange}
+                                name="year"
+                                value={this.state.year}
+                                onChange={this.handleChange}
                                 placeholder="Year"
                                 type="number"
                               />
@@ -179,11 +196,13 @@ class EditPaper extends React.Component {
                                 htmlFor="input-last-name"
                               >
                                 Abstract
-                            </label>
+                              </label>
                               <Input
                                 className="form-control-alternative"
                                 id="input-last-name"
-                                name="abstract" value={this.state.abstract} onChange={this.handleChange}
+                                name="abstract"
+                                value={this.state.abstract}
+                                onChange={this.handleChange}
                                 placeholder="Abstract"
                                 rows="10"
                                 type="textarea"
@@ -191,11 +210,39 @@ class EditPaper extends React.Component {
                             </FormGroup>
                           </Col>
                         </Row>
+                        <p>
+                          {" "}
+                          In this page you can add your interests which we
+                          haven’t explored or remove the interests which you
+                          think it’s not correct. You can also rate for them
+                          from 1-5 to define the importance of your interests.
+                          Note that only top 15 interests will be visualized in
+                          the word cloud.
+                        </p>
                       </div>
                       <hr className="my-4" />
-                      <Button color="primary" type="submit"> Update </Button>
+                      <Button color="primary" type="submit">
+                        {" "}
+                        Update{" "}
+                      </Button>
+                      <i
+                        className="far fa-question-circle"
+                        style={{
+                          position: "absolute",
+                          marginTop: "-5px",
+                          cursor: "pointer",
+                        }}
+                        onMouseOver={this.infoshow}
+                        onMouseLeave={this.infohide}
+                      ></i>
+                      <p style={{ display: "none" }} id="p-info">
+                        {" "}
+                        If you’re not satisfied with the interest modeling
+                        result, click here to generate the better interest model
+                        yourself.
+                      </p>
                     </Form>
-                  }
+                  )}
                 </CardBody>
               </Card>
             </Col>

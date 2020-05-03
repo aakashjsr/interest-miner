@@ -5,8 +5,6 @@ import RestAPI from "services/api";
 
 import { handleServerErrors } from "utils/errorHandler";
 import * as am4core from "@amcharts/amcharts4/core";
-
-import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import * as am4plugins_wordCloud from "@amcharts/amcharts4/plugins/wordCloud";
 import { Modal, ModalBody, ModalFooter, Button } from "reactstrap";
 import { TwitterTweetEmbed } from "react-twitter-embed";
@@ -16,7 +14,6 @@ import "react-tabs/style/react-tabs.css";
 
 /* Chart code */
 // Themes begin
-am4core.useTheme(am4themes_animated);
 // Themes end
 
 class CloudChartPage extends Component {
@@ -61,9 +58,11 @@ class CloudChartPage extends Component {
     let series = chart.series.push(new am4plugins_wordCloud.WordCloudSeries());
     series.randomness = 0.1;
     series.rotationThreshold = 0.5;
+    series.animationDuration = 50;
 
     series.dataFields.word = "keyword";
     series.dataFields.value = "weight";
+    
 
     series.heatRules.push({
       target: series.labels.template,

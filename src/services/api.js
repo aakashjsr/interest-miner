@@ -3,30 +3,23 @@ import { BASE_URL } from "../constants";
 import axios from "axios";
 
 class RestAPI {
-
   //** SIGNUP API **//
   static userSignup(data) {
     return axios({
       method: "post",
       url: `${BASE_URL}/api/accounts/register/`,
-      data: data
-    }).then(
-      res => res
-
-    )
-  };
+      data: data,
+    }).then((res) => res);
+  }
 
   //** SIGNUP API **//
   static userSignIn(data) {
-
     return axios({
       method: "post",
       url: `${BASE_URL}/api/accounts/login/`,
-      data: data
-    }).then(
-      res => res
-    )
-  };
+      data: data,
+    }).then((res) => res);
+  }
 
   //** ADD PAPER API **//
   static addPaper(data) {
@@ -37,14 +30,11 @@ class RestAPI {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
+        Authorization: `Token ${TOKEN}`,
       },
-      data: data
-    }).then(
-      res => res
-
-    )
-  };
+      data: data,
+    }).then((res) => res);
+  }
 
   //** GET LIST PAPER API **//
   static getListPaper() {
@@ -55,12 +45,10 @@ class RestAPI {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
+        Authorization: `Token ${TOKEN}`,
       },
-    }).then(
-      res => res
-    )
-  };
+    }).then((res) => res);
+  }
 
   //** GET A PAPER API **//
   static getPaper(id) {
@@ -71,12 +59,10 @@ class RestAPI {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
+        Authorization: `Token ${TOKEN}`,
       },
-    }).then(
-      res => res
-    )
-  };
+    }).then((res) => res);
+  }
 
   //** DELETE A PAPER API **//
   static deletePaper(id) {
@@ -87,12 +73,10 @@ class RestAPI {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
+        Authorization: `Token ${TOKEN}`,
       },
-    }).then(
-      res => res
-    )
-  };
+    }).then((res) => res);
+  }
 
   static deletekeyword(id) {
     const TOKEN = getItem("accessToken");
@@ -102,12 +86,10 @@ class RestAPI {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
+        Authorization: `Token ${TOKEN}`,
       },
-    }).then(
-      res => res
-    )
-  };
+    }).then((res) => res);
+  }
 
   //** UPDATE PAPER API **//
   static updatePaper(data, id) {
@@ -118,15 +100,11 @@ class RestAPI {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
+        Authorization: `Token ${TOKEN}`,
       },
-      data: data
-    }).then(
-      res => res
-
-    )
-  };
-
+      data: data,
+    }).then((res) => res);
+  }
 
   //** GET USER PROFILE DATA API **//
   static getUserData() {
@@ -137,14 +115,11 @@ class RestAPI {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
+        Authorization: `Token ${TOKEN}`,
       },
       //   data: data
-    }).then(
-      res => res
-
-    )
-  };
+    }).then((res) => res);
+  }
 
   //** UPDATE USER PROFILE API **//
   static updateUserProfile(data, id) {
@@ -155,16 +130,11 @@ class RestAPI {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
+        Authorization: `Token ${TOKEN}`,
       },
-      data: data
-    }).then(
-      res => res
-
-    )
-  };
-
-
+      data: data,
+    }).then((res) => res);
+  }
 
   //** GET KEYWORD DATA API **//
   static getKeyword() {
@@ -175,18 +145,14 @@ class RestAPI {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
+        Authorization: `Token ${TOKEN}`,
       },
       //   data: data
-    }).then(
-      res => res
-
-    )
-  };
+    }).then((res) => res);
+  }
 
   //** ADD KEYWORD DATA API **//
   static addKeyword(data) {
-    console.log("Data",data)
     const TOKEN = getItem("accessToken");
     return axios({
       method: "post",
@@ -194,18 +160,14 @@ class RestAPI {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
+        Authorization: `Token ${TOKEN}`,
       },
-      
+
       data: {
-        keywords:data
-      }
-    }).then(
-      res => res
-
-    )
-  };
-
+        keywords: data,
+      },
+    }).then((res) => res);
+  }
 
   //** GET BLACK KEYWORD  API **//
   static getBlackKeyword() {
@@ -216,18 +178,14 @@ class RestAPI {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
+        Authorization: `Token ${TOKEN}`,
       },
       //   data: data
-    }).then(
-      res => res
-
-    )
-  };
+    }).then((res) => res);
+  }
 
   //** ADD BLACK KEYWORD API **//
   static addBlackKeyword(data) {
-
     const TOKEN = getItem("accessToken");
     return axios({
       method: "post",
@@ -235,17 +193,13 @@ class RestAPI {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
+        Authorization: `Token ${TOKEN}`,
       },
       data: {
-        keywords: [data]
-      }
-    }).then(
-      res => res
-
-    )
-  };
-
+        keywords: [data],
+      },
+    }).then((res) => res);
+  }
 
   //** DELETE BLACK KEYWORD API **//
   static deleteBlackKeyword(id) {
@@ -256,15 +210,10 @@ class RestAPI {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
+        Authorization: `Token ${TOKEN}`,
       },
-
-    }).then(
-      res => res
-
-    )
-  };
-
+    }).then((res) => res);
+  }
 
   //** PIE DATA API **//
   static pieChart(data) {
@@ -275,18 +224,14 @@ class RestAPI {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
+        Authorization: `Token ${TOKEN}`,
       },
-      keywords: data
-    }).then(
-      res => res
-
-    )
-  };
+      keywords: data,
+    }).then((res) => res);
+  }
 
   //** STREAM DATA API **//
   static streamChart() {
-
     const TOKEN = getItem("accessToken");
     return axios({
       method: "get",
@@ -294,17 +239,13 @@ class RestAPI {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
+        Authorization: `Token ${TOKEN}`,
       },
-    }).then(
-      res => res
-
-    )
-  };
+    }).then((res) => res);
+  }
 
   //** CONCEPT DATA API **//
   static conceptChart() {
-
     const TOKEN = getItem("accessToken");
     return axios({
       method: "get",
@@ -312,17 +253,10 @@ class RestAPI {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
+        Authorization: `Token ${TOKEN}`,
       },
-    }).then(
-      res => res
-
-    )
-  };
-
-
-
-
+    }).then((res) => res);
+  }
 
   //** BAR DATA API **//
   static barChart(data) {
@@ -333,14 +267,11 @@ class RestAPI {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
+        Authorization: `Token ${TOKEN}`,
       },
-      keywords: data
-    }).then(
-      res => res
-
-    )
-  };
+      keywords: data,
+    }).then((res) => res);
+  }
 
   //** CLOUD DATA API **//
   static cloudChart(data) {
@@ -351,14 +282,11 @@ class RestAPI {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
+        Authorization: `Token ${TOKEN}`,
       },
-      keywords: data
-    }).then(
-      res => res
-
-    )
-  };
+      keywords: data,
+    }).then((res) => res);
+  }
 
   //** GET SEARCH USER PROFILE DATA API **//
   static getUserProfile(id) {
@@ -369,13 +297,10 @@ class RestAPI {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
+        Authorization: `Token ${TOKEN}`,
       },
-    }).then(
-      res => res
-    )
-  };
-
+    }).then((res) => res);
+  }
 
   //** GET SCORE SEARCH USER PROFILE DATA API **//
   static getScore(id) {
@@ -386,16 +311,10 @@ class RestAPI {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
+        Authorization: `Token ${TOKEN}`,
       },
-    }).then(
-      res => res
-    )
-  };
-
-
-
-
+    }).then((res) => res);
+  }
 }
 
 export default RestAPI;

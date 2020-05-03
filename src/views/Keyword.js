@@ -94,11 +94,11 @@ class Keyword extends React.Component {
         });
         var inputs = document.getElementsByTagName("Input");
         for (var i = 0; i < inputs.length; i++) {
-          if (inputs[i].type === "text") {
+          if (inputs[i].id === "keyword") {
             inputs[i].disabled = true;
           }
         }
-        this.handleAddRow()
+        this.handleAddRow();
       })
       .catch((error) => {
         this.setState({ isLoding: false });
@@ -114,7 +114,7 @@ class Keyword extends React.Component {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 2000,
         });
-        this.getKeywords();
+        window.location.href = "/app/cloud-chart";
       })
       .catch((error) => {
         this.setState({ isLoding: false });
@@ -203,6 +203,7 @@ class Keyword extends React.Component {
                                   required
                                   min="1"
                                   max="5"
+                                  step="0.1"
                                 />
                               </FormGroup>
                             </Col>
