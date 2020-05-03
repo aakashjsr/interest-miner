@@ -62,6 +62,7 @@ class CloudChartPage extends Component {
 
     series.dataFields.word = "keyword";
     series.dataFields.value = "weight";
+    
 
     series.heatRules.push({
       target: series.labels.template,

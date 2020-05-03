@@ -1,24 +1,12 @@
-
 import React from "react";
 import Chart from "chart.js";
-import CloudChart from "../components/Chart/CloudChart"
-import { Link } from 'react-router-dom';
+import CloudChart from "../components/Chart/CloudChart";
+import { Link } from "react-router-dom";
 
-
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Container,
-  Row,
-  Col
-} from "reactstrap";
+import { Card, CardHeader, CardBody, Container, Row, Col } from "reactstrap";
 
 // core components
-import {
-  chartOptions,
-  parseOptions,
-} from "variables/charts.js";
+import { chartOptions, parseOptions } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
 
@@ -27,7 +15,7 @@ class CloudChartPage extends React.Component {
     super(props);
     this.state = {
       activeNav: 1,
-      chartExample1Data: "data1"
+      chartExample1Data: "data1",
     };
     if (window.Chart) {
       parseOptions(Chart, chartOptions());
@@ -38,7 +26,7 @@ class CloudChartPage extends React.Component {
     this.setState({
       activeNav: index,
       chartExample1Data:
-        this.state.chartExample1Data === "data1" ? "data2" : "data1"
+        this.state.chartExample1Data === "data1" ? "data2" : "data1",
     });
   };
   render() {
@@ -52,24 +40,36 @@ class CloudChartPage extends React.Component {
               <Card className="bg-gradient-default1 shadow">
                 <CardHeader className="bg-transparent">
                   <Row className="align-items-center">
-                    <div className="col" style={{display:"flex",justifyContent:"space-between"}}>
+                    <div
+                      className="col"
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
                       <h2 className="text-white1 mb-0">Interest Overview</h2>
-                      <Link to="/app/Keyword" className=" ls-1 mb-1" style={{lineHeight:"2"}}>
-                      Edit Keywords
+                      <Link
+                        to="/app/Keyword"
+                        className=" ls-1 mb-1"
+                        style={{ lineHeight: "2" }}
+                      >
+                        Edit Keywords
                       </Link>
-                    
                     </div>
-
                   </Row>
                 </CardHeader>
                 <CardBody>
-
                   <CloudChart />
-
+                  <div>Word Cloud</div>
+                  <p>
+                    This word cloud shows the top 15 interests based on your
+                    published paper/tweets. By hovering your mouse over a word
+                    to see its source. You can also click the word to see from
+                    which paper/tweet we got this interest.
+                  </p>
                 </CardBody>
               </Card>
             </Col>
-
           </Row>
         </Container>
       </>
