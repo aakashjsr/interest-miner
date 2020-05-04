@@ -89,6 +89,10 @@ class BarChart extends Component {
           </div>
         ) : (
           <>
+            <p>
+              Here you can see the statistical result of how many papers/tweets
+              you have published in the past times. .
+            </p>
             <div className="mixed-chart" style={{ paddingLeft: "20%" }}>
               <h1>Paper Data</h1>
               <Chart
@@ -106,10 +110,6 @@ class BarChart extends Component {
                 width="600"
               />
             </div>
-            <p>
-              Here you can see the statistical result of how many papers/tweets
-              you have published in the past times. .
-            </p>
           </>
         )}
       </>

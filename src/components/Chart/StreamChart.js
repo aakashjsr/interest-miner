@@ -147,7 +147,6 @@ class StreamChart extends React.Component {
                 height={500}
               />
             </div>
-            
           </>
         )}
       </div>

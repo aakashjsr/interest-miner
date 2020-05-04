@@ -306,28 +306,30 @@ class ConceptMapContainer extends Component {
     }
 
     return (
-      <div id="conceptMapWrapper">
-        {this.state.isLoding ? (
-          <div className="text-center" style={{ padding: "20px" }}>
-            <Loader type="Puff" color="#00BFFF" height={100} width={100} />
-          </div>
-        ) : this.state.isData ? (
-          <>
-            <div>
-              <Stage width={width} height={this.stageHeight}>
-                <Layer>{this.getNodes()}</Layer>
-              </Stage>
-              <div align="center">
-                {highlighedCategory.length ? highlighedCategory[0] : ""}
-              </div>
+      <>
+        <div id="conceptMapWrapper">
+          {this.state.isLoding ? (
+            <div className="text-center" style={{ padding: "20px" }}>
+              <Loader type="Puff" color="#00BFFF" height={100} width={100} />
             </div>
-          </>
-        ) : (
-          <div style={{ textAlign: "center" }}>
-            No data is available at the moment
-          </div>
-        )}
-      </div>
+          ) : this.state.isData ? (
+            <>
+              <div>
+                <Stage width={width} height={this.stageHeight}>
+                  <Layer>{this.getNodes()}</Layer>
+                </Stage>
+                <div align="center">
+                  {highlighedCategory.length ? highlighedCategory[0] : ""}
+                </div>
+              </div>
+            </>
+          ) : (
+            <div style={{ textAlign: "center" }}>
+              No data is available at the moment
+            </div>
+          )}
+        </div>
+      </>
     );
   }
 }

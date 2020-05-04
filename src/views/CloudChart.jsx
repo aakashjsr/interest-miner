@@ -58,7 +58,6 @@ class CloudChartPage extends React.Component {
                     </div>
                   </Row>
                 </CardHeader>
-
                 <CardBody>
                   <div>Word Cloud</div>
                   <p>
@@ -68,6 +67,7 @@ class CloudChartPage extends React.Component {
                     which paper/tweet we got this interest.
                   </p>
                   <CloudChart />
+
                 </CardBody>
               </Card>
             </Col>
