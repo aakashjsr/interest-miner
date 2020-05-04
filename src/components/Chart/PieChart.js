@@ -103,7 +103,7 @@ class PieChart extends React.Component {
           </div>
         ) : this.state.data.length ? (
           <>
-            <p>This chart shows your interests in the last month.</p>
+            
             <div style={{ maxWidth: "560px", margin: "35px auto" }}>
               <Chart
                 options={this.state.options}

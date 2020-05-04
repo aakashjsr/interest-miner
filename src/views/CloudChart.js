@@ -47,11 +47,24 @@ class CloudChartPage extends React.Component {
                         justifyContent: "space-between",
                       }}
                     >
-                      <h2 className="text-white1 mb-0">Interest Overview</h2>
+                      <div>
+                        <h2 className="text-white1 mb-0">Interest Overview</h2>
+                        <p>
+                          This word cloud shows the top 15 interests based on
+                          your published paper/tweets. By hovering your mouse
+                          over a word to see its source. You can also click the
+                          word to see from which paper/tweet we got this
+                          interest.
+                        </p>
+                      </div>
                       <Link
                         to="/app/Keyword"
                         className=" ls-1 mb-1"
-                        style={{ lineHeight: "2" }}
+                        style={{
+                          lineHeight: "7",
+                          width: "300px",
+                          textAlign: "right",
+                        }}
                       >
                         Edit Keywords
                       </Link>
@@ -60,13 +73,6 @@ class CloudChartPage extends React.Component {
                 </CardHeader>
 
                 <CardBody>
-                  <div>Word Cloud</div>
-                  <p>
-                    This word cloud shows the top 15 interests based on your
-                    published paper/tweets. By hovering your mouse over a word
-                    to see its source. You can also click the word to see from
-                    which paper/tweet we got this interest.
-                  </p>
                   <CloudChart />
                 </CardBody>
               </Card>

@@ -9,8 +9,12 @@ import * as am4plugins_wordCloud from "@amcharts/amcharts4/plugins/wordCloud";
 import { Modal, ModalBody, ModalFooter, Button } from "reactstrap";
 import { TwitterTweetEmbed } from "react-twitter-embed";
 
+import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+
+am4core.useTheme(am4themes_animated);
 
 /* Chart code */
 // Themes begin
@@ -24,24 +28,24 @@ class CloudChartPage extends Component {
     isPaperData: false,
     tweetIds: [],
     userPageIDs: [],
-    isData:true,
+    isData: true,
     title: "",
     url: "",
     year: "",
     abstract: "",
-
   };
   componentDidMount() {
     this.setState({ isLoding: true }, () => {
       RestAPI.cloudChart()
         .then((response) => {
-          if(response.data.length===0){
+          console.log(response);
+          if (response.data.length === 0) {
             this.setState({
-              isData:false
-            })
+              isData: false,
+            });
           }
 
-          series.data = response.data.slice(0,15);
+          series.data = response.data.slice(0, 15);
           this.setState({
             isLoding: false,
             // data : response.data
@@ -58,11 +62,9 @@ class CloudChartPage extends Component {
     let series = chart.series.push(new am4plugins_wordCloud.WordCloudSeries());
     series.randomness = 0.1;
     series.rotationThreshold = 0.5;
-    series.animationDuration = 50;
-
+    series.defaultState.interpolationDuration = 50000000;
     series.dataFields.word = "keyword";
     series.dataFields.value = "weight";
-    
 
     series.heatRules.push({
       target: series.labels.template,
@@ -118,16 +120,17 @@ class CloudChartPage extends Component {
   render() {
     return (
       <Fragment>
-        {this.state.isLoding ? 
+        {this.state.isLoding ? (
           <div className="text-center" style={{ padding: "20px" }}>
             <Loader type="Puff" color="#00BFFF" height={100} width={100} />
           </div>
-         :
-         this.state.isData ?
-         <div id="chartdiv" style={{ width: "100%", height: "600px" }}></div>
-         :<div id="chartdiv" style={{textAlign:"center"}}>No Data Found</div>
-      
-          }
+        ) : this.state.isData ? (
+          <div id="chartdiv" style={{ width: "100%", height: "1000px" }}></div>
+        ) : (
+          <div id="chartdiv" style={{ textAlign: "center" }}>
+            No Data Found
+          </div>
+        )}
         <Modal isOpen={this.state.modal} toggle={this.toggle} size="lg">
           <ModalBody>
             <Tabs>
