@@ -1,23 +1,11 @@
-
 import React from "react";
 import Chart from "chart.js";
-import BarChart from "../components/Chart/BarChart"
+import BarChart from "../components/Chart/BarChart";
 
-
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Container,
-  Row,
-  Col
-} from "reactstrap";
+import { Card, CardHeader, CardBody, Container, Row, Col } from "reactstrap";
 
 // core components
-import {
-  chartOptions,
-  parseOptions,
-} from "variables/charts.js";
+import { chartOptions, parseOptions } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
 
@@ -26,7 +14,7 @@ class BarChartPage extends React.Component {
     super(props);
     this.state = {
       activeNav: 1,
-      chartExample1Data: "data1"
+      chartExample1Data: "data1",
     };
     if (window.Chart) {
       parseOptions(Chart, chartOptions());
@@ -37,7 +25,7 @@ class BarChartPage extends React.Component {
     this.setState({
       activeNav: index,
       chartExample1Data:
-        this.state.chartExample1Data === "data1" ? "data2" : "data1"
+        this.state.chartExample1Data === "data1" ? "data2" : "data1",
     });
   };
   render() {
@@ -56,8 +44,11 @@ class BarChartPage extends React.Component {
                         Overview
                       </h6>
                       <h2 className="text-white1 mb-0">Activities</h2>
+                      <p>
+                        Here you can see the statistical result of how many
+                        papers/tweets you have published in the past times. .
+                      </p>
                     </div>
-
                   </Row>
                 </CardHeader>
                 <CardBody>
@@ -65,7 +56,6 @@ class BarChartPage extends React.Component {
                 </CardBody>
               </Card>
             </Col>
-
           </Row>
         </Container>
       </>
