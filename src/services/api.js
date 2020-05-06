@@ -220,7 +220,7 @@ class RestAPI {
     const TOKEN = getItem("accessToken");
     return axios({
       method: "get",
-      url: `${BASE_URL}/api/interests/short-term/user/${getItem("Id")}`,
+      url: `${BASE_URL}/api/interests/short-term/user/${getItem("userId")}`,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -235,7 +235,7 @@ class RestAPI {
     const TOKEN = getItem("accessToken");
     return axios({
       method: "get",
-      url: `${BASE_URL}/api/interests/stream-graph/user/${getItem("Id")}`,
+      url: `${BASE_URL}/api/interests/stream-graph/user/${getItem("userId")}`,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -249,7 +249,7 @@ class RestAPI {
     const TOKEN = getItem("accessToken");
     return axios({
       method: "get",
-      url: `${BASE_URL}/api/interests/long-term/user/${getItem("Id")}`,
+      url: `${BASE_URL}/api/interests/long-term/user/${getItem("userId")}`,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -263,7 +263,7 @@ class RestAPI {
     const TOKEN = getItem("accessToken");
     return axios({
       method: "get",
-      url: `${BASE_URL}/api/interests/activity-stats/user/${getItem("Id")}`,
+      url: `${BASE_URL}/api/interests/activity-stats/user/${getItem("userId")}`,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -278,7 +278,7 @@ class RestAPI {
     const TOKEN = getItem("accessToken");
     return axios({
       method: "get",
-      url: `${BASE_URL}/api/interests/long-term/user/${getItem("Id")}`,
+      url: `${BASE_URL}/api/interests/long-term/user/${getItem("userId")}`,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",

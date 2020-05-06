@@ -146,9 +146,9 @@ class Sidebar extends React.Component {
       collapseOpen: false,
     });
   };
-  goBackProfile=()=>{
-    setItem("Id",getItem("mId"))
-  }
+  goBackProfile = () => {
+    setItem("userId", getItem("mId"));
+  };
   // creates the links that appear in the left menu / Sidebar
   createLinks = (routes) => {
     return routes.map((prop, key) => {
@@ -278,7 +278,7 @@ class Sidebar extends React.Component {
                 <InputGroupAddon addonType="prepend"></InputGroupAddon>
               </InputGroup>
             </Form>
-            {getItem("Id") === getItem("mId") &&(
+            {getItem("userId") === getItem("mId") && (
               <>
                 <h6 className="navbar-heading text-muted">Data Management</h6>
                 <hr className="my-2" />
@@ -291,41 +291,40 @@ class Sidebar extends React.Component {
             )}
             <h6 className="navbar-heading text-muted">Visualizations</h6>
             <hr className="my-2" />
-            {getItem("Id")!==getItem("mId") &&
-            <>
-            <Nav navbar>
-            <NavItem>
-              <NavLink
-to={"/app/profile/" + getItem("Id")}              
-  tag={NavLinkRRD}
-                activeClassName="active"
-              >
-                <i className="fas fa-chart-pie text-orange" />
-                 Profile
-              </NavLink>
-            </NavItem>
-          </Nav>
-             <Nav navbar>
-              <NavItem>
-                <NavLink
-                 to="/app/user-profile"
-                  
-                  tag={NavLinkRRD}
-                  onClick={this.goBackProfile}
-                  activeClassName="active"
-                >
-                  <i className="fas fa-chart-pie text-orange" />
-                  Go Back To Profile
-                </NavLink>
-              </NavItem>
-            </Nav>
-            </>
-  }
+            {getItem("userId") !== getItem("mId") && (
+              <>
+                <Nav navbar>
+                  <NavItem>
+                    <NavLink
+                      to={"/app/profile/" + getItem("userId")}
+                      tag={NavLinkRRD}
+                      activeClassName="active"
+                    >
+                      <i className="fa fa-user text-blue" />
+                      Profile
+                    </NavLink>
+                  </NavItem>
+                </Nav>
+                <Nav navbar>
+                  <NavItem>
+                    <NavLink
+                      to="/app/user-profile"
+                      tag={NavLinkRRD}
+                      onClick={this.goBackProfile}
+                      activeClassName="active"
+                    >
+                      <i className="fa fa-users text-info" />
+                      Go Back To Profile
+                    </NavLink>
+                  </NavItem>
+                </Nav>
+              </>
+            )}
 
             <Nav navbar>
               <NavItem>
                 <NavLink
-                  to={"/app/pie-chart/" + getItem("Id")}
+                  to={"/app/pie-chart/" + getItem("userId")}
                   tag={NavLinkRRD}
                   onClick={this.closeCollapse}
                   activeClassName="active"
@@ -339,7 +338,7 @@ to={"/app/profile/" + getItem("Id")}
             <Nav navbar>
               <NavItem>
                 <NavLink
-                  to={"/app/bar-chart/" + getItem("Id")}
+                  to={"/app/bar-chart/" + getItem("userId")}
                   tag={NavLinkRRD}
                   onClick={this.closeCollapse}
                   activeClassName="active"
@@ -353,7 +352,7 @@ to={"/app/profile/" + getItem("Id")}
             <Nav navbar>
               <NavItem>
                 <NavLink
-                  to={"/app/cloud-chart/" + getItem("Id")}
+                  to={"/app/cloud-chart/" + getItem("userId")}
                   tag={NavLinkRRD}
                   onClick={this.closeCollapse}
                   activeClassName="active"
@@ -367,7 +366,7 @@ to={"/app/profile/" + getItem("Id")}
             <Nav navbar>
               <NavItem>
                 <NavLink
-                  to={"/app/concept-chart/" + getItem("Id")}
+                  to={"/app/concept-chart/" + getItem("userId")}
                   tag={NavLinkRRD}
                   onClick={this.closeCollapse}
                   activeClassName="active"
@@ -381,7 +380,7 @@ to={"/app/profile/" + getItem("Id")}
             <Nav navbar>
               <NavItem>
                 <NavLink
-                  to={"/app/stream-chart/" + getItem("Id")}
+                  to={"/app/stream-chart/" + getItem("userId")}
                   tag={NavLinkRRD}
                   onClick={this.closeCollapse}
                   activeClassName="active"

@@ -1,12 +1,11 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { logout } from "../../helper/index";
 import { getItem } from "utils/localStorage";
 import { BASE_URL } from "../../constants";
 import axios from "axios";
-import Autosuggest from 'react-autosuggest';
-import './AdminNav.css'
+import Autosuggest from "react-autosuggest";
+import "./AdminNav.css";
 
 // reactstrap components
 import {
@@ -21,7 +20,7 @@ import {
   Navbar,
   Nav,
   Container,
-  Media
+  Media,
 } from "reactstrap";
 
 function getSuggestionValue(suggestion) {
@@ -31,26 +30,23 @@ function getSuggestionValue(suggestion) {
 
 function renderSuggestion(suggestion) {
   // debugger;
-localStorage.setItem("Id",suggestion.id)
+  localStorage.setItem("userId", suggestion.id);
   return (
-    <Link to={`/app/profile/${suggestion.id}`} >
-
-      <div style={{ padding: '10px 20px' }}>{`${suggestion.first_name} ${suggestion.last_name}`}</div>
+    <Link to={`/app/profile/${suggestion.id}`}>
+      <div
+        style={{ padding: "10px 20px" }}
+      >{`${suggestion.first_name} ${suggestion.last_name}`}</div>
     </Link>
   );
 }
 
 class AdminNavbar extends React.Component {
-
-
   state = {
-    query: '',
+    query: "",
     results: [],
     suggestions: [],
-    value: ''
-  }
-
-
+    value: "",
+  };
 
   getInfo = (v) => {
     const TOKEN = getItem("accessToken");
@@ -60,46 +56,37 @@ class AdminNavbar extends React.Component {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
-      }
+        Authorization: `Token ${TOKEN}`,
+      },
     }).then(({ data }) => {
       this.setState({
         suggestions: data,
         popupVisible: !this.state.popupVisible,
-      })
-    })
-  }
-
-
+      });
+    });
+  };
 
   _onBlur = () => {
     this.setState({
-      value: '',
-
+      value: "",
     });
-  }
+  };
 
-
-  
   onChange = (event, { newValue, method }) => {
     this.setState({
-      value: newValue
+      value: newValue,
     });
   };
 
   onSuggestionsFetchRequested = ({ value }) => {
-              this.getInfo(value)
-          
+    this.getInfo(value);
   };
 
   onSuggestionsClearRequested = () => {
     this.setState({
-      suggestions: []
+      suggestions: [],
     });
   };
-
-
-
 
   //**END SUGGESTION *//
   render() {
@@ -108,7 +95,7 @@ class AdminNavbar extends React.Component {
       placeholder: "Search for users..",
       value,
       onChange: this.onChange,
-      onBlur: this._onBlur
+      onBlur: this._onBlur,
     };
     return (
       <>
@@ -124,23 +111,23 @@ class AdminNavbar extends React.Component {
             <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
               <FormGroup className="mb-0">
                 <InputGroup className="input-group-alternative">
-                  <InputGroupAddon addonType="prepend">
-                  </InputGroupAddon>
+                  <InputGroupAddon addonType="prepend"></InputGroupAddon>
 
                   <Autosuggest
-                  suggestions={suggestions}
-                  onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                  onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                  getSuggestionValue={getSuggestionValue}
-                  renderSuggestion={renderSuggestion}
-                  inputProps={inputProps} />
-
+                    suggestions={suggestions}
+                    onSuggestionsFetchRequested={
+                      this.onSuggestionsFetchRequested
+                    }
+                    onSuggestionsClearRequested={
+                      this.onSuggestionsClearRequested
+                    }
+                    getSuggestionValue={getSuggestionValue}
+                    renderSuggestion={renderSuggestion}
+                    inputProps={inputProps}
+                  />
                 </InputGroup>
               </FormGroup>
-
-
             </Form>
-
 
             <Nav className="align-items-center d-none d-md-flex" navbar>
               <UncontrolledDropdown nav>
@@ -148,11 +135,10 @@ class AdminNavbar extends React.Component {
                   <Media className="align-items-center">
                     <span className="avatar avatar-sm rounded-circle">
                       <i className="fas fa-user-tie"></i>
-
                     </span>
                     <Media className="ml-2 d-none d-lg-block">
                       <span className="mb-0 text-sm font-weight-bold">
-                        {getItem("name") ? getItem("name") : 'User'}
+                        {getItem("name") ? getItem("name") : "User"}
                       </span>
                     </Media>
                   </Media>
@@ -167,7 +153,7 @@ class AdminNavbar extends React.Component {
                   </DropdownItem>
 
                   <DropdownItem divider />
-                  <DropdownItem to="/" onClick={e => logout()}>
+                  <DropdownItem to="/" onClick={(e) => logout()}>
                     <i className="ni ni-user-run" />
                     <span>Logout</span>
                   </DropdownItem>
