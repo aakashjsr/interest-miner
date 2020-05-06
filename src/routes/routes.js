@@ -1,4 +1,3 @@
-
 import Profile from "../views/Profile.js";
 import Register from "../views/Register.js";
 import Login from "../views/Login.js";
@@ -9,13 +8,12 @@ import CloudChartPage from "../views/CloudChart";
 import ConceptChartPage from "../views/ConceptChart";
 import StreamChartPage from "../views/StreamChart";
 import SearchUserProfile from "../views/SearchUserProfile";
-import Keyword from "../views/Keyword.js"
-import BlacklistedKeywords from "../views/BlacklistedKeywords.js"
+import Keyword from "../views/Keyword.js";
+import BlacklistedKeywords from "../views/BlacklistedKeywords.js";
+import Demo from "../views/Demo.js";
 
 import PieChartPage from "../views/PieChart";
 import BarChartPage from "../views/BarChart";
-
-
 
 var routes = [
   {
@@ -24,8 +22,7 @@ var routes = [
     icon: "ni ni-tv-2 text-primary",
     component: ViewPaper,
     layout: "/app",
-    display: "none"
-
+    display: "none",
   },
   {
     path: "/add-paper",
@@ -41,7 +38,7 @@ var routes = [
     icon: "ni ni-fat-add text-orange",
     component: EditPaper,
     layout: "/app",
-    display: "none"
+    display: "none",
   },
   {
     path: "/view-paper",
@@ -58,7 +55,7 @@ var routes = [
     icon: "ni ni-archive-2 text-yellow",
     component: Keyword,
     layout: "/app",
-    display: "none"
+    display: "none",
   },
   {
     path: "/blacklisted-keywords",
@@ -66,9 +63,8 @@ var routes = [
     icon: "ni ni-archive-2 text-brown",
     component: BlacklistedKeywords,
     layout: "/app",
-    display: "none"
+    display: "none",
   },
-
 
   {
     path: "/pie-chart",
@@ -76,8 +72,7 @@ var routes = [
     icon: "fas fa-chart-pie text-orange",
     component: PieChartPage,
     layout: "/app",
-    display: "none"
-
+    display: "none",
   },
   {
     path: "/bar-chart",
@@ -85,8 +80,7 @@ var routes = [
     icon: "fas fa-chart-bar text-pink",
     component: BarChartPage,
     layout: "/app",
-    display: "none"
-
+    display: "none",
   },
   {
     path: "/cloud-chart",
@@ -94,8 +88,7 @@ var routes = [
     icon: "fas fa-cloud text-info",
     component: CloudChartPage,
     layout: "/app",
-    display: "none"
-
+    display: "none",
   },
   {
     path: "/concept-chart",
@@ -103,8 +96,7 @@ var routes = [
     icon: "fas fa-cloud text-info",
     component: ConceptChartPage,
     layout: "/app",
-    display: "none"
-
+    display: "none",
   },
   {
     path: "/stream-chart",
@@ -112,8 +104,7 @@ var routes = [
     icon: "fas fa-cloud text-info",
     component: StreamChartPage,
     layout: "/app",
-    display: "none"
-
+    display: "none",
   },
 
   {
@@ -122,8 +113,7 @@ var routes = [
     icon: "ni ni-single-02 text-green",
     component: Profile,
     layout: "/app",
-    display: "none"
-
+    display: "none",
   },
   {
     path: "/profile/:id",
@@ -131,8 +121,7 @@ var routes = [
     icon: "ni ni-single-02 text-green",
     component: SearchUserProfile,
     layout: "/app",
-    display: "none"
-
+    display: "none",
   },
 
   {
@@ -141,7 +130,7 @@ var routes = [
     icon: "ni ni-key-25 text-info",
     component: Login,
     layout: "/auth",
-    display: "none"
+    display: "none",
   },
   {
     path: "/register",
@@ -149,8 +138,15 @@ var routes = [
     icon: "ni ni-circle-08 text-pink",
     component: Register,
     layout: "/auth",
-    display: "none"
-
-  }
+    display: "none",
+  },
+  {
+    path: "/demo",
+    name: "Demo",
+    icon: "ni ni-circle-08 text-pink",
+    component: Demo,
+    layout: "/auth",
+    display: "none",
+  },
 ];
 export default routes;

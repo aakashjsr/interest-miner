@@ -1,14 +1,12 @@
-
 import React from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
-import Autosuggest from 'react-autosuggest';
+import Autosuggest from "react-autosuggest";
 import { getItem } from "utils/localStorage";
 import { BASE_URL } from "../../constants";
 import { logout } from "../../helper/index";
 import axios from "axios";
-
 // reactstrap components
 import {
   Collapse,
@@ -27,8 +25,9 @@ import {
   Nav,
   Container,
   Row,
-  Col
+  Col,
 } from "reactstrap";
+import { setItem } from "utils/localStorage";
 
 function getSuggestionValue(suggestion) {
   // debugger;
@@ -39,25 +38,26 @@ function renderSuggestion(suggestion) {
   // debugger;
 
   return (
-    <Link to={`/app/profile/${suggestion.id}`} >
-
-      <div style={{ padding: '10px 20px' }}>{`${suggestion.first_name} ${suggestion.last_name}`}</div>
+    <Link to={`/app/profile/${suggestion.id}`}>
+      <div
+        style={{ padding: "10px 20px" }}
+      >{`${suggestion.first_name} ${suggestion.last_name}`}</div>
     </Link>
   );
 }
-
 
 class Sidebar extends React.Component {
   state = {
     collapseOpen: false,
     dropdownOpen: false,
-    query: '',
+    query: "",
     results: [],
     activeSuggestion: 0,
     showSuggestions: false,
     popupVisible: false,
     suggestions: [],
-    value: ''
+    value: "",
+    userView: false,
   };
   constructor(props) {
     super(props);
@@ -66,11 +66,27 @@ class Sidebar extends React.Component {
 
   _onBlur = () => {
     this.setState({
-      value: '',
-
+      value: "",
     });
-  }
+  };
 
+  // componentDidMount() {
+  //   this.manageUserView();
+  // }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState.path == this.state.path) {
+  //     this.manageUserView();
+  //   }
+  // }
+
+  // manageUserView = () => {
+  //   if (matchPath(window.location.pathname, { path: "/app/profile/:id" })) {
+  //     console.log("ttttttttttt",this.props)
+  //     this.setState({ userView: true, path: this.props.location.pathname,searchedUserID: getItem("Id") });
+  //   } else {
+  //     this.setState({ userView: false, path: this.props.location.pathname,searchedUserID: getItem("Id") });
+  //   }
+  // };
 
   //** START SUGGESTION**//
   getInfo = (v) => {
@@ -81,19 +97,19 @@ class Sidebar extends React.Component {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        'Authorization': `Token ${TOKEN}`
-      }
+        Authorization: `Token ${TOKEN}`,
+      },
     }).then(({ data }) => {
       this.setState({
         suggestions: data,
         popupVisible: !this.state.popupVisible,
-      })
-    })
-  }
-  
+      });
+    });
+  };
+
   onChange = (event, { newValue, method }) => {
     this.setState({
-      value: newValue
+      value: newValue,
     });
   };
 
@@ -103,15 +119,15 @@ class Sidebar extends React.Component {
 
   onSuggestionsClearRequested = () => {
     this.setState({
-      suggestions: []
+      suggestions: [],
     });
   };
 
   toggle = () => {
     this.setState({
-      dropdownOpen: !this.state.dropdownOpen
-    })
-  }
+      dropdownOpen: !this.state.dropdownOpen,
+    });
+  };
   // setDropdownOpen(!dropdownOpen);
   // verifies if routeName is the one active (in browser input)
   activeRoute(routeName) {
@@ -120,17 +136,21 @@ class Sidebar extends React.Component {
   // toggles collapse between opened and closed (true/false)
   toggleCollapse = () => {
     this.setState({
-      collapseOpen: !this.state.collapseOpen
+      collapseOpen: !this.state.collapseOpen,
     });
   };
   // closes the collapse
   closeCollapse = () => {
+    // this.manageUserView();
     this.setState({
-      collapseOpen: false
+      collapseOpen: false,
     });
   };
+  goBackProfile=()=>{
+    setItem("Id",getItem("mId"))
+  }
   // creates the links that appear in the left menu / Sidebar
-  createLinks = routes => {
+  createLinks = (routes) => {
     return routes.map((prop, key) => {
       return (
         <NavItem key={key} style={{ display: prop.display }}>
@@ -139,7 +159,6 @@ class Sidebar extends React.Component {
             tag={NavLinkRRD}
             onClick={this.closeCollapse}
             activeClassName="active"
-
           >
             <i className={prop.icon} />
             {prop.name}
@@ -154,7 +173,7 @@ class Sidebar extends React.Component {
       placeholder: "Search for users..",
       value,
       onChange: this.onChange,
-      onBlur: this._onBlur
+      onBlur: this._onBlur,
     };
 
     const { routes, logo } = this.props;
@@ -162,12 +181,12 @@ class Sidebar extends React.Component {
     if (logo && logo.innerLink) {
       navbarBrandProps = {
         to: logo.innerLink,
-        tag: Link
+        tag: Link,
       };
     } else if (logo && logo.outterLink) {
       navbarBrandProps = {
         href: logo.outterLink,
-        target: "_blank"
+        target: "_blank",
       };
     }
     return (
@@ -187,19 +206,17 @@ class Sidebar extends React.Component {
           </button>
 
           <NavbarBrand className="pt-0" {...navbarBrandProps}>
-            <span style={{ fontWeight: 'bolder', color: '#1189ef' }}>INTEREST MINER</span>
+            <span style={{ fontWeight: "bolder", color: "#1189ef" }}>
+              INTEREST MINER
+            </span>
           </NavbarBrand>
-
 
           {/* User */}
           <Nav className="align-items-center d-md-none">
-
             <UncontrolledDropdown nav>
               <DropdownToggle nav>
                 <Media className="align-items-center">
-                  <span className="avatar avatar-sm rounded-circle">
-
-                  </span>
+                  <span className="avatar avatar-sm rounded-circle"></span>
                 </Media>
               </DropdownToggle>
               <DropdownMenu className="dropdown-menu-arrow" right>
@@ -211,7 +228,7 @@ class Sidebar extends React.Component {
                   <span>My profile</span>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem to="/" onClick={e => logout()}>
+                <DropdownItem to="/" onClick={(e) => logout()}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>
@@ -226,14 +243,12 @@ class Sidebar extends React.Component {
                 {logo ? (
                   <Col className="collapse-brand" xs="6">
                     {logo.innerLink ? (
-                      <Link to={logo.innerLink}>
-                        INTEREST MINER
-                      </Link>
+                      <Link to={logo.innerLink}>INTEREST MINER</Link>
                     ) : (
-                        <a href={logo.outterLink}>
-                          <img alt={logo.imgAlt} src={logo.imgSrc} />
-                        </a>
-                      )}
+                      <a href={logo.outterLink}>
+                        <img alt={logo.imgAlt} src={logo.imgSrc} />
+                      </a>
+                    )}
                   </Col>
                 ) : null}
                 <Col className="collapse-close" xs="6">
@@ -251,106 +266,131 @@ class Sidebar extends React.Component {
             {/* Form */}
             <Form className="mt-4 mb-3 d-md-none">
               <InputGroup className="input-group-rounded input-group-merge">
-
                 <Autosuggest
                   suggestions={suggestions}
                   onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
                   onSuggestionsClearRequested={this.onSuggestionsClearRequested}
                   getSuggestionValue={getSuggestionValue}
                   renderSuggestion={renderSuggestion}
-                  inputProps={inputProps} />
+                  inputProps={inputProps}
+                />
 
-                <InputGroupAddon addonType="prepend">
-
-                </InputGroupAddon>
+                <InputGroupAddon addonType="prepend"></InputGroupAddon>
               </InputGroup>
             </Form>
+            {getItem("Id") === getItem("mId") &&(
+              <>
+                <h6 className="navbar-heading text-muted">Data Management</h6>
+                <hr className="my-2" />
 
+                {/* Navigation */}
+                <Nav navbar>{this.createLinks(routes)}</Nav>
 
-            <h6 className="navbar-heading text-muted">Data Management</h6>
-            <hr className="my-2" />
-
-
-            {/* Navigation */}
-            <Nav navbar>{this.createLinks(routes)}</Nav>
-
-            <hr className="my-3" />
+                <hr className="my-3" />
+              </>
+            )}
             <h6 className="navbar-heading text-muted">Visualizations</h6>
             <hr className="my-2" />
+            {getItem("Id")!==getItem("mId") &&
+            <>
+            <Nav navbar>
+            <NavItem>
+              <NavLink
+to={"/app/profile/" + getItem("Id")}              
+  tag={NavLinkRRD}
+                activeClassName="active"
+              >
+                <i className="fas fa-chart-pie text-orange" />
+                 Profile
+              </NavLink>
+            </NavItem>
+          </Nav>
+             <Nav navbar>
+              <NavItem>
+                <NavLink
+                 to="/app/user-profile"
+                  
+                  tag={NavLinkRRD}
+                  onClick={this.goBackProfile}
+                  activeClassName="active"
+                >
+                  <i className="fas fa-chart-pie text-orange" />
+                  Go Back To Profile
+                </NavLink>
+              </NavItem>
+            </Nav>
+            </>
+  }
 
             <Nav navbar>
               <NavItem>
                 <NavLink
-                  to="/app/pie-chart"
+                  to={"/app/pie-chart/" + getItem("Id")}
                   tag={NavLinkRRD}
                   onClick={this.closeCollapse}
                   activeClassName="active"
                 >
                   <i className="fas fa-chart-pie text-orange" />
-                  Recent  Interests
-              </NavLink>
+                  Recent Interests
+                </NavLink>
               </NavItem>
             </Nav>
 
             <Nav navbar>
               <NavItem>
                 <NavLink
-                  to="/app/bar-chart"
+                  to={"/app/bar-chart/" + getItem("Id")}
                   tag={NavLinkRRD}
                   onClick={this.closeCollapse}
                   activeClassName="active"
                 >
                   <i className="fas fa-chart-bar text-pink" />
                   Activities
-              </NavLink>
+                </NavLink>
               </NavItem>
             </Nav>
 
             <Nav navbar>
               <NavItem>
                 <NavLink
-                  to="/app/cloud-chart"
+                  to={"/app/cloud-chart/" + getItem("Id")}
                   tag={NavLinkRRD}
                   onClick={this.closeCollapse}
                   activeClassName="active"
                 >
                   <i className="fas fa-cloud text-info" />
                   Interest Overview
-              </NavLink>
+                </NavLink>
               </NavItem>
             </Nav>
 
             <Nav navbar>
               <NavItem>
                 <NavLink
-                  to="/app/concept-chart"
+                  to={"/app/concept-chart/" + getItem("Id")}
                   tag={NavLinkRRD}
                   onClick={this.closeCollapse}
                   activeClassName="active"
                 >
                   <i className="fas fa-brain text-blue" />
                   Potential Interests
-              </NavLink>
+                </NavLink>
               </NavItem>
             </Nav>
 
             <Nav navbar>
               <NavItem>
                 <NavLink
-                  to="/app/stream-chart"
+                  to={"/app/stream-chart/" + getItem("Id")}
                   tag={NavLinkRRD}
                   onClick={this.closeCollapse}
                   activeClassName="active"
                 >
                   <i className="fas fa-wave-square text-green"></i>
-
                   Interest Trends
-              </NavLink>
+                </NavLink>
               </NavItem>
             </Nav>
-
-
-
           </Collapse>
         </Container>
       </Navbar>
@@ -359,7 +399,7 @@ class Sidebar extends React.Component {
 }
 
 Sidebar.defaultProps = {
-  routes: [{}]
+  routes: [{}],
 };
 
 Sidebar.propTypes = {
@@ -375,8 +415,8 @@ Sidebar.propTypes = {
     // the image src of the logo
     imgSrc: PropTypes.string.isRequired,
     // the alt for the img
-    imgAlt: PropTypes.string.isRequired
-  })
+    imgAlt: PropTypes.string.isRequired,
+  }),
 };
 
 export default Sidebar;

@@ -62,7 +62,6 @@ class StreamChart extends React.Component {
             paperXaxis: paperData.xAxis,
             paperSeries: paperData.series,
           };
-          console.log(chartOptions);
 
           this.setState({ chartOptions, isLoding: false });
         })

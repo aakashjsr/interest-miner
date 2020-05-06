@@ -623,6 +623,7 @@ pre code {
   }
 }
 
+
 .container-fluid {
   width: 100%;
   padding-right: 15px;
@@ -19069,4 +19070,6 @@ button:focus,
 .table .badge i {
   margin-right: 10px;
 }
-
+.MuiTypography-body1 {
+  font-size: .8rem !important;
+}

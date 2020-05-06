@@ -31,7 +31,7 @@ function getSuggestionValue(suggestion) {
 
 function renderSuggestion(suggestion) {
   // debugger;
-
+localStorage.setItem("Id",suggestion.id)
   return (
     <Link to={`/app/profile/${suggestion.id}`} >
 
