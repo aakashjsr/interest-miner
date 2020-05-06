@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 // reactstrap components
@@ -11,7 +10,7 @@ import {
   Nav,
   Container,
   Row,
-  Col
+  Col,
 } from "reactstrap";
 
 class AdminNavbar extends React.Component {
@@ -24,7 +23,9 @@ class AdminNavbar extends React.Component {
         >
           <Container className="px-4">
             <NavbarBrand to="/" tag={Link}>
-              <span style={{ color: 'white', fontSize: '2em' }}>Interest Miner</span>
+              <span style={{ color: "white", fontSize: "2em" }}>
+                Interest Miner
+              </span>
             </NavbarBrand>
             <button className="navbar-toggler" id="navbar-collapse-main">
               <span className="navbar-toggler-icon" />
@@ -70,6 +71,12 @@ class AdminNavbar extends React.Component {
                   >
                     <i className="ni ni-key-25" />
                     <span className="nav-link-inner--text">Login</span>
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink className="nav-link-icon" to="/auth/demo" tag={Link}>
+                    <i className="ni ni-badge" />
+                    <span className="nav-link-inner--text">Demo</span>
                   </NavLink>
                 </NavItem>
               </Nav>

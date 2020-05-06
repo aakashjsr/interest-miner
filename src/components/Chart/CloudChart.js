@@ -3,26 +3,40 @@ import { toast } from "react-toastify";
 import Loader from "react-loader-spinner";
 import RestAPI from "services/api";
 
+import "d3-transition";
+
 import { handleServerErrors } from "utils/errorHandler";
-import * as am4core from "@amcharts/amcharts4/core";
-import * as am4plugins_wordCloud from "@amcharts/amcharts4/plugins/wordCloud";
+
 import { Modal, ModalBody, ModalFooter, Button } from "reactstrap";
 import { TwitterTweetEmbed } from "react-twitter-embed";
-
-import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 
-am4core.useTheme(am4themes_animated);
-
+import ReactWordcloud from "react-wordcloud";
 /* Chart code */
 // Themes begin
 // Themes end
+const options = {
+  colors: ["#0000CC", "#CC00CC"],
+  enableTooltip: true,
+  deterministic: true,
+  fontFamily: "impact",
+  fontSizes: [5, 60],
+  fontStyle: "normal",
+  fontWeight: "normal",
+  padding: 3,
+  rotations: 2,
+  rotationAngles: [0, 90],
+  scale: "sqrt",
+  spiral: "archimedean",
+  transitionDuration: 0,
+};
 
 class CloudChartPage extends Component {
   state = {
     mydata: [],
+    wordArray: [],
     isModalLoader: false,
     isTweetData: false,
     isPaperData: false,
@@ -34,21 +48,28 @@ class CloudChartPage extends Component {
     year: "",
     abstract: "",
   };
+
   componentDidMount() {
     this.setState({ isLoding: true }, () => {
       RestAPI.cloudChart()
         .then((response) => {
-          console.log(response);
+          let keywordArray = [];
+          for (let i = 0; i < response.data.length; i++) {
+            keywordArray.push({
+              text: response.data[i].keyword,
+              value: response.data[i].weight,
+              tweet_ids: response.data[i].tweet_ids,
+              papers: response.data[i].papers,
+            });
+          }
           if (response.data.length === 0) {
             this.setState({
               isData: false,
             });
           }
-
-          series.data = response.data.slice(0, 15);
           this.setState({
             isLoding: false,
-            // data : response.data
+            wordArray: keywordArray,
           });
         })
         .catch((error) => {
@@ -56,60 +77,39 @@ class CloudChartPage extends Component {
           handleServerErrors(error, toast.error);
         });
     });
-
-    let chart = am4core.create("chartdiv", am4plugins_wordCloud.WordCloud);
-    chart.fontFamily = "Courier New";
-    let series = chart.series.push(new am4plugins_wordCloud.WordCloudSeries());
-    series.randomness = 0.1;
-    series.rotationThreshold = 0.5;
-    series.defaultState.interpolationDuration = 50000000;
-    series.dataFields.word = "keyword";
-    series.dataFields.value = "weight";
-
-    series.heatRules.push({
-      target: series.labels.template,
-      property: "fill",
-      min: am4core.color("#0000CC"),
-      max: am4core.color("#CC00CC"),
-      dataField: "value",
-    });
-    series.labels.template.events.on("hit", (ev) => {
-      this.setState({ modal: true, isModalLoader: true }, () => {
-        if (ev.target.dataItem.dataContext.tweet_ids) {
-          this.setState({
-            isTweetData: true,
-            tweetIds: ev.target.dataItem.dataContext.tweet_ids,
-          });
-          if (ev.target.dataItem.dataContext.tweet_ids.length === 0) {
-            this.setState({
-              isTweetData: false,
-            });
-          }
-        }
-        if (ev.target.dataItem.dataContext.papers) {
-          this.setState({
-            isPaperData: true,
-            userPageIDs: ev.target.dataItem.dataContext.papers,
-          });
-
-          if (ev.target.dataItem.dataContext.papers.length === 0) {
-            this.setState({
-              isPaperData: false,
-            });
-          }
-        }
-        this.setState({
-          isModalLoader: false,
-        });
-      });
-    });
-
-    series.labels.template.urlTarget = "_blank";
-    series.labels.template.tooltipText = "{source}";
-
-    let hoverState = series.labels.template.states.create("hover");
-    hoverState.properties.fill = am4core.color("#FF0000");
   }
+  getCallback = (callback) => {
+    let reactRef = this;
+    return function (word, event) {
+      reactRef.setState({ modal: true, isModalLoader: true });
+      if (word.tweet_ids) {
+        reactRef.setState({
+          isTweetData: true,
+          tweetIds: word.tweet_ids,
+        });
+        if (word.tweet_ids.length === 0) {
+          reactRef.setState({
+            isTweetData: false,
+          });
+        }
+      }
+      if (word.papers) {
+        reactRef.setState({
+          isPaperData: true,
+          userPageIDs: word.papers,
+        });
+
+        if (word.papers.length === 0) {
+          reactRef.setState({
+            isPaperData: false,
+          });
+        }
+      }
+      reactRef.setState({
+        isModalLoader: false,
+      });
+    };
+  };
 
   toggle = (id) => {
     this.setState({
@@ -118,6 +118,12 @@ class CloudChartPage extends Component {
   };
 
   render() {
+    const callbacks = {
+      getWordTooltip: (word) =>
+        `The word "${word.text}" appears ${word.value} times.`,
+      onWordClick: this.getCallback("onWordClick"),
+    };
+
     return (
       <Fragment>
         {this.state.isLoding ? (
@@ -125,13 +131,25 @@ class CloudChartPage extends Component {
             <Loader type="Puff" color="#00BFFF" height={100} width={100} />
           </div>
         ) : this.state.isData ? (
-          <div id="chartdiv" style={{ width: "100%", height: "1000px" }}></div>
+          <>
+            <div style={{ height: 400, width: "100%" }}>
+              <ReactWordcloud
+                options={options}
+                callbacks={callbacks}
+                words={this.state.wordArray}
+              />
+            </div>
+          </>
         ) : (
-          <div id="chartdiv" style={{ textAlign: "center" }}>
-            No Data Found
-          </div>
+          // <div id="chartdiv" style={{ width: "100%", height: "1000px" }}></div>
+          <div style={{ textAlign: "center" }}>No Data Found</div>
         )}
-        <Modal isOpen={this.state.modal} toggle={this.toggle} size="lg">
+        <Modal
+          isOpen={this.state.modal}
+          toggle={this.toggle}
+          size="lg"
+          id="modal"
+        >
           <ModalBody>
             <Tabs>
               <TabList>

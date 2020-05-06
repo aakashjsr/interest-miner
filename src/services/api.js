@@ -220,7 +220,7 @@ class RestAPI {
     const TOKEN = getItem("accessToken");
     return axios({
       method: "get",
-      url: `${BASE_URL}/api/interests/short-term/`,
+      url: `${BASE_URL}/api/interests/short-term/user/${getItem("userId")}`,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -235,7 +235,7 @@ class RestAPI {
     const TOKEN = getItem("accessToken");
     return axios({
       method: "get",
-      url: `${BASE_URL}/api/interests/stream-graph/`,
+      url: `${BASE_URL}/api/interests/stream-graph/user/${getItem("userId")}`,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -249,7 +249,7 @@ class RestAPI {
     const TOKEN = getItem("accessToken");
     return axios({
       method: "get",
-      url: `${BASE_URL}/api/interests/long-term/`,
+      url: `${BASE_URL}/api/interests/long-term/user/${getItem("userId")}`,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -263,7 +263,7 @@ class RestAPI {
     const TOKEN = getItem("accessToken");
     return axios({
       method: "get",
-      url: `${BASE_URL}/api/interests/activity-stats/`,
+      url: `${BASE_URL}/api/interests/activity-stats/user/${getItem("userId")}`,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -278,7 +278,7 @@ class RestAPI {
     const TOKEN = getItem("accessToken");
     return axios({
       method: "get",
-      url: `${BASE_URL}/api/interests/long-term/`,
+      url: `${BASE_URL}/api/interests/long-term/user/${getItem("userId")}`,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -287,7 +287,29 @@ class RestAPI {
       keywords: data,
     }).then((res) => res);
   }
+  //** POST API FOR INTEREST EXTRACTION **//
+  static interestExtract(data) {
+    return axios({
+      method: "post",
+      url: `${BASE_URL}/api/interests/interest-extraction/`,
+      headers: {
+        "Content-Type": "application/json",
+        // Accept: "application/json",
+      },
+      data: data,
+    }).then((res) => res);
+  }
 
+  static computeSimilarity(data) {
+    return axios({
+      method: "post",
+      url: `${BASE_URL}/api/interests/similarity/`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    }).then((res) => res);
+  }
   //** GET SEARCH USER PROFILE DATA API **//
   static getUserProfile(id) {
     const TOKEN = getItem("accessToken");

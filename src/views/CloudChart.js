@@ -16,6 +16,7 @@ class CloudChartPage extends React.Component {
     this.state = {
       activeNav: 1,
       chartExample1Data: "data1",
+      tooltipOpen: false,
     };
     if (window.Chart) {
       parseOptions(Chart, chartOptions());
@@ -28,6 +29,9 @@ class CloudChartPage extends React.Component {
       chartExample1Data:
         this.state.chartExample1Data === "data1" ? "data2" : "data1",
     });
+  };
+  toogle = (status) => {
+    this.setState({ tooltipOpen: status });
   };
   render() {
     return (
@@ -68,6 +72,31 @@ class CloudChartPage extends React.Component {
                       >
                         Edit Keywords
                       </Link>
+                      <i
+                        className="fa fa-question-circle"
+                        style={{ lineHeight: "7" }}
+                        onMouseOver={() => this.toogle(true)}
+                        onMouseOut={() => this.toogle(false)}
+                      />
+                      {this.state.tooltipOpen && (
+                        <div
+                          style={{
+                            backgroundColor: "#ffffff",
+                            color: "#32325d",
+                            borderRadius: "8px",
+                            padding: "6px",
+                            fontSize: "13px",
+                            border: "1px solid black",
+                            position: "absolute",
+                            marginTop: "38px",
+                            right: "32px",
+                          }}
+                        >
+                          If you’re not satisfied with the interest modeling
+                          result, click here to generate the better interest
+                          model yourself.
+                        </div>
+                      )}
                     </div>
                   </Row>
                 </CardHeader>
