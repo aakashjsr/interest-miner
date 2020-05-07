@@ -31,10 +31,10 @@ const options = {
   enableTooltip: true,
   deterministic: true,
   fontFamily: "impact",
-  fontSizes: [5, 60],
+  fontSizes: [14, 60],
   fontStyle: "normal",
   fontWeight: "normal",
-  padding: 3,
+  padding: 5,
   rotations: 2,
   rotationAngles: [0, 90],
   scale: "sqrt",
@@ -55,6 +55,8 @@ class Demo extends React.Component {
     wordArray: [],
     keyarray: "",
     isDemoLoader: false,
+    isWordCloud: false,
+    isData: true,
   };
   componentDidMount() {
     this.setState({
@@ -96,6 +98,11 @@ class Demo extends React.Component {
             let keys = Object.keys(response.data);
             let value = Object.values(response.data);
             let keywordArray = [];
+            if (keys.length === 0) {
+              this.setState({
+                isData: false,
+              });
+            }
             for (let i = 0; i < keys.length; i++) {
               keywordArray.push({
                 text: keys[i],
@@ -104,6 +111,7 @@ class Demo extends React.Component {
             }
             this.setState({
               isDemoLoader: false,
+              isWordCloud: true,
               wordArray: keywordArray,
             });
 
@@ -183,8 +191,7 @@ class Demo extends React.Component {
 
   render() {
     const callbacks = {
-      getWordTooltip: (word) =>
-        `The word "${word.text}" appears ${word.value} times.`,
+      getWordTooltip: (word) => `${word.text}`,
     };
     return (
       <>
@@ -304,19 +311,34 @@ class Demo extends React.Component {
                               >
                                 Extract Interest
                               </Button>
-                              <div
-                                style={{
-                                  height: 400,
-                                  width: "100%",
-                                  marginTop: "40px",
-                                }}
-                              >
-                                <ReactWordcloud
-                                  options={options}
-                                  callbacks={callbacks}
-                                  words={this.state.wordArray}
-                                />
-                              </div>
+                              {this.state.isWordCloud ? (
+                                this.state.isData ? (
+                                  <div
+                                    style={{
+                                      height: 400,
+                                      width: "100%",
+                                      marginTop: "40px",
+                                    }}
+                                  >
+                                    <ReactWordcloud
+                                      options={options}
+                                      callbacks={callbacks}
+                                      words={this.state.wordArray}
+                                    />
+                                  </div>
+                                ) : (
+                                  <p
+                                    style={{
+                                      textAlign: "center",
+                                      lineHeight: "3",
+                                    }}
+                                  >
+                                    No Keywords Found
+                                  </p>
+                                )
+                              ) : (
+                                <></>
+                              )}
                             </Col>
                           </Row>
                         </Form>
