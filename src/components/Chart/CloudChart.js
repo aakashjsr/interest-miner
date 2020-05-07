@@ -53,6 +53,7 @@ class CloudChartPage extends Component {
     this.setState({ isLoding: true }, () => {
       RestAPI.cloudChart()
         .then((response) => {
+          console.log(response);
           let keywordArray = [];
           for (let i = 0; i < response.data.length; i++) {
             keywordArray.push({
@@ -60,6 +61,7 @@ class CloudChartPage extends Component {
               value: response.data[i].weight,
               tweet_ids: response.data[i].tweet_ids,
               papers: response.data[i].papers,
+              source: response.data[i].source,
             });
           }
           if (response.data.length === 0) {
@@ -119,8 +121,7 @@ class CloudChartPage extends Component {
 
   render() {
     const callbacks = {
-      getWordTooltip: (word) =>
-        `The word "${word.text}" appears ${word.value} times.`,
+      getWordTooltip: (word) => `${word.source}`,
       onWordClick: this.getCallback("onWordClick"),
     };
 

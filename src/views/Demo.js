@@ -22,16 +22,38 @@ import {
   Form,
 } from "reactstrap";
 
+import ReactWordcloud from "react-wordcloud";
+/* Chart code */
+// Themes begin
+// Themes end
+const options = {
+  colors: ["#0000CC", "#CC00CC"],
+  enableTooltip: true,
+  deterministic: true,
+  fontFamily: "impact",
+  fontSizes: [5, 60],
+  fontStyle: "normal",
+  fontWeight: "normal",
+  padding: 3,
+  rotations: 2,
+  rotationAngles: [0, 90],
+  scale: "sqrt",
+  spiral: "archimedean",
+  transitionDuration: 0,
+};
+
 class Demo extends React.Component {
   state = {
     isLoding: true,
-    weight: 4,
+    weight: null,
     wiki: false,
     keywords: "",
     algorithm: "",
     keywords_1: [],
     keywords_2: [],
     score: "",
+    wordArray: [],
+    keyarray: "",
     isDemoLoader: false,
   };
   componentDidMount() {
@@ -39,41 +61,77 @@ class Demo extends React.Component {
       isLoding: false,
     });
   }
+
   interestExtraction = () => {
-    let data = {
-      num_of_keywords: this.state.weight,
-      wiki_filter: this.state.wiki,
-      text: this.state.keywords,
-      algorithm: this.state.algorithm,
-    };
-    this.setState({ isDemoLoader: true }, () => {
-      RestAPI.interestExtract(data)
-        .then((response) => {
-          this.setState({ isDemoLoader: false });
-          if (response.status === 200) {
-            toast.success("Sucess", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 100,
+    if (this.state.keywords === "") {
+      toast.error("Please Enter text for interest extraction", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+      return;
+    }
+    if (this.state.algorithm === "") {
+      toast.error("Please Select Algorithm", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+      return;
+    }
+    if (this.state.weight === null) {
+      toast.error("Please Enter Keywords Count", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+      return;
+    } else {
+      let data = {
+        num_of_keywords: this.state.weight,
+        wiki_filter: this.state.wiki,
+        text: this.state.keywords,
+        algorithm: this.state.algorithm,
+      };
+      this.setState({ isDemoLoader: true }, () => {
+        RestAPI.interestExtract(data)
+          .then((response) => {
+            let keys = Object.keys(response.data);
+            let value = Object.values(response.data);
+            let keywordArray = [];
+            for (let i = 0; i < keys.length; i++) {
+              keywordArray.push({
+                text: keys[i],
+                value: value[i],
+              });
+            }
+            this.setState({
+              isDemoLoader: false,
+              wordArray: keywordArray,
             });
-          }
-        })
-        .catch((error) => {
-          this.setState({ isDemoLoader: false });
-          handleServerErrors(error, toast.error);
-        });
-    });
+
+            if (response.status === 200) {
+              toast.success("Sucess", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 100,
+              });
+            }
+          })
+          .catch((error) => {
+            this.setState({ isDemoLoader: false });
+            handleServerErrors(error, toast.error);
+          });
+      });
+    }
   };
 
   computeSimilarities = () => {
     if (this.state.keywords_1.length === 0) {
-      toast.error("Please Add Keyword", {
+      toast.error("Please Add Keyword (Set 1)", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });
       return;
     }
     if (this.state.keywords_2.length === 0) {
-      toast.error("Please Add Keyword", {
+      toast.error("Please Add Keyword (Set 2)", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });
@@ -112,15 +170,22 @@ class Demo extends React.Component {
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
+
   handleWikipedia = () => {
     this.setState({ wiki: !this.state.wiki });
   };
+
   selectchange = (e) => {
     this.setState({
       algorithm: e.target.value,
     });
   };
+
   render() {
+    const callbacks = {
+      getWordTooltip: (word) =>
+        `The word "${word.text}" appears ${word.value} times.`,
+    };
     return (
       <>
         <Col lg="10" md="12">
@@ -176,7 +241,7 @@ class Demo extends React.Component {
                                   }}
                                   className="form-control-alternative"
                                   name="keywords"
-                                  placeholder="Add Keyword"
+                                  placeholder="Enter text for interest extraction"
                                   type="text"
                                   required
                                   onChange={this.handleChange}
@@ -186,19 +251,11 @@ class Demo extends React.Component {
                             <Col lg="4">
                               <FormGroup>
                                 <select
-                                  className="form-control-alternative"
-                                  style={{
-                                    background: "white",
-                                    padding: " 12px 30px",
-                                    borderRadius: "4px",
-                                    fontSize: "15px",
-                                    color: "#969fa9",
-                                    width: "100%",
-                                  }}
+                                  className="form-control form-control-alternative"
                                   name="algorithm"
                                   onChange={this.selectchange}
                                 >
-                                  <option value="">Algorithm</option>
+                                  <option value="">Select Algorithm</option>
                                   <option value="SingleRank">
                                     Single Rank
                                   </option>
@@ -211,7 +268,7 @@ class Demo extends React.Component {
                                 <Input
                                   className="form-control-alternative"
                                   name="weight"
-                                  placeholder="Weight"
+                                  placeholder="Keywords Count"
                                   type="Number"
                                   required
                                   onChange={this.handleChange}
@@ -247,6 +304,19 @@ class Demo extends React.Component {
                               >
                                 Extract Interest
                               </Button>
+                              <div
+                                style={{
+                                  height: 400,
+                                  width: "100%",
+                                  marginTop: "40px",
+                                }}
+                              >
+                                <ReactWordcloud
+                                  options={options}
+                                  callbacks={callbacks}
+                                  words={this.state.wordArray}
+                                />
+                              </div>
                             </Col>
                           </Row>
                         </Form>
@@ -280,7 +350,7 @@ class Demo extends React.Component {
                                   }}
                                   className="form-control-alternative"
                                   name="keywords_1"
-                                  placeholder="Add Keyword"
+                                  placeholder=" Keywords (Set 1)"
                                   type="text"
                                   required
                                   onChange={this.handleChange}
@@ -298,7 +368,7 @@ class Demo extends React.Component {
                                   }}
                                   className="form-control-alternative"
                                   name="keywords_2"
-                                  placeholder="Add Keyword"
+                                  placeholder=" Keywords (Set 2)"
                                   type="text"
                                   required
                                   onChange={this.handleChange}
@@ -306,19 +376,18 @@ class Demo extends React.Component {
                               </FormGroup>
                             </Col>
                             <Col lg="12">
-                              <FormGroup style={{ textAlign: "center" }}>
+                              <FormGroup
+                                style={{
+                                  textAlign: "center",
+                                  width: "40%",
+                                  margin: "0 auto 30px",
+                                }}
+                              >
                                 <select
-                                  className="form-control-alternative"
-                                  style={{
-                                    background: "white",
-                                    padding: " 12px 30px",
-                                    borderRadius: "4px",
-                                    fontSize: "15px",
-                                    color: "#969fa9",
-                                  }}
+                                  className="form-control form-control-alternative"
                                   onChange={this.selectchange}
                                 >
-                                  <option>Algorithm</option>
+                                  <option>Select Algorithm</option>
                                   <option value="WordEmbedding">
                                     Word Embedding
                                   </option>
