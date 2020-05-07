@@ -159,14 +159,14 @@ class Keyword extends React.Component {
                   <Row className="align-items-center">
                     <Col xs="12">
                       <h3 className="mb-0">Edit Interest Page</h3>
-                      <p>
+                      {/* <p>
                         Description: In this page you can add your interests
                         which we haven’t explored or remove the interests which
                         you think it’s not correct. You can also rate for them
                         from 1-5 to define the importance of your interests.
                         Note that only top 15 interests will be visualized in
                         the word cloud.
-                      </p>
+                      </p> */}
                     </Col>
                   </Row>
                 </CardHeader>

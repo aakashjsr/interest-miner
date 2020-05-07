@@ -22,7 +22,7 @@ const options = {
   enableTooltip: true,
   deterministic: true,
   fontFamily: "impact",
-  fontSizes: [5, 60],
+  fontSizes: [14, 60],
   fontStyle: "normal",
   fontWeight: "normal",
   padding: 3,

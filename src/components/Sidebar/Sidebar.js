@@ -313,8 +313,8 @@ class Sidebar extends React.Component {
                       onClick={this.goBackProfile}
                       activeClassName="active"
                     >
-                      <i className="fa fa-users text-info" />
-                      Go Back To Profile
+                      <i className="fa fa-chevron-circle-left text-info" />
+                      Return To My Account
                     </NavLink>
                   </NavItem>
                 </Nav>
