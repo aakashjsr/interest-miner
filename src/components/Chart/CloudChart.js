@@ -119,8 +119,7 @@ class CloudChartPage extends Component {
 
   render() {
     const callbacks = {
-      getWordTooltip: (word) =>
-        `The word "${word.text}" appears ${word.value} times.`,
+      getWordTooltip: (word) => `${word.text}`,
       onWordClick: this.getCallback("onWordClick"),
     };
 
