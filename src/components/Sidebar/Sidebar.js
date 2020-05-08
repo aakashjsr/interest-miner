@@ -296,18 +296,6 @@ class Sidebar extends React.Component {
                 <Nav navbar>
                   <NavItem>
                     <NavLink
-                      to={"/app/profile/" + getItem("userId")}
-                      tag={NavLinkRRD}
-                      activeClassName="active"
-                    >
-                      <i className="fa fa-user text-blue" />
-                      Profile
-                    </NavLink>
-                  </NavItem>
-                </Nav>
-                <Nav navbar>
-                  <NavItem>
-                    <NavLink
                       to="/app/user-profile"
                       tag={NavLinkRRD}
                       onClick={this.goBackProfile}
@@ -315,6 +303,18 @@ class Sidebar extends React.Component {
                     >
                       <i className="fa fa-chevron-circle-left text-info" />
                       Return To My Account
+                    </NavLink>
+                  </NavItem>
+                </Nav>
+                <Nav navbar>
+                  <NavItem>
+                    <NavLink
+                      to={"/app/profile/" + getItem("userId")}
+                      tag={NavLinkRRD}
+                      activeClassName="active"
+                    >
+                      <i className="fa fa-user text-blue" />
+                      Profile
                     </NavLink>
                   </NavItem>
                 </Nav>
