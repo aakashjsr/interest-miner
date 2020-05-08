@@ -27,7 +27,7 @@ class Keyword extends React.Component {
     keywordData: [],
     rows: [{ name: "", weight: null, id: "" }],
     name: "",
-    Weight: "",
+    Weight: null,
     isLoding: false,
     isDisabled: true,
   };
@@ -57,7 +57,7 @@ class Keyword extends React.Component {
   handleAddRow = () => {
     const item = {
       name: "",
-      weight: "",
+      weight: null,
       id: "",
     };
     this.setState({

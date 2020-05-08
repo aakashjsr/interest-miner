@@ -57,6 +57,7 @@ class Demo extends React.Component {
     isDemoLoader: false,
     isWordCloud: false,
     isData: true,
+    isScore: false,
   };
   componentDidMount() {
     this.setState({
@@ -79,6 +80,13 @@ class Demo extends React.Component {
       });
       return;
     }
+    if (this.state.algorithm === "null") {
+      toast.error("Please Select Algorithm", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+      return;
+    }
     if (this.state.weight === null) {
       toast.error("Please Enter Keywords Count", {
         position: toast.POSITION.TOP_RIGHT,
@@ -89,12 +97,13 @@ class Demo extends React.Component {
       let data = {
         num_of_keywords: this.state.weight,
         wiki_filter: this.state.wiki,
-        text: this.state.keywords,
+        text: this.state.keywords.trim(),
         algorithm: this.state.algorithm,
       };
       this.setState({ isDemoLoader: true }, () => {
         RestAPI.interestExtract(data)
           .then((response) => {
+            console.log("rrrrrrrrrrrrrrrrrrrrr", response);
             let keys = Object.keys(response.data);
             let value = Object.values(response.data);
             let keywordArray = [];
@@ -114,13 +123,6 @@ class Demo extends React.Component {
               isWordCloud: true,
               wordArray: keywordArray,
             });
-
-            if (response.status === 200) {
-              toast.success("Sucess", {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 100,
-              });
-            }
           })
           .catch((error) => {
             this.setState({ isDemoLoader: false });
@@ -151,9 +153,16 @@ class Demo extends React.Component {
         autoClose: 2000,
       });
       return;
+    }
+    if (this.state.algorithm === "null") {
+      toast.error("Please Select Algorithm", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+      return;
     } else {
-      let keyword1 = this.state.keywords_1.split(",");
-      let keyword2 = this.state.keywords_2.split(",");
+      let keyword1 = this.state.keywords_1.trim().split(",");
+      let keyword2 = this.state.keywords_2.trim().split(",");
       let data = {
         algorithm: this.state.algorithm,
         keywords_1: keyword1,
@@ -162,16 +171,21 @@ class Demo extends React.Component {
       this.setState({
         isDemoLoader: true,
       });
-      RestAPI.computeSimilarity(data).then((response) => {
-        this.setState({
-          score: response.data.score,
-          isDemoLoader: false,
+      RestAPI.computeSimilarity(data)
+        .then((response) => {
+          console.log("res", response);
+          if (response.status === 200) {
+            this.setState({
+              score: response.data.score,
+              isScore: true,
+              isDemoLoader: false,
+            });
+          }
+        })
+        .catch((error) => {
+          this.setState({ isDemoLoader: false });
+          handleServerErrors(error, toast.error);
         });
-        toast.success("Scores are Below", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000,
-        });
-      });
     }
   };
 
@@ -250,7 +264,6 @@ class Demo extends React.Component {
                                   name="keywords"
                                   placeholder="Enter text for interest extraction"
                                   type="text"
-                                  required
                                   onChange={this.handleChange}
                                 ></textarea>
                               </FormGroup>
@@ -262,7 +275,7 @@ class Demo extends React.Component {
                                   name="algorithm"
                                   onChange={this.selectchange}
                                 >
-                                  <option value="">Select Algorithm</option>
+                                  <option value="null">Select Algorithm</option>
                                   <option value="SingleRank">
                                     Single Rank
                                   </option>
@@ -277,7 +290,6 @@ class Demo extends React.Component {
                                   name="weight"
                                   placeholder="Keywords Count"
                                   type="Number"
-                                  required
                                   onChange={this.handleChange}
                                 />
                               </FormGroup>
@@ -372,9 +384,8 @@ class Demo extends React.Component {
                                   }}
                                   className="form-control-alternative"
                                   name="keywords_1"
-                                  placeholder=" Keywords (Set 1)"
+                                  placeholder="Keywords (Set 1)"
                                   type="text"
-                                  required
                                   onChange={this.handleChange}
                                 ></textarea>
                               </FormGroup>
@@ -390,9 +401,8 @@ class Demo extends React.Component {
                                   }}
                                   className="form-control-alternative"
                                   name="keywords_2"
-                                  placeholder=" Keywords (Set 2)"
+                                  placeholder="Keywords (Set 2)"
                                   type="text"
-                                  required
                                   onChange={this.handleChange}
                                 ></textarea>
                               </FormGroup>
@@ -409,7 +419,7 @@ class Demo extends React.Component {
                                   className="form-control form-control-alternative"
                                   onChange={this.selectchange}
                                 >
-                                  <option>Select Algorithm</option>
+                                  <option value="null">Select Algorithm</option>
                                   <option value="WordEmbedding">
                                     Word Embedding
                                   </option>
@@ -427,18 +437,24 @@ class Demo extends React.Component {
                             >
                               Compute Similarity
                             </Button>
-                            <br />
-                            <h2
-                              className="text-center"
-                              style={{
-                                display: "block",
-                                width: "100%",
-                                marginTop: "20px",
-                                fontSize: "28px",
-                              }}
-                            >
-                              {this.state.score}
-                            </h2>
+                            {this.state.isScore ? (
+                              <>
+                                <br />
+                                <h2
+                                  className="text-center"
+                                  style={{
+                                    display: "block",
+                                    width: "100%",
+                                    marginTop: "20px",
+                                    fontSize: "28px",
+                                  }}
+                                >
+                                  {this.state.score}%
+                                </h2>
+                              </>
+                            ) : (
+                              <></>
+                            )}
                           </Row>
                         </Form>
                       </>

@@ -54,6 +54,25 @@ class AdminNavbar extends React.Component {
               </div>
               <Nav className="ml-auto" navbar>
                 <NavItem>
+                  <a
+                    className="nav-link-icon"
+                    style={{ color: "white", lineHeight: "3.6" }}
+                    href="https://interest-miner-api.webworks.ninja/docs/"
+                  >
+                    <i
+                      className="ni ni-single-copy-04"
+                      style={{ marginRight: "5px" }}
+                    />
+                    <span className="nav-link-inner--text">API Docs</span>
+                  </a>
+                </NavItem>
+                <NavItem>
+                  <NavLink className="nav-link-icon" to="/auth/demo" tag={Link}>
+                    <i className="ni ni-badge" />
+                    <span className="nav-link-inner--text">Demo</span>
+                  </NavLink>
+                </NavItem>
+                <NavItem>
                   <NavLink
                     className="nav-link-icon"
                     to="/auth/register"
@@ -71,12 +90,6 @@ class AdminNavbar extends React.Component {
                   >
                     <i className="ni ni-key-25" />
                     <span className="nav-link-inner--text">Login</span>
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink className="nav-link-icon" to="/auth/demo" tag={Link}>
-                    <i className="ni ni-badge" />
-                    <span className="nav-link-inner--text">Demo</span>
                   </NavLink>
                 </NavItem>
               </Nav>

@@ -53,7 +53,6 @@ class CloudChartPage extends Component {
     this.setState({ isLoding: true }, () => {
       RestAPI.cloudChart()
         .then((response) => {
-          console.log(response);
           let keywordArray = [];
           for (let i = 0; i < response.data.length; i++) {
             keywordArray.push({
