@@ -65,7 +65,8 @@ class Demo extends React.Component {
     });
   }
 
-  interestExtraction = () => {
+  interestExtraction = (e) => {
+    e.returnValue = false;
     if (this.state.keywords === "") {
       toast.error("Please Enter text for interest extraction", {
         position: toast.POSITION.TOP_RIGHT,
@@ -88,6 +89,13 @@ class Demo extends React.Component {
       return;
     }
     if (this.state.weight === null) {
+      toast.error("Please Enter Keywords Count", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+      return;
+    }
+    if (this.state.weight === "") {
       toast.error("Please Enter Keywords Count", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
@@ -173,7 +181,6 @@ class Demo extends React.Component {
       });
       RestAPI.computeSimilarity(data)
         .then((response) => {
-          console.log("res", response);
           if (response.status === 200) {
             this.setState({
               score: response.data.score,
@@ -263,6 +270,7 @@ class Demo extends React.Component {
                                   className="form-control-alternative"
                                   name="keywords"
                                   placeholder="Enter text for interest extraction"
+                                  value={this.state.keywords}
                                   type="text"
                                   onChange={this.handleChange}
                                 ></textarea>
@@ -273,12 +281,25 @@ class Demo extends React.Component {
                                 <select
                                   className="form-control form-control-alternative"
                                   name="algorithm"
+                                  value={this.state.algorithm}
                                   onChange={this.selectchange}
                                 >
                                   <option value="null">Select Algorithm</option>
+                                  <option value="TopicRank">Topic Rank</option>
                                   <option value="SingleRank">
                                     Single Rank
                                   </option>
+                                  <option value="MultipartiteRank">
+                                    Multi Partite Rank
+                                  </option>
+                                  <option value="PositionRank">
+                                    Position Rank
+                                  </option>
+                                  <option value="TopicalPageRank">
+                                    Topical Page Rank
+                                  </option>
+                                  <option value="TextRank">Text Rank</option>
+                                  <option value="Rake">Rake</option>
                                   <option value="Yake">Yake</option>
                                 </select>
                               </FormGroup>
@@ -290,6 +311,7 @@ class Demo extends React.Component {
                                   name="weight"
                                   placeholder="Keywords Count"
                                   type="Number"
+                                  value={this.state.weight}
                                   onChange={this.handleChange}
                                 />
                               </FormGroup>
@@ -303,6 +325,7 @@ class Demo extends React.Component {
                                       color="primary"
                                       onChange={this.handleWikipedia}
                                       placeholder="Use Wikipedia"
+                                      value={this.state.wiki}
                                       checked={this.state.wiki ? true : false}
                                       inputProps={{
                                         "aria-label": "secondary checkbox",
@@ -386,6 +409,7 @@ class Demo extends React.Component {
                                   name="keywords_1"
                                   placeholder="Keywords (Set 1)"
                                   type="text"
+                                  value={this.state.keywords_1}
                                   onChange={this.handleChange}
                                 ></textarea>
                               </FormGroup>
@@ -401,6 +425,7 @@ class Demo extends React.Component {
                                   }}
                                   className="form-control-alternative"
                                   name="keywords_2"
+                                  value={this.state.keywords_2}
                                   placeholder="Keywords (Set 2)"
                                   type="text"
                                   onChange={this.handleChange}
@@ -418,6 +443,7 @@ class Demo extends React.Component {
                                 <select
                                   className="form-control form-control-alternative"
                                   onChange={this.selectchange}
+                                  value={this.state.algorithm}
                                 >
                                   <option value="null">Select Algorithm</option>
                                   <option value="WordEmbedding">
