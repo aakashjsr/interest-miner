@@ -147,12 +147,12 @@ class Profile extends React.Component {
                           <span className="description">Papers</span>
                         </div>
 
-                        <div>
+                        {/* <div>
                           <span className="heading">
                             {this.state.data && keyword_count}
                           </span>
                           <span className="description">Keywords</span>
-                        </div>
+                        </div> */}
                         <div>
                           <span className="heading">
                             {this.state.data && tweet_count}
