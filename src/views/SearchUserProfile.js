@@ -181,10 +181,10 @@ class SearchUserProfile extends React.Component {
                           <span className="description">Papers</span>
                         </div>
 
-                        <div>
+                        {/* <div>
                           <span className="heading">{this.state.data && keyword_count}</span>
                           <span className="description">Keywords</span>
-                        </div>
+                        </div> */}
                         <div>
                           <span className="heading">{this.state.data && tweet_count}</span>
                           <span className="description">Tweet Count</span>
@@ -297,7 +297,7 @@ class SearchUserProfile extends React.Component {
                                 className="form-control-label"
                                 htmlFor="input-city"
                               >
-                                Auth Id
+                                Author Id
                             </label>
                               <Input
                                 className="form-control-alternative"
