@@ -59,6 +59,23 @@ class Profile extends React.Component {
     });
   }
 
+  refreshData = () => {
+    this.setState({ isLoding1: true }, () => {
+      user
+        .refreshData()
+        .then((response) => {
+          toast.success("New data will be available in a few minutes!", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+          });
+        })
+        .catch((error) => {
+          this.setState({ isLoding1: false });
+          handleServerErrors(error, toast.error);
+        });
+    });
+  }
+
   handleChange = (e) => {
     let getValue = e.target.value;
     let getName = e.target.name;
@@ -166,6 +183,9 @@ class Profile extends React.Component {
                     <h3>{this.state.data && first_name + " " + last_name}</h3>
 
                     <hr className="my-4" />
+                    <div>
+                        <Button color="info" onClick={this.refreshData}>Refresh Account Data</Button>
+                      </div>  
                   </div>
                 </CardBody>
               </Card>

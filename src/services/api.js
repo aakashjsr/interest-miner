@@ -3,6 +3,20 @@ import { BASE_URL } from "../constants";
 import axios from "axios";
 
 class RestAPI {
+
+  static refreshData(data) {
+    return axios({
+      method: "post",
+      url: `${BASE_URL}/api/interests/trigger-data-updata/`,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Token ${getItem("accessToken")}`,
+      },
+      data: {},
+    }).then((res) => res);
+  }
+
   //** SIGNUP API **//
   static userSignup(data) {
     return axios({

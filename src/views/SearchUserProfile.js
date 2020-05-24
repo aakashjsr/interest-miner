@@ -20,6 +20,35 @@ import { toast } from 'react-toastify';
 import Loader from 'react-loader-spinner'
 import { handleServerErrors } from "utils/errorHandler";
 import RestAPI from '../services/api';
+import ReactApexChart from 'react-apexcharts';
+
+
+const SimilarityComponent = props => {
+  if (props.showLoader) {
+    return (
+        <div className="text-center" style={{ padding: '20px' }}>
+          <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+        </div>
+      );
+  } else {
+    if (props.score) {
+      return (
+          <div>
+            <h3 className="rounded-circle" style={{
+            color: 'rgb(94, 114, 228)', textAlign: 'center', marginTop: '15px',
+            fontSize: '45px'}}>{props.score} %</h3>
+
+            <div id="chart">
+              <ReactApexChart options={props.radarChartData.options} series={props.radarChartData.series} type="radar" height={300} />
+            </div>
+            
+          </div>
+        );
+    } else {
+      return <Button onClick={props.getScore} style={{ marginTop: '30px' }} color="primary">Get Similarity Score</Button>;
+    }
+  }  
+} 
 
 class SearchUserProfile extends React.Component {
   state = {
@@ -35,7 +64,8 @@ class SearchUserProfile extends React.Component {
     keyword_count: '',
     score: '',
     isLoding: false,
-    isLoding1: false
+    isLoding1: false,
+    radarChartData: {}
   }
   componentDidMount() {
     this.setState({ isLoding: true }, () => {
@@ -78,7 +108,8 @@ class SearchUserProfile extends React.Component {
             paper_count: response.data.paper_count,
             tweet_count: response.data.tweet_count,
             keyword_count: response.data.keyword_count,
-            score: ''
+            score: '',
+            radarChartData: {}
           })
 
         }).catch(error => {
@@ -129,10 +160,46 @@ class SearchUserProfile extends React.Component {
   getScore = () => {
     this.setState({ isLoding1: true }, () => {
       RestAPI.getScore(this.props.match.params.id).then(response => {
-        this.setState({ isLoding1: false, score: response.data.score })
+        const radarChartData = {
+            series: [{
+              name: 'Your Interests',
+              data: Object.values(response.data.user_1_data || {}),
+            }, {
+              name: "User's Interests",
+              data: Object.values(response.data.user_2_data || {}),
+            }],
+            options: {
+              chart: {
+                height: 350,
+                type: 'radar',
+                dropShadow: {
+                  enabled: true,
+                  blur: 1,
+                  left: 1,
+                  top: 1
+                }
+              },
+              stroke: {
+                width: 2
+              },
+              fill: {
+                opacity: 0.1
+              },
+              markers: {
+                size: 0
+              },
+              xaxis: {
+                categories: Object.keys(response.data.user_1_data || {})
+              }
+            },
+          
+          
+          };
+        this.setState({ isLoding1: false, score: response.data.score, radarChartData })
         // this.props.history.push("/admin/view-paper");
 
       }).catch(error => {
+        console.log(error)
         this.setState({ isLoding1: false })
         handleServerErrors(error, toast.error)
 
@@ -140,7 +207,6 @@ class SearchUserProfile extends React.Component {
     })
 
   }
-
 
   render() {
     const { email, first_name, last_name, twitter_account_id, author_id, paper_count, tweet_count, keyword_count } = this.state
@@ -158,17 +224,7 @@ class SearchUserProfile extends React.Component {
                 <Row className="justify-content-center">
                   <Col className="order-lg-2" lg="12">
                     <div className="card-profile-image" style={{ textAlign: 'center' }}>
-                      {!this.state.score && <Button onClick={this.getScore} style={{ marginTop: '30px' }} color="primary">Get Similarity Score</Button>}
-
-                      {this.state.isLoding1 ?
-                        (<div className="text-center" style={{ padding: '20px' }}>
-                          <Loader type="Puff" color="#00BFFF" height={100} width={100} />
-                        </div>)
-                        : <h1 className="rounded-circle" style={{
-                          color: 'rgb(94, 114, 228)', textAlign: 'center', marginTop: '15px',
-                          fontSize: '45px'
-                        }}>{this.state.score}</h1>}
-
+                      <SimilarityComponent radarChartData={this.state.radarChartData} score={this.state.score} showLoader={this.state.isLoding1} getScore={this.getScore} />
                     </div>
                   </Col>
                 </Row>
