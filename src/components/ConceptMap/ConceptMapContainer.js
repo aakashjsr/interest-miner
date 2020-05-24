@@ -11,8 +11,8 @@ class ConceptMapContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.stageHeight = 600;
-    this.stageWidth = 600;
+    this.stageHeight = 1200;
+    this.stageWidth = 900;
 
     this.keywordNodeSize = 20;
     this.keywordNodeSpacing = 30;

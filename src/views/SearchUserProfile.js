@@ -170,6 +170,7 @@ class SearchUserProfile extends React.Component {
             }],
             options: {
               chart: {
+                toolbar: {show:false},
                 height: 350,
                 type: 'radar',
                 dropShadow: {
