@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import Chart from "react-apexcharts";
 import { toast } from "react-toastify";
 import Loader from "react-loader-spinner";
@@ -6,7 +6,7 @@ import RestAPI from "services/api";
 
 import { handleServerErrors } from "utils/errorHandler";
 
-class PieChart extends React.Component {
+class UserPieChart extends Component {
   state = {
     data: [],
     series: [],
@@ -72,7 +72,7 @@ class PieChart extends React.Component {
 
   componentDidMount() {
     this.setState({ isLoding: true }, () => {
-      RestAPI.pieChart()
+      RestAPI.pieChartUser()
         .then((response) => {
           let mydata = response.data.map((val) => val.keyword);
           let values = response.data.map((val) => val.weight);
@@ -121,4 +121,4 @@ class PieChart extends React.Component {
   }
 }
 
-export default PieChart;
+export default UserPieChart;

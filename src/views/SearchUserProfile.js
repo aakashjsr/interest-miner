@@ -29,6 +29,7 @@ import { TwitterTweetEmbed } from "react-twitter-embed";
 import UserCarousel from "../components/carousel";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+import UserPieChart from "../components/Chart/UserPieChart";
 
 import ReactWordcloud from "react-wordcloud";
 /* Chart code */
@@ -125,7 +126,7 @@ class SearchUserProfile extends React.Component {
         categories: [],
       },
     },
-    series: [],
+    series1: [],
     tweetoptions: {
       chart: {
         id: "basic-bar",
@@ -308,25 +309,6 @@ class SearchUserProfile extends React.Component {
               xaxis: {
                 categories: [...tweetscategorieList],
               },
-            },
-          });
-        })
-        .catch((error) => {
-          this.setState({ isLoding: false });
-          handleServerErrors(error, toast.error);
-        });
-      RestAPI.pieChartUser()
-        .then((response) => {
-          let mydata = response.data.map((val) => val.keyword);
-          let values = response.data.map((val) => val.weight);
-
-          this.setState({
-            isLoding: false,
-            data: response.data,
-            series: values,
-            options: {
-              ...this.state.options,
-              labels: mydata,
             },
           });
         })
@@ -858,18 +840,13 @@ class SearchUserProfile extends React.Component {
                         }}
                       >
                         <Carousel.Item>
-                          <div
-                            style={{ maxWidth: "560px", margin: "35px auto" }}
-                          >
-                            <Chart
-                              options={this.state.coloroptions}
-                              series={this.state.series}
-                              type="pie"
-                            />
-                          </div>
+                          <UserPieChart />
                         </Carousel.Item>
                         <Carousel.Item>
-                          <div className="mixed-chart">
+                          <div
+                            className="mixed-chart"
+                            style={{ margin: "0 auto", width: "600px" }}
+                          >
                             <h1>Paper Data</h1>
                             <Chart
                               options={this.state.options}
@@ -880,9 +857,13 @@ class SearchUserProfile extends React.Component {
                           </div>
                         </Carousel.Item>
                         <Carousel.Item>
-                          <div className="mixed-chart">
+                          <div
+                            className="mixed-chart"
+                            style={{ margin: "0 auto", width: "600px" }}
+                          >
                             <h1>Tweet Data</h1>
                             <Chart
+                              style={{ margin: "0 auto" }}
                               options={this.state.tweetoptions}
                               series={this.state.tweetseries}
                               type="bar"

@@ -19072,7 +19072,7 @@ button:focus,
 .MuiTypography-body1 {
   font-size: 0.8rem !important;
 }
-.carousel >a{
-  background: #000000 !important;
-  opacity: 0.3 !important;
+.mixed-chart {
+  margin: 0 auto;
+  width: 600px;
 }

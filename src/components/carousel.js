@@ -423,7 +423,10 @@ class UserCarousel extends Component {
             <PieChart />
           </Carousel.Item>
           <Carousel.Item>
-            <div className="mixed-chart">
+            <div
+              className="mixed-chart"
+              style={{ margin: "0 auto", width: "600px" }}
+            >
               <h1>Paper Data</h1>
               <Chart
                 options={this.state.options}
@@ -434,7 +437,10 @@ class UserCarousel extends Component {
             </div>
           </Carousel.Item>
           <Carousel.Item>
-            <div className="mixed-chart">
+            <div
+              className="mixed-chart"
+              style={{ margin: "0 auto", width: "600px" }}
+            >
               <h1>Tweet Data</h1>
               <Chart
                 options={this.state.tweetoptions}
@@ -452,6 +458,7 @@ class UserCarousel extends Component {
             <div id="chart">
               <Chart
                 type="area"
+                width="600"
                 series={this.state.chartOptions.twitterSeries}
                 options={twitterGraphOptions}
               />
