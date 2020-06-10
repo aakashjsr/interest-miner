@@ -74,7 +74,7 @@ class Profile extends React.Component {
           handleServerErrors(error, toast.error);
         });
     });
-  }
+  };
 
   handleChange = (e) => {
     let getValue = e.target.value;
@@ -184,8 +184,10 @@ class Profile extends React.Component {
 
                     <hr className="my-4" />
                     <div>
-                        <Button color="info" onClick={this.refreshData}>Refresh Account Data</Button>
-                      </div>  
+                      <Button color="info" onClick={this.refreshData}>
+                        Refresh Account Data
+                      </Button>
+                    </div>
                   </div>
                 </CardBody>
               </Card>
@@ -210,126 +212,128 @@ class Profile extends React.Component {
                       />
                     </div>
                   ) : (
-                    <Form onSubmit={this._handleSubmit} method="post">
-                      <h6 className="heading-small text-muted mb-4">
-                        User information
-                      </h6>
-                      <div className="pl-lg-4">
-                        <Row>
-                          <Col lg="6">
-                            <FormGroup>
-                              <label
-                                className="form-control-label"
-                                htmlFor="input-first-name"
-                              >
-                                First name
-                              </label>
-                              <Input
-                                className="form-control-alternative"
-                                id="input-first-name"
-                                name="first_name"
-                                value={first_name}
-                                onChange={this.handleChange}
-                                placeholder="First name"
-                                type="text"
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col lg="6">
-                            <FormGroup>
-                              <label
-                                className="form-control-label"
-                                htmlFor="input-last-name"
-                              >
-                                Last name
-                              </label>
-                              <Input
-                                className="form-control-alternative"
-                                id="input-last-name"
-                                name="last_name"
-                                value={last_name}
-                                onChange={this.handleChange}
-                                placeholder="Last name"
-                                type="text"
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col lg="6">
-                            <FormGroup>
-                              <label
-                                className="form-control-label"
-                                htmlFor="input-email"
-                              >
-                                Email address
-                              </label>
-                              <Input
-                                className="form-control-alternative"
-                                id="input-email"
-                                name="email"
-                                value={email}
-                                onChange={this.handleChange}
-                                placeholder="jesse@example.com"
-                                type="email"
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                      </div>
-                      <hr className="my-4" />
-                      {/* Address */}
-                      <h6 className="heading-small text-muted mb-4">
-                        Source information
-                      </h6>
-                      <div className="pl-lg-4">
-                        <Row></Row>
-                        <Row>
-                          <Col lg="6">
-                            <FormGroup>
-                              <label
-                                className="form-control-label"
-                                htmlFor="input-city"
-                              >
-                                Author Id
-                              </label>
-                              <Input
-                                className="form-control-alternative"
-                                id="input-city"
-                                name="author_id"
-                                value={author_id}
-                                onChange={this.handleChange}
-                                placeholder="City"
-                                type="text"
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col lg="6">
-                            <FormGroup>
-                              <label
-                                className="form-control-label"
-                                htmlFor="input-country"
-                              >
-                                Twitter Id
-                              </label>
-                              <Input
-                                className="form-control-alternative"
-                                id="input-country"
-                                name="twitter_account_id"
-                                value={twitter_account_id}
-                                onChange={this.handleChange}
-                                placeholder="Twitter Acount id"
-                                type="text"
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                      </div>
-                      <hr className="my-4" />
-                      <Button color="info" type="submit">
-                        Edit profile
-                      </Button>
-                    </Form>
+                    <>
+                      <Form onSubmit={this._handleSubmit} method="post">
+                        <h6 className="heading-small text-muted mb-4">
+                          User information
+                        </h6>
+                        <div className="pl-lg-4">
+                          <Row>
+                            <Col lg="6">
+                              <FormGroup>
+                                <label
+                                  className="form-control-label"
+                                  htmlFor="input-first-name"
+                                >
+                                  First name
+                                </label>
+                                <Input
+                                  className="form-control-alternative"
+                                  id="input-first-name"
+                                  name="first_name"
+                                  value={first_name}
+                                  onChange={this.handleChange}
+                                  placeholder="First name"
+                                  type="text"
+                                />
+                              </FormGroup>
+                            </Col>
+                            <Col lg="6">
+                              <FormGroup>
+                                <label
+                                  className="form-control-label"
+                                  htmlFor="input-last-name"
+                                >
+                                  Last name
+                                </label>
+                                <Input
+                                  className="form-control-alternative"
+                                  id="input-last-name"
+                                  name="last_name"
+                                  value={last_name}
+                                  onChange={this.handleChange}
+                                  placeholder="Last name"
+                                  type="text"
+                                />
+                              </FormGroup>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col lg="6">
+                              <FormGroup>
+                                <label
+                                  className="form-control-label"
+                                  htmlFor="input-email"
+                                >
+                                  Email address
+                                </label>
+                                <Input
+                                  className="form-control-alternative"
+                                  id="input-email"
+                                  name="email"
+                                  value={email}
+                                  onChange={this.handleChange}
+                                  placeholder="jesse@example.com"
+                                  type="email"
+                                />
+                              </FormGroup>
+                            </Col>
+                          </Row>
+                        </div>
+                        <hr className="my-4" />
+                        {/* Address */}
+                        <h6 className="heading-small text-muted mb-4">
+                          Source information
+                        </h6>
+                        <div className="pl-lg-4">
+                          <Row></Row>
+                          <Row>
+                            <Col lg="6">
+                              <FormGroup>
+                                <label
+                                  className="form-control-label"
+                                  htmlFor="input-city"
+                                >
+                                  Author Id
+                                </label>
+                                <Input
+                                  className="form-control-alternative"
+                                  id="input-city"
+                                  name="author_id"
+                                  value={author_id}
+                                  onChange={this.handleChange}
+                                  placeholder="City"
+                                  type="text"
+                                />
+                              </FormGroup>
+                            </Col>
+                            <Col lg="6">
+                              <FormGroup>
+                                <label
+                                  className="form-control-label"
+                                  htmlFor="input-country"
+                                >
+                                  Twitter Id
+                                </label>
+                                <Input
+                                  className="form-control-alternative"
+                                  id="input-country"
+                                  name="twitter_account_id"
+                                  value={twitter_account_id}
+                                  onChange={this.handleChange}
+                                  placeholder="Twitter Acount id"
+                                  type="text"
+                                />
+                              </FormGroup>
+                            </Col>
+                          </Row>
+                        </div>
+                        <hr className="my-4" />
+                        <Button color="info" type="submit">
+                          Edit profile
+                        </Button>
+                      </Form>
+                    </>
                   )}
                 </CardBody>
               </Card>

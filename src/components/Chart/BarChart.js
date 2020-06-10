@@ -89,8 +89,7 @@ class BarChart extends Component {
           </div>
         ) : (
           <>
-            
-            <div className="mixed-chart" style={{ paddingLeft: "20%" }}>
+            <div className="mixed-chart">
               <h1>Paper Data</h1>
               <Chart
                 options={this.state.options}

@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify';
 
 export const handleServerErrors = (error, enqueueSnackbar, defaultMsg = "Something went wrong. Try again.") => {
+   
     try {
         if (error && error.response && error.response.status === 401) {
             // enqueueSnackbar("Session expired. Login Again");

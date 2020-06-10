@@ -3,10 +3,8 @@ import { toast } from "react-toastify";
 import Loader from "react-loader-spinner";
 import { handleServerErrors } from "utils/errorHandler";
 import RestAPI from "../services/api";
-
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 

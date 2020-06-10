@@ -204,6 +204,7 @@ pre {
   overflow: auto;
   -ms-overflow-style: scrollbar;
 }
+
 figure {
   margin: 0 0 1rem;
 }
@@ -225,6 +226,20 @@ caption {
   text-align: left;
   caption-side: bottom;
 }
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: #000000fa no-repeat center center;
+  background-size: 100% 100%;
+}
+
+.carousel .slide > .carousel-control-prev {
+  background: #090606 !important;
+}
+
 th {
   text-align: inherit;
 }

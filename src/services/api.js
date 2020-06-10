@@ -3,7 +3,6 @@ import { BASE_URL } from "../constants";
 import axios from "axios";
 
 class RestAPI {
-
   static refreshData(data) {
     return axios({
       method: "post",
@@ -243,13 +242,39 @@ class RestAPI {
       keywords: data,
     }).then((res) => res);
   }
-
+  //** PIE DATA API FOR USER PROFILE **//
+  static pieChartUser(data) {
+    const TOKEN = getItem("accessToken");
+    return axios({
+      method: "get",
+      url: `${BASE_URL}/api/interests/short-term/user/${getItem("mId")}`,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Token ${TOKEN}`,
+      },
+      keywords: data,
+    }).then((res) => res);
+  }
   //** STREAM DATA API **//
   static streamChart() {
     const TOKEN = getItem("accessToken");
     return axios({
       method: "get",
       url: `${BASE_URL}/api/interests/stream-graph/user/${getItem("userId")}`,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Token ${TOKEN}`,
+      },
+    }).then((res) => res);
+  }
+  //** STREAM DATA API FOR USER PROFILE **//
+  static streamChartUser() {
+    const TOKEN = getItem("accessToken");
+    return axios({
+      method: "get",
+      url: `${BASE_URL}/api/interests/stream-graph/user/${getItem("mId")}`,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -287,6 +312,21 @@ class RestAPI {
     }).then((res) => res);
   }
 
+  //** BAR DATA API FOR USER PROFILE **//
+  static barChartUser(data) {
+    const TOKEN = getItem("accessToken");
+    return axios({
+      method: "get",
+      url: `${BASE_URL}/api/interests/activity-stats/user/${getItem("mId")}`,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Token ${TOKEN}`,
+      },
+      keywords: data,
+    }).then((res) => res);
+  }
+
   //** CLOUD DATA API **//
   static cloudChart(data) {
     const TOKEN = getItem("accessToken");
@@ -301,6 +341,22 @@ class RestAPI {
       keywords: data,
     }).then((res) => res);
   }
+
+  //** CLOUD DATA API FOR USER PROFILE **//
+  static cloudChartUser(data) {
+    const TOKEN = getItem("accessToken");
+    return axios({
+      method: "get",
+      url: `${BASE_URL}/api/interests/long-term/user/${getItem("mId")}`,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Token ${TOKEN}`,
+      },
+      keywords: data,
+    }).then((res) => res);
+  }
+
   //** POST API FOR INTEREST EXTRACTION **//
   static interestExtract(data) {
     return axios({
