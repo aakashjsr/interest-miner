@@ -18,19 +18,15 @@ import SearchUserHeader from "components/Headers/SearchUserHeader.js";
 import { toast } from "react-toastify";
 import Loader from "react-loader-spinner";
 import Carousel from "react-bootstrap/Carousel";
-import PieChart from "../components/Chart/PieChart";
 import { handleServerErrors } from "utils/errorHandler";
 import RestAPI from "../services/api";
 import ReactApexChart from "react-apexcharts";
 import Chart from "react-apexcharts";
-import BarChart from "../components/Chart/BarChart";
 import { getItem } from "utils/localStorage";
-import CloudChart from "../components/Chart/CloudChart";
-import StreamChart from "../components/Chart/StreamChart";
 import "d3-transition";
 import { Modal, ModalBody, ModalFooter } from "reactstrap";
 import { TwitterTweetEmbed } from "react-twitter-embed";
-
+import UserCarousel from "../components/carousel";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 
@@ -242,6 +238,45 @@ class SearchUserProfile extends React.Component {
         });
 
       RestAPI.barChartUser()
+        .then((response) => {
+          let categorieList = Object.keys(response.data.papers);
+          let value = Object.values(response.data.papers);
+          let tweetscategorieList = Object.keys(response.data.tweets);
+          let tweetsvalue = Object.values(response.data.tweets);
+          this.setState({
+            isLoding: false,
+            data: response.data,
+            series: [{ name: "Paper", data: [...value] }],
+            tweetseries: [{ name: "Tweet", data: [...tweetsvalue] }],
+            // options: { ...this.state.options, ...this.state.options.xaxis, ...this.state.options.xaxis.categories = categorieList },
+            // tweetoptions: { ...this.state.tweetoptions, ...this.state.tweetoptions.xaxis, ...this.state.tweetoptions.xaxis.categories = tweetscategorieList },
+            options: {
+              chart: {
+                id: "basic-bar",
+              },
+
+              fill: {
+                colors: ["#9C27B0"],
+              },
+              xaxis: {
+                categories: [...categorieList],
+              },
+            },
+            tweetoptions: {
+              chart: {
+                id: "basic-bar",
+              },
+              xaxis: {
+                categories: [...tweetscategorieList],
+              },
+            },
+          });
+        })
+        .catch((error) => {
+          this.setState({ isLoding: false });
+          handleServerErrors(error, toast.error);
+        });
+      RestAPI.barChart()
         .then((response) => {
           let categorieList = Object.keys(response.data.papers);
           let value = Object.values(response.data.papers);
@@ -808,31 +843,18 @@ class SearchUserProfile extends React.Component {
                       <h1 style={{ color: "#076ec6" }}>
                         {this.state.data && first_name + " " + last_name}
                       </h1>
-                      <Carousel
-                        style={{
-                          background: "rgba(50, 151, 211, 0.25)",
-                          borderRadius: "6px",
-                        }}
-                      >
-                        <Carousel.Item>
-                          <PieChart />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                          <BarChart />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                          <CloudChart />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                          <StreamChart />
-                        </Carousel.Item>
-                      </Carousel>
+                      <UserCarousel />
                       <br />
                       <h1 style={{ color: "#076ec6" }}>{getItem("name")}</h1>
                       <Carousel
+                        interval={1000000000}
+                        indicators={false}
                         style={{
                           background: "rgba(50, 151, 211, 0.25)",
                           borderRadius: "6px",
+                          height: "550px",
+                          overflow: "hidden",
+                          padding: "10px",
                         }}
                       >
                         <Carousel.Item>
@@ -855,7 +877,10 @@ class SearchUserProfile extends React.Component {
                               type="bar"
                               width="600"
                             />
-                            <hr />
+                          </div>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                          <div className="mixed-chart">
                             <h1>Tweet Data</h1>
                             <Chart
                               options={this.state.tweetoptions}
@@ -999,7 +1024,8 @@ class SearchUserProfile extends React.Component {
                               options={twitterGraphOptions}
                             />
                           </div>
-                          <br />
+                        </Carousel.Item>
+                        <Carousel.Item>
                           <div align="center">Paper Keyword Trends</div>
                           <div id="chart">
                             <Chart
