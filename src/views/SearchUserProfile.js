@@ -827,7 +827,9 @@ class SearchUserProfile extends React.Component {
                       </h1>
                       <UserCarousel />
                       <br />
-                      <h1 style={{ color: "#076ec6" }}>{getItem("name")}</h1>
+                      <h1 style={{ color: "#076ec6" }}>
+                        {getItem("name") + " " + getItem("lastname")}
+                      </h1>
                       <Carousel
                         interval={1000000000}
                         indicators={false}
