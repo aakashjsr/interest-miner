@@ -1,24 +1,10 @@
-
 import React from "react";
 import Chart from "chart.js";
-import ConceptMapContainer from "../components/ConceptMap/"
-
-
-
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Container,
-  Row,
-  Col
-} from "reactstrap";
+import ConceptMapContainer from "../components/ConceptMap/";
+import { Card, CardHeader, CardBody, Container, Row, Col } from "reactstrap";
 
 // core components
-import {
-  chartOptions,
-  parseOptions,
-} from "variables/charts.js";
+import { chartOptions, parseOptions } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
 
@@ -27,7 +13,7 @@ class ConceptPage extends React.Component {
     super(props);
     this.state = {
       activeNav: 1,
-      chartExample1Data: "data1"
+      chartExample1Data: "data1",
     };
     if (window.Chart) {
       parseOptions(Chart, chartOptions());
@@ -38,7 +24,7 @@ class ConceptPage extends React.Component {
     this.setState({
       activeNav: index,
       chartExample1Data:
-        this.state.chartExample1Data === "data1" ? "data2" : "data1"
+        this.state.chartExample1Data === "data1" ? "data2" : "data1",
     });
   };
   render() {
@@ -57,19 +43,19 @@ class ConceptPage extends React.Component {
                         {/* Overview */}
                       </h6>
                       <h2 className="text-white1 mb-0">Potential Interests</h2>
-                      <p>This chart uses your top 5 interests to infer your potential interests. You can see them on the right side of the graph.</p>
+                      <p>
+                        This chart uses your top 5 interests to infer your
+                        potential interests. You can see them on the right side
+                        of the graph.
+                      </p>
                     </div>
-
                   </Row>
                 </CardHeader>
                 <CardBody>
-
                   <ConceptMapContainer />
-
                 </CardBody>
               </Card>
             </Col>
-
           </Row>
         </Container>
       </>

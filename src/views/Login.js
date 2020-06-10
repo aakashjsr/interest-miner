@@ -52,6 +52,7 @@ class Login extends React.Component {
         }
       })
       .catch((error) => {
+        console.log("error", error);
         this.setState({ isLoding: false });
         handleServerErrors(error, toast.error);
       });

@@ -623,7 +623,6 @@ pre code {
   }
 }
 
-
 .container-fluid {
   width: 100%;
   padding-right: 15px;
@@ -19071,5 +19070,9 @@ button:focus,
   margin-right: 10px;
 }
 .MuiTypography-body1 {
-  font-size: .8rem !important;
+  font-size: 0.8rem !important;
+}
+.carousel >a{
+  background: #000000 !important;
+  opacity: 0.3 !important;
 }
