@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import Loader from "react-loader-spinner";
 import { handleServerErrors } from "utils/errorHandler";
 import RestAPI from "../services/api";
+import swal from "sweetalert";
 
 // reactstrap components
 import {
@@ -123,25 +124,36 @@ class Keyword extends React.Component {
 
   //** DELETE A Keyword **//
   deleteKeyword = (id) => {
-    this.setState({ isLoding: true }, () => {
-      RestAPI.deletekeyword(id)
-        .then((response) => {
-          const newvalue = this.state.keywordData.filter((v, i) => v.id !== id);
-          this.setState({
-            isLoding: false,
-            keywordData: [...newvalue],
+    console.log(id);
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to see this Keyword!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        RestAPI.deletekeyword(id)
+          .then((response) => {
+            swal("Poof! Your Keyword has been deleted!", {
+              icon: "success",
+            });
+            const newvalue = this.state.keywordData.filter(
+              (v, i) => v.id !== id
+            );
+            this.setState({
+              keywordData: [...newvalue],
+            });
+            this.getKeywords();
+          })
+          .catch((error) => {
+            swal("Oops! Something Went Wrong", {
+              icon: "error",
+            });
           });
-
-          toast.success("Keyword Deleted!", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 2000,
-          });
-          this.getKeywords();
-        })
-        .catch((error) => {
-          this.setState({ isLoding: false });
-          handleServerErrors(error, toast.error);
-        });
+      } else {
+        swal("Your Keyword is safe!");
+      }
     });
   };
 
