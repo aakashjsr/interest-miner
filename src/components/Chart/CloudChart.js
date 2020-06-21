@@ -47,6 +47,9 @@ class CloudChartPage extends Component {
     url: "",
     year: "",
     abstract: "",
+    papercount: null,
+    word: "",
+    abstract: "",
   };
 
   componentDidMount() {
@@ -79,6 +82,13 @@ class CloudChartPage extends Component {
         });
     });
   }
+  getMarkedAbstract = (text, word) => {
+    text = text || "";
+    text = text.split(word).join(`<mark>${word}</mark>`);
+    word = word[0].toUpperCase() + word.slice(1);
+    text = text.split(word).join(`<mark>${word}</mark>`);
+    return text;
+  };
   getCallback = (callback) => {
     let reactRef = this;
     return function (word, event) {
@@ -98,6 +108,8 @@ class CloudChartPage extends Component {
         reactRef.setState({
           isPaperData: true,
           userPageIDs: word.papers,
+          papercount: word.papers.length,
+          word: word.text,
         });
 
         if (word.papers.length === 0) {
@@ -109,6 +121,8 @@ class CloudChartPage extends Component {
       reactRef.setState({
         isModalLoader: false,
       });
+      let str = word.papers.abstract;
+      let res = str;
     };
   };
 
@@ -123,7 +137,6 @@ class CloudChartPage extends Component {
       getWordTooltip: (word) => `${word.source}`,
       onWordClick: this.getCallback("onWordClick"),
     };
-
     return (
       <Fragment>
         {this.state.isLoding ? (
@@ -171,12 +184,39 @@ class CloudChartPage extends Component {
                   <>
                     {this.state.isPaperData ? (
                       <>
+                        <p>{this.state.papercount} Papers Contain Predicting</p>
                         {this.state.userPageIDs.map((data, idx) => (
                           <>
-                            <strong>Title: </strong> <p>{data.title}</p>
-                            <strong>Year: </strong> <p>{data.year}</p>
-                            <strong>URL: </strong> <p>{data.url}</p>
-                            <strong>Abstract: </strong> <p>{data.abstract}</p>
+                            <div
+                              style={{
+                                borderRadius: "20px",
+                                padding: "20px",
+                                margin: "20px 0",
+                                boxShadow: "4px 4px 24px 4px gainsboro",
+                              }}
+                            >
+                              <strong>Title: </strong>{" "}
+                              <p
+                                dangerouslySetInnerHTML={{
+                                  __html: this.getMarkedAbstract(
+                                    data.title,
+                                    this.state.word
+                                  ),
+                                }}
+                              ></p>
+                              <strong>Year: </strong> <p>{data.year}</p>
+                              <strong>URL: </strong> <p>{data.url}</p>
+                              <strong>Abstract: </strong>{" "}
+                              <p
+                                id="abstract"
+                                dangerouslySetInnerHTML={{
+                                  __html: this.getMarkedAbstract(
+                                    data.abstract,
+                                    this.state.word
+                                  ),
+                                }}
+                              ></p>
+                            </div>
                           </>
                         ))}
                       </>

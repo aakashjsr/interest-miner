@@ -11,7 +11,7 @@ import SearchUserProfile from "../views/SearchUserProfile";
 import Keyword from "../views/Keyword.js";
 import BlacklistedKeywords from "../views/BlacklistedKeywords.js";
 import Demo from "../views/Demo.js";
-
+import LoginRedirecting from "../views/LoginRedirecting";
 import PieChartPage from "../views/PieChart";
 import BarChartPage from "../views/BarChart";
 
@@ -146,6 +146,12 @@ var routes = [
     icon: "ni ni-circle-08 text-pink",
     component: Demo,
     layout: "/auth",
+    display: "none",
+  },
+  {
+    path: "/redirect",
+    component: LoginRedirecting,
+    layout: "/app",
     display: "none",
   },
 ];

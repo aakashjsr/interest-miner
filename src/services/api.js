@@ -407,6 +407,20 @@ class RestAPI {
       },
     }).then((res) => res);
   }
+
+  //** GET DATA STATUS API **//
+  static dataimportstatus() {
+    const TOKEN = getItem("accessToken");
+    return axios({
+      method: "get",
+      url: `${BASE_URL}/api/accounts/data-import-status/`,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Token ${TOKEN}`,
+      },
+    }).then((res) => res);
+  }
 }
 
 export default RestAPI;

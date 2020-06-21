@@ -109,7 +109,6 @@ class Demo extends React.Component {
       this.setState({ isDemoLoader: true }, () => {
         RestAPI.interestExtract(data)
           .then((response) => {
-            console.log("rrrrrrrrrrrrrrrrrrrrr", response);
             let keys = Object.keys(response.data);
             let value = Object.values(response.data);
             let keywordArray = [];

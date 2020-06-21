@@ -28,6 +28,7 @@ class EditPaper extends React.Component {
     url: "",
     year: "",
     abstract: "",
+    authors: "",
     isLoding: false,
   };
   componentDidMount() {
@@ -40,6 +41,7 @@ class EditPaper extends React.Component {
             title: response.data.title,
             url: response.data.url,
             year: response.data.year,
+            authors: response.data.authors,
             abstract: response.data.abstract,
           });
         })
@@ -70,6 +72,7 @@ class EditPaper extends React.Component {
       title: this.state.title,
       url: this.state.url,
       year: this.state.year,
+      authors: this.state.authors,
       abstract: this.state.abstract,
     };
 
@@ -85,6 +88,7 @@ class EditPaper extends React.Component {
             title: "",
             url: "",
             year: "",
+            authors: "",
             abstract: "",
           });
           this.props.history.push("/app/view-paper");
@@ -186,6 +190,25 @@ class EditPaper extends React.Component {
                                 onChange={this.handleChange}
                                 placeholder="Year"
                                 type="number"
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col lg="6">
+                            <FormGroup>
+                              <label
+                                className="form-control-label"
+                                htmlFor="input-first-name"
+                              >
+                                Authors
+                              </label>
+                              <Input
+                                className="form-control-alternative"
+                                id="input-first-name"
+                                name="authors"
+                                value={this.state.authors}
+                                onChange={this.handleChange}
+                                placeholder="Authors"
+                                type="text"
                               />
                             </FormGroup>
                           </Col>

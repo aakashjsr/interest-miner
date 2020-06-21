@@ -24,6 +24,7 @@ class Login extends React.Component {
     email: "",
     password: "",
     isLoding: false,
+    modal: false,
   };
 
   handleChange = (e) => {
@@ -42,14 +43,19 @@ class Login extends React.Component {
     this.setState({ isLoding: true });
     RestAPI.userSignIn(data)
       .then((response) => {
-        this.setState({ isLoding: false });
+        console.log(response);
+        this.setState({ isLoding: false, modal: true });
         if (response.status === 200) {
           localStorage.setItem("accessToken", response.data.token);
           localStorage.setItem("name", response.data.first_name);
           localStorage.setItem("lastname", response.data.last_name);
           localStorage.setItem("userId", response.data.id);
           localStorage.setItem("mId", response.data.id);
-          this.props.history.push("/app/pie-chart/" + response.data.id);
+          if (response.data.data_being_loaded) {
+            window.location.href = "/app/redirect";
+          } else {
+            this.props.history.push("/app/pie-chart/" + response.data.id);
+          }
         }
       })
       .catch((error) => {

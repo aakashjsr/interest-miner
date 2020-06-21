@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import { toast } from "react-toastify";
-import Carousel from "react-bootstrap/Carousel";
-import PieChart from "./Chart/PieChart";
 import { handleServerErrors } from "utils/errorHandler";
-import RestAPI from "../services/api";
+import RestAPI from "../../services/api";
 import Chart from "react-apexcharts";
-import CloudChart from "./Chart/CloudChart";
 import "d3-transition";
 import "react-tabs/style/react-tabs.css";
 
-class UserCarousel extends Component {
+class PaperCharts extends Component {
   state = {
     data: [],
     id: "",
@@ -207,25 +204,6 @@ class UserCarousel extends Component {
           this.setState({ isLoding: false });
           handleServerErrors(error, toast.error);
         });
-      RestAPI.pieChart()
-        .then((response) => {
-          let mydata = response.data.map((val) => val.keyword);
-          let values = response.data.map((val) => val.weight);
-
-          this.setState({
-            isLoding: false,
-            data: response.data,
-            series: values,
-            options: {
-              ...this.state.options,
-              labels: mydata,
-            },
-          });
-        })
-        .catch((error) => {
-          this.setState({ isLoding: false });
-          handleServerErrors(error, toast.error);
-        });
       RestAPI.streamChart()
         .then((response) => {
           let twitterData = this.getChartOptions(response.data.twitter_data);
@@ -239,32 +217,6 @@ class UserCarousel extends Component {
           };
 
           this.setState({ chartOptions, isLoding: false });
-        })
-        .catch((error) => {
-          this.setState({ isLoding: false });
-          handleServerErrors(error, toast.error);
-        });
-      RestAPI.cloudChart()
-        .then((response) => {
-          let keywordArray = [];
-          for (let i = 0; i < response.data.length; i++) {
-            keywordArray.push({
-              text: response.data[i].keyword,
-              value: response.data[i].weight,
-              tweet_ids: response.data[i].tweet_ids,
-              papers: response.data[i].papers,
-              source: response.data[i].source,
-            });
-          }
-          if (response.data.length === 0) {
-            this.setState({
-              isData: false,
-            });
-          }
-          this.setState({
-            isLoding: false,
-            wordArray: keywordArray,
-          });
         })
         .catch((error) => {
           this.setState({ isLoding: false });
@@ -306,58 +258,7 @@ class UserCarousel extends Component {
     return { xAxis: xAxisOptions, series: seriesData };
   };
 
-  handleChange = (e) => {
-    let getValue = e.target.value;
-    let getName = e.target.name;
-    this.setState(() => ({ [getName]: getValue }));
-  };
-
-  _handleSubmit = (e) => {
-    const {
-      id,
-      email,
-      first_name,
-      last_name,
-      twitter_account_id,
-      author_id,
-    } = this.state;
-    e.preventDefault();
-    let data = {
-      email: email,
-      first_name: first_name,
-      last_name: last_name,
-      twitter_account_id: twitter_account_id,
-      author_id: author_id,
-    };
-
-    this.setState({ isLoding: true }, () => {
-      RestAPI.updateUserProfile(data, id)
-        .then((response) => {
-          toast.success("Update Profile Data !", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 2000,
-          });
-          this.setState({ isLoding: false });
-          // this.props.history.push("/admin/view-paper");
-        })
-        .catch((error) => {
-          this.setState({ isLoding: false });
-          handleServerErrors(error, toast.error);
-        });
-    });
-  };
-
   render() {
-    const {
-      email,
-      first_name,
-      last_name,
-      twitter_account_id,
-      author_id,
-      paper_count,
-      tweet_count,
-      keyword_count,
-    } = this.state;
     let graphOptions = {
       chart: {
         toolbar: {
@@ -408,77 +309,18 @@ class UserCarousel extends Component {
 
     return (
       <>
-        <Carousel
-          interval={1000000000}
-          indicators={false}
-          style={{
-            background: "rgba(50, 151, 211, 0.25)",
-            borderRadius: "6px",
-            height: "550px",
-            overflow: "hidden",
-            padding: "10px",
-          }}
-        >
-          <Carousel.Item>
-            <PieChart />
-          </Carousel.Item>
-          <Carousel.Item>
-            <div
-              className="mixed-chart"
-              style={{ margin: "0 auto", width: "600px" }}
-            >
-              <h1>Paper Data</h1>
-              <Chart
-                options={this.state.options}
-                series={this.state.series}
-                type="bar"
-                width="600"
-              />
-            </div>
-          </Carousel.Item>
-          <Carousel.Item>
-            <div
-              className="mixed-chart"
-              style={{ margin: "0 auto", width: "600px" }}
-            >
-              <h1>Tweet Data</h1>
-              <Chart
-                options={this.state.tweetoptions}
-                series={this.state.tweetseries}
-                type="bar"
-                width="600"
-              />
-            </div>
-          </Carousel.Item>
-          <Carousel.Item>
-            <CloudChart />
-          </Carousel.Item>
-          <Carousel.Item>
-            <div align="center">Twitter Keyword Trends</div>
-            <div id="chart">
-              <Chart
-                type="area"
-                width="600"
-                series={this.state.chartOptions.twitterSeries}
-                options={twitterGraphOptions}
-              />
-            </div>
-          </Carousel.Item>
-          <Carousel.Item>
-            <div align="center">Paper Keyword Trends</div>
-            <div id="chart">
-              <Chart
-                type="area"
-                series={this.state.chartOptions.paperSeries}
-                options={paperGraphOptions}
-                height={500}
-              />
-            </div>
-          </Carousel.Item>
-        </Carousel>
+        <div align="center">Paper Keyword Trends</div>
+        <div id="chart">
+          <Chart
+            type="area"
+            series={this.state.chartOptions.paperSeries}
+            options={paperGraphOptions}
+            width="400"
+          />
+        </div>
       </>
     );
   }
 }
 
-export default UserCarousel;
+export default PaperCharts;

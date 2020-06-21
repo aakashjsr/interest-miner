@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Switch, Redirect } from "react-router-dom";
 // reactstrap components
@@ -8,8 +7,7 @@ import { Container, Row, Col } from "reactstrap";
 import AuthNavbar from "components/Navbars/AuthNavbar.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 import routes from "../routes/routes";
-import PublicRoute from '../routes/PublicRoute';
-
+import PublicRoute from "../routes/PublicRoute";
 
 // import routes from "routes";
 
@@ -20,7 +18,7 @@ class Auth extends React.Component {
   componentWillUnmount() {
     document.body.classList.remove("bg-default");
   }
-  getRoutes = routes => {
+  getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if (prop.layout === "/auth") {
         return (
@@ -69,6 +67,7 @@ class Auth extends React.Component {
               </svg>
             </div>
           </div>
+
           {/* Page content */}
           <Container className="mt--8 pb-5">
             <Row className="justify-content-center">

@@ -1,10 +1,9 @@
-
 import React from "react";
 // react plugin used to create google maps
-import { toast } from 'react-toastify';
-import Loader from 'react-loader-spinner'
+import { toast } from "react-toastify";
+import Loader from "react-loader-spinner";
 import { handleServerErrors } from "utils/errorHandler";
-import RestAPI from '../services/api';
+import RestAPI from "../services/api";
 
 // reactstrap components
 import {
@@ -17,56 +16,61 @@ import {
   Input,
   Container,
   Row,
-  Col
+  Col,
 } from "reactstrap";
 
 // core components
 import Header from "components/Headers/Header.js";
 
-
 class AddPaper extends React.Component {
-
   state = {
-    title: '',
-    url: '',
-    year: '',
-    abstract: '',
-    isLoding: false
-  }
-
-  handleChange = e => {
-    let getValue = e.target.value;
-    let getName = e.target.name;
-    this.setState(() => ({ [getName]: getValue }))
+    title: "",
+    url: "",
+    year: "",
+    abstract: "",
+    authors: "",
+    isLoding: false,
   };
 
-  _handleSubmit = e => {
+  handleChange = (e) => {
+    let getValue = e.target.value;
+    let getName = e.target.name;
+    this.setState(() => ({ [getName]: getValue }));
+  };
+
+  _handleSubmit = (e) => {
     e.preventDefault();
     let data = {
       title: this.state.title,
       url: this.state.url,
       year: this.state.year,
+      authors: this.state.authors,
       abstract: this.state.abstract,
     };
 
     this.setState({ isLoding: true }, () => {
-      RestAPI.addPaper(data).then(response => {
-        toast.success("Paper Added!", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000
+      RestAPI.addPaper(data)
+        .then((response) => {
+          toast.success("Paper Added!", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+          });
+          this.setState({
+            isLoding: false,
+            title: "",
+            url: "",
+            year: "",
+            authors: "",
+            abstract: "",
+          });
+          this.props.history.push("/app/view-paper");
+        })
+        .catch((error) => {
+          this.setState({ isLoding: false });
+          handleServerErrors(error, toast.error);
         });
-        this.setState({ isLoding: false, title: '', url: '', year: '', abstract: '' })
-        this.props.history.push("/app/view-paper");
-
-      }).catch(error => {
-        this.setState({ isLoding: false })
-        handleServerErrors(error, toast.error)
-
-      })
-    })
-
+    });
   };
-
 
   render() {
     return (
@@ -85,16 +89,20 @@ class AddPaper extends React.Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  {this.state.isLoding ?
-                    (<div className="text-center" style={{ padding: '20px' }}>
-                      <Loader type="Puff" color="#00BFFF" height={100} width={100} />
-                    </div>)
-
-                    :
+                  {this.state.isLoding ? (
+                    <div className="text-center" style={{ padding: "20px" }}>
+                      <Loader
+                        type="Puff"
+                        color="#00BFFF"
+                        height={100}
+                        width={100}
+                      />
+                    </div>
+                  ) : (
                     <Form onSubmit={this._handleSubmit} method="post">
                       <h6 className="heading-small text-muted mb-4">
                         Paper information
-                    </h6>
+                      </h6>
                       <div className="pl-lg-4">
                         <Row>
                           <Col lg="6">
@@ -104,11 +112,13 @@ class AddPaper extends React.Component {
                                 htmlFor="input-username"
                               >
                                 Title
-                            </label>
+                              </label>
                               <Input
                                 className="form-control-alternative"
                                 id="input-username"
-                                name="title" value={this.state.title} onChange={this.handleChange}
+                                name="title"
+                                value={this.state.title}
+                                onChange={this.handleChange}
                                 placeholder="Title"
                                 type="text"
                               />
@@ -121,11 +131,13 @@ class AddPaper extends React.Component {
                                 htmlFor="input-email"
                               >
                                 URL
-                            </label>
+                              </label>
                               <Input
                                 className="form-control-alternative"
                                 id="input-email"
-                                name="url" value={this.state.url} onChange={this.handleChange}
+                                name="url"
+                                value={this.state.url}
+                                onChange={this.handleChange}
                                 placeholder="https://www.zyz.com"
                                 type="text"
                               />
@@ -140,13 +152,34 @@ class AddPaper extends React.Component {
                                 htmlFor="input-first-name"
                               >
                                 Year
-                            </label>
+                              </label>
                               <Input
                                 className="form-control-alternative"
                                 id="input-first-name"
-                                name="year" value={this.state.year} onChange={this.handleChange}
+                                name="year"
+                                value={this.state.year}
+                                onChange={this.handleChange}
                                 placeholder="Year"
                                 type="number"
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col lg="6">
+                            <FormGroup>
+                              <label
+                                className="form-control-label"
+                                htmlFor="input-first-name"
+                              >
+                                Authors
+                              </label>
+                              <Input
+                                className="form-control-alternative"
+                                id="input-first-name"
+                                name="authors"
+                                value={this.state.authors}
+                                onChange={this.handleChange}
+                                placeholder="Authors"
+                                type="text"
                               />
                             </FormGroup>
                           </Col>
@@ -157,11 +190,13 @@ class AddPaper extends React.Component {
                                 htmlFor="input-last-name"
                               >
                                 Abstract
-                            </label>
+                              </label>
                               <Input
                                 className="form-control-alternative"
                                 id="input-last-name"
-                                name="abstract" value={this.state.abstract} onChange={this.handleChange}
+                                name="abstract"
+                                value={this.state.abstract}
+                                onChange={this.handleChange}
                                 placeholder="Abstract"
                                 // className="form-control-alternative"
                                 rows="10"
@@ -173,10 +208,13 @@ class AddPaper extends React.Component {
                       </div>
                       <hr className="my-4" />
                       <div align="right">
-                        <Button color="primary" type="submit"> Save </Button>
+                        <Button color="primary" type="submit">
+                          {" "}
+                          Save{" "}
+                        </Button>
                       </div>
                     </Form>
-                  }
+                  )}
                 </CardBody>
               </Card>
             </Col>
