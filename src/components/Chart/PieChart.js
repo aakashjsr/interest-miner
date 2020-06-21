@@ -108,6 +108,7 @@ class PieChart extends React.Component {
                 options={this.state.options}
                 series={this.state.series}
                 type="pie"
+                width="400"
               />
             </div>
           </>
