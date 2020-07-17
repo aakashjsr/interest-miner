@@ -266,7 +266,7 @@ class SearchUserProfile extends React.Component {
 
         <Container className="mt--7" fluid>
           <Row>
-            <Col className="order-xl-2 mb-5 mb-xl-0" xl="6">
+            <Col className="order-xl-2" xl="6">
               <Card className="card-profile shadow">
                 <Row className="justify-content-center">
                   <Col className="order-lg-2" lg="12">
