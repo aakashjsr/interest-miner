@@ -122,6 +122,7 @@ class Keyword extends React.Component {
       });
   };
 
+
   //** DELETE A Keyword **//
   deleteKeyword = (id) => {
     console.log(id);
@@ -169,13 +170,13 @@ class Keyword extends React.Component {
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
                     <Col xs="12">
-                      <h3 className="mb-0">Edit Interest Page</h3>
-                      <p>
+                      <h3 className="mb-0" >Edit Interest Page</h3>
+                      <p className="bold">
                         In this page you can add your interests which we haven’t
                         explored or remove the interests which you think it’s
                         not correct. You can also rate for them from 1-5 to
-                        define the importance of your interests. Note that only
-                        top 15 interests will be visualized in the word cloud.
+                        define the importance of your interests.</p>
+                      <p><i>P.S: only top 15 interests will be visualized in the word cloud.</i>
                       </p>
                     </Col>
                   </Row>
@@ -190,85 +191,85 @@ class Keyword extends React.Component {
                     />
                   </div>
                 ) : (
-                  <CardBody>
-                    <Form onSubmit={this.handleSubmit} method="post">
-                      <div className="pl-lg-4">
-                        {this.state.rows.map((item, idx) => (
-                          <Row>
-                            <Col lg="5">
-                              <FormGroup>
-                                <Input
-                                  className="form-control-alternative"
-                                  id="keyword"
-                                  name="name"
-                                  required
-                                  value={this.state.rows[idx].name}
-                                  onChange={this.handleChangeKeyword(idx)}
-                                  placeholder="Add Keyword"
-                                  type="text"
-                                />
-                              </FormGroup>
-                            </Col>
-                            <Col lg="5">
-                              <FormGroup>
-                                <Input
-                                  className="form-control-alternative"
-                                  name="weight"
-                                  value={this.state.rows[idx].weight}
-                                  onChange={this.handleChangeWeight(idx)}
-                                  placeholder="Weight "
-                                  type="Number"
-                                  required
-                                  min="1"
-                                  max="5"
-                                  step="0.1"
-                                />
-                              </FormGroup>
-                            </Col>
-                            <Col lg="2">
-                              <FormGroup>
-                                <Button
-                                  className="btn btn-outline-danger btn-sm"
-                                  style={{ marginTop: "8px" }}
-                                  onClick={this.handleRemoveSpecificRow(
-                                    this.state.rows[idx].id,
-                                    idx
-                                  )}
-                                >
-                                  Remove
+                    <CardBody>
+                      <Form onSubmit={this.handleSubmit} method="post">
+                        <div className="pl-lg-4">
+                          {this.state.rows.map((item, idx) => (
+                            <Row>
+                              <Col lg="5">
+                                <FormGroup>
+                                  <Input
+                                    className="form-control-alternative"
+                                    id="keyword"
+                                    name="name"
+                                    required
+                                    value={this.state.rows[idx].name}
+                                    onChange={this.handleChangeKeyword(idx)}
+                                    placeholder="Add Keyword"
+                                    type="text"
+                                  />
+                                </FormGroup>
+                              </Col>
+                              <Col lg="5">
+                                <FormGroup>
+                                  <Input
+                                    className="form-control-alternative"
+                                    name="weight"
+                                    value={this.state.rows[idx].weight}
+                                    onChange={this.handleChangeWeight(idx)}
+                                    placeholder="Weight "
+                                    type="Number"
+                                    required
+                                    min="1"
+                                    max="5"
+                                    step="0.1"
+                                  />
+                                </FormGroup>
+                              </Col>
+                              <Col lg="2">
+                                <FormGroup>
+                                  <Button
+                                    className="btn btn-outline-danger btn-sm"
+                                    style={{ marginTop: "8px" }}
+                                    onClick={this.handleRemoveSpecificRow(
+                                      this.state.rows[idx].id,
+                                      idx
+                                    )}
+                                  >
+                                    Remove
                                 </Button>
-                              </FormGroup>
-                            </Col>
-                          </Row>
-                        ))}
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          margin: " 0 53px 0 25px",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <div align="left">
-                          <Button
-                            style={{ color: "green" }}
-                            type="button"
-                            onClick={this.handleAddRow}
-                          >
-                            Add
-                          </Button>
+                                </FormGroup>
+                              </Col>
+                            </Row>
+                          ))}
                         </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            margin: " 0 53px 0 25px",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <div align="left">
+                            <Button
+                              style={{ color: "green" }}
+                              type="button"
+                              onClick={this.handleAddRow}
+                            >
+                              Add
+                          </Button>
+                          </div>
 
-                        <div align="right">
-                          <Button color="primary" type="submit">
-                            {" "}
+                          <div align="right">
+                            <Button color="primary" type="submit">
+                              {" "}
                             Save{" "}
-                          </Button>
+                            </Button>
+                          </div>
                         </div>
-                      </div>
-                    </Form>
-                  </CardBody>
-                )}
+                      </Form>
+                    </CardBody>
+                  )}
               </Card>
             </Col>
           </Row>

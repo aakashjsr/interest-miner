@@ -40,6 +40,7 @@ class CloudChartPage extends Component {
     isModalLoader: false,
     isTweetData: false,
     isPaperData: false,
+    isManualData: false,
     tweetIds: [],
     userPageIDs: [],
     isData: true,
@@ -50,6 +51,7 @@ class CloudChartPage extends Component {
     papercount: null,
     word: "",
     abstract: "",
+    weight: "",
   };
 
   componentDidMount() {
@@ -92,11 +94,13 @@ class CloudChartPage extends Component {
   getCallback = (callback) => {
     let reactRef = this;
     return function (word, event) {
+      console.log("kkkkkkkkk", word)
       reactRef.setState({ modal: true, isModalLoader: true });
       if (word.tweet_ids) {
         reactRef.setState({
           isTweetData: true,
           tweetIds: word.tweet_ids,
+          weight: word.weight,
         });
         if (word.tweet_ids.length === 0) {
           reactRef.setState({
@@ -110,6 +114,7 @@ class CloudChartPage extends Component {
           userPageIDs: word.papers,
           papercount: word.papers.length,
           word: word.text,
+          weight: word.weight,
         });
 
         if (word.papers.length === 0) {
@@ -117,6 +122,11 @@ class CloudChartPage extends Component {
             isPaperData: false,
           });
         }
+      }
+      if (word.source == "Manual") {
+        reactRef.setState({
+          isManualData: true
+        })
       }
       reactRef.setState({
         isModalLoader: false,
@@ -134,7 +144,7 @@ class CloudChartPage extends Component {
 
   render() {
     const callbacks = {
-      getWordTooltip: (word) => `${word.source}`,
+      getWordTooltip: (word) => `${word.source == "Scholar" ? "Extracted from Paper" : word.source == "Twitter" ? "Extracted from Twitter" : word.source == "Manual" ? "Manually added" : "Extracted from Paper & Twitter"}`,
       onWordClick: this.getCallback("onWordClick"),
     };
     return (
@@ -154,9 +164,9 @@ class CloudChartPage extends Component {
             </div>
           </>
         ) : (
-          // <div id="chartdiv" style={{ width: "100%", height: "1000px" }}></div>
-          <div style={{ textAlign: "center" }}>No Data Found</div>
-        )}
+              // <div id="chartdiv" style={{ width: "100%", height: "1000px" }}></div>
+              <div style={{ textAlign: "center" }}>No Data Found</div>
+            )}
         <Modal
           isOpen={this.state.modal}
           toggle={this.toggle}
@@ -181,54 +191,62 @@ class CloudChartPage extends Component {
                     />
                   </div>
                 ) : (
-                  <>
-                    {this.state.isPaperData ? (
-                      <>
-                        <p>{this.state.papercount} Papers Contain Predicting</p>
-                        {this.state.userPageIDs.map((data, idx) => (
+                    <>
+                      {this.state.isPaperData ? (
+                        <>
+                          <p>{this.state.papercount} Papers Contain this interest</p>
+                          <p>The weight of interest :{this.state.weight} </p>
+                          <p>Interest keywords before Wikipedia filter related to this interest : </p>
+                          <p>Algorithm used to extract keywords : Singlerank</p>
+
+                          {this.state.userPageIDs.map((data, idx) => (
+                            <>
+                              <div
+                                style={{
+                                  borderRadius: "20px",
+                                  padding: "20px",
+                                  margin: "20px 0",
+                                  boxShadow: "4px 4px 24px 4px gainsboro",
+                                }}
+                              >
+                                <strong>Title: </strong>{" "}
+                                <p
+                                  dangerouslySetInnerHTML={{
+                                    __html: this.getMarkedAbstract(
+                                      data.title,
+                                      this.state.word
+                                    ),
+                                  }}
+                                ></p>
+                                <strong>Year: </strong> <p>{data.year}</p>
+                                <strong>URL: </strong> <p>{data.url}</p>
+                                <strong>Abstract: </strong>{" "}
+                                <p
+                                  id="abstract"
+                                  dangerouslySetInnerHTML={{
+                                    __html: this.getMarkedAbstract(
+                                      data.abstract,
+                                      this.state.word
+                                    ),
+                                  }}
+                                ></p>
+                              </div>
+                            </>
+                          ))}
+                        </>
+                      ) : (
                           <>
-                            <div
-                              style={{
-                                borderRadius: "20px",
-                                padding: "20px",
-                                margin: "20px 0",
-                                boxShadow: "4px 4px 24px 4px gainsboro",
-                              }}
-                            >
-                              <strong>Title: </strong>{" "}
-                              <p
-                                dangerouslySetInnerHTML={{
-                                  __html: this.getMarkedAbstract(
-                                    data.title,
-                                    this.state.word
-                                  ),
-                                }}
-                              ></p>
-                              <strong>Year: </strong> <p>{data.year}</p>
-                              <strong>URL: </strong> <p>{data.url}</p>
-                              <strong>Abstract: </strong>{" "}
-                              <p
-                                id="abstract"
-                                dangerouslySetInnerHTML={{
-                                  __html: this.getMarkedAbstract(
-                                    data.abstract,
-                                    this.state.word
-                                  ),
-                                }}
-                              ></p>
-                            </div>
+                            <p style={{ textAlign: "center" }}>
+                              {this.state.isManualData ?
+                                "This interest was added manually"
+                                :
+                                "No matching papers found"
+                              }
+                            </p>
                           </>
-                        ))}
-                      </>
-                    ) : (
-                      <>
-                        <p style={{ textAlign: "center" }}>
-                          No matching papers found
-                        </p>
-                      </>
-                    )}
-                  </>
-                )}
+                        )}
+                    </>
+                  )}
               </TabPanel>
               <TabPanel>
                 {this.state.isModalLoader ? (
@@ -242,40 +260,49 @@ class CloudChartPage extends Component {
                     />
                   </div>
                 ) : (
-                  <>
-                    {this.state.isTweetData ? (
-                      <>
-                        {this.state.tweetIds.map((data, idx) => (
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <TwitterTweetEmbed
-                              tweetId={data}
-                              placeholder={
-                                <Loader
-                                  type="Puff"
-                                  color="#00BFFF"
-                                  height={100}
-                                  style={{
-                                    padding: "200px 0px",
-                                  }}
-                                  width={100}
-                                />
-                              }
-                            />
-                          </div>
-                        ))}
-                      </>
-                    ) : (
-                      <p style={{ textAlign: "center" }}>
-                        No matching tweets found{" "}
-                      </p>
-                    )}
-                  </>
-                )}
+                    <>
+
+                      {this.state.isTweetData ? (
+                        <>
+                          <p>The weight of interest :{this.state.weight} </p>
+                          <p>Interest keywords before Wikipedia filter related to this interest : </p>
+                          <p>Algorithm used to extract keywords : YAKE</p>
+                          {this.state.tweetIds.map((data, idx) => (
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <TwitterTweetEmbed
+                                tweetId={data}
+                                placeholder={
+                                  <Loader
+                                    type="Puff"
+                                    color="#00BFFF"
+                                    height={100}
+                                    style={{
+                                      padding: "200px 0px",
+                                    }}
+                                    width={100}
+                                  />
+                                }
+                              />
+                            </div>
+                          ))}
+                        </>
+                      ) : (
+                          <p style={{ textAlign: "center" }}>
+                            {this.state.isManualData ?
+                              "This interest was added manually"
+                              :
+                              " No matching tweets found"
+                            }
+
+                          </p>
+                        )}
+                    </>
+                  )}
               </TabPanel>
             </Tabs>
           </ModalBody>
