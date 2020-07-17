@@ -19076,3 +19076,10 @@ button:focus,
   margin: 0 auto;
   width: 600px;
 }
+
+.venndiagram {
+  display: flex;
+}
+.venndiagram > .user1 {
+  background-color: khaki;
+}
