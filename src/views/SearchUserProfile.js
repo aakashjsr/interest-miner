@@ -6,9 +6,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  FormGroup,
-  Form,
-  Input,
   Container,
   Row,
   Col,
@@ -22,6 +19,7 @@ import RestAPI from "../services/api";
 import ReactApexChart from "react-apexcharts";
 import "d3-transition";
 import ComparisonSlider from "../views/ComparisonSlider.js";
+import VennDiagram from "../components/UserCharts/VennDiagram.js";
 import "react-tabs/style/react-tabs.css";
 
 const SimilarityComponent = (props) => {
@@ -319,24 +317,15 @@ class SearchUserProfile extends React.Component {
             </Col>
             <Col className="order-xl-1" xl="6">
               <Card className="bg-secondary shadow">
-                {/* <CardHeader className="bg-white border-0">
+                <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
                     <Col xs="8">
                       <h3 className="mb-0">Venn Diagram</h3>
                     </Col>
                   </Row>
-                </CardHeader> */}
+                </CardHeader>
                 <CardBody>
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <h3 className="mb-0">Venn Diagram</h3>
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
+                  <VennDiagram />
                 </CardBody>
               </Card>
             </Col>
