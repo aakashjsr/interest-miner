@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { Chart } from "@antv/g2";
 class BarChart extends Component {
   state = {};
-
-  render() {
+  componentDidMount() {
     const data = [
       { genre: "Sports", sold: 275 },
       { genre: "Strategy", sold: 115 },
@@ -14,9 +13,9 @@ class BarChart extends Component {
 
     // Step 1: 创建 Chart 对象
     const chart = new Chart({
-      container: "c1", // 指定图表容器 ID
-      width: 600, // 指定图表宽度
-      height: 300, // 指定图表高度
+      container: "c1",
+      width: 600,
+      height: 300,
     });
 
     // Step 2: 载入数据源
@@ -26,8 +25,11 @@ class BarChart extends Component {
     chart.interval().position("genre*sold");
 
     // Step 4: 渲染图表
-    chart.render(<div id="c1"></div>);
-    return <div id="c2"></div>;
+    chart.render();
+  }
+  render() {
+
+    return <div id="c1"></div>;
   }
 }
 export default BarChart;
