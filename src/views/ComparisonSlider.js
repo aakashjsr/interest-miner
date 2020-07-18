@@ -261,7 +261,6 @@ class ComparisonSlider extends React.Component {
         });
       RestAPI.cloudChartUser()
         .then((response) => {
-          console.log(response);
           let keywordArray = [];
           for (let i = 0; i < response.data.length; i++) {
             keywordArray.push({
@@ -273,7 +272,6 @@ class ComparisonSlider extends React.Component {
               source: response.data[i].source,
             });
           }
-          console.log(keywordArray);
           if (response.data.length === 0) {
             this.setState({
               isData: false,

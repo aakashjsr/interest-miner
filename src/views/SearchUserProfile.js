@@ -17,6 +17,7 @@ import Loader from "react-loader-spinner";
 import { handleServerErrors } from "utils/errorHandler";
 import RestAPI from "../services/api";
 import ReactApexChart from "react-apexcharts";
+import BarChart from "../components/UserCharts/BarChart";
 import "d3-transition";
 import ComparisonSlider from "../views/ComparisonSlider.js";
 import VennDiagram from "../components/UserCharts/VennDiagram.js";
@@ -239,7 +240,6 @@ class SearchUserProfile extends React.Component {
           // this.props.history.push("/admin/view-paper");
         })
         .catch((error) => {
-          console.log(error);
           this.setState({ isLoding1: false });
           handleServerErrors(error, toast.error);
         });
@@ -266,7 +266,19 @@ class SearchUserProfile extends React.Component {
           <Row>
             <Col className="order-xl-2" xl="6">
               <Card className="card-profile shadow">
-                <Row className="justify-content-center">
+                <CardHeader className="bg-white border-0">
+                  <Row
+                    className="align-items-center"
+                    style={{ padding: "0 10px" }}
+                  >
+                    <h3>Bar Chart</h3>
+                    <p>
+                      Bar chart explaining the weight of users occupied by
+                      interest.
+                    </p>
+                  </Row>
+                </CardHeader>
+                {/* <Row className="justify-content-center">
                   <Col className="order-lg-2" lg="12">
                     <div
                       className="card-profile-image"
@@ -280,9 +292,10 @@ class SearchUserProfile extends React.Component {
                       />
                     </div>
                   </Col>
-                </Row>
+                </Row> */}
                 <CardBody className="pt-0 pt-md-4">
-                  <Row>
+                  <BarChart />
+                  {/* <Row>
                     <div className="col">
                       <div
                         className="card-profile-stats d-flex justify-content-center "
@@ -294,11 +307,6 @@ class SearchUserProfile extends React.Component {
                           </span>
                           <span className="description">Papers</span>
                         </div>
-
-                        {/* <div>
-                          <span className="heading">{this.state.data && keyword_count}</span>
-                          <span className="description">Keywords</span>
-                        </div> */}
                         <div>
                           <span className="heading">
                             {this.state.data && tweet_count}
@@ -307,11 +315,11 @@ class SearchUserProfile extends React.Component {
                         </div>
                       </div>
                     </div>
-                  </Row>
-                  <div className="text-center">
+                  </Row> */}
+                  {/* <div className="text-center">
                     <h3>{this.state.data && first_name + " " + last_name}</h3>
                     <hr className="my-4" />
-                  </div>
+                  </div> */}
                 </CardBody>
               </Card>
             </Col>
