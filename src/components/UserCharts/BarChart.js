@@ -15,45 +15,45 @@ class BarChart extends Component {
         let user_2_data = Object.keys(response.data.user_2_data);
         let value1 = Object.values(response.data.user_1_data);
         let value2 = Object.values(response.data.user_2_data);
+        //api data
         const datas = [];
         for (let i = 0; i < user_1_data.length; i++) {
           datas.push({
             country: user_1_data[i],
-            type: "User 1 Data",
-            value: value1[i],
+            type: "2016 年转基因种植面积",
+            value: parseInt(value1[i]),
           });
           datas.push({
             country: user_2_data[i],
-            type: "User 2 Data",
-            value: value2[i],
+            type: "2016 年耕地总面积",
+            value: parseInt(value2[i]),
           });
         }
         console.log("data", datas);
+        //custom data
         const data = [
-          { country: "乌拉圭", type: "2016 年转基因种植面积", value: 1.3 },
-          { country: "乌拉圭", type: "2016 年耕地总面积", value: 1.8 },
-          { country: "南非", type: "2016 年转基因种植面积", value: 3.7 },
-          { country: "南非", type: "2016 年耕地总面积", value: 12.1 },
-          { country: "巴基斯坦", type: "2016 年转基因种植面积", value: 2.9 },
-          { country: "巴基斯坦", type: "2016 年耕地总面积", value: 22.0 },
-          { country: "阿根廷", type: "2016 年转基因种植面积", value: 23.8 },
-          { country: "阿根廷", type: "2016 年耕地总面积", value: 38.6 },
-          { country: "加拿大", type: "2016 年转基因种植面积", value: 11.6 },
-          { country: "加拿大", type: "2016 年耕地总面积", value: 46.9 },
-          { country: "巴西", type: "2016 年转基因种植面积", value: 49.1 },
-          { country: "巴西", type: "2016 年耕地总面积", value: 73.2 },
-          { country: "中国", type: "2016 年转基因种植面积", value: 2.8 },
-          { country: "中国", type: "2016 年耕地总面积", value: 108.4 },
-          { country: "美国", type: "2016 年转基因种植面积", value: 72.9 },
-          { country: "美国", type: "2016 年耕地总面积", value: 165.2 },
-          { country: "印度", type: "2016 年转基因种植面积", value: 49.1 },
-          { country: "印度", type: "2016 年耕地总面积", value: 175.4 },
+          { country: "object", type: "2016 年转基因种植面积", value: 5 },
+          { country: "object", type: "2016 年耕地总面积", value: 1 },
+          { country: "hiv", type: "2016 年转基因种植面积", value: 1 },
+          { country: "hiv", type: "2016 年耕地总面积", value: 5 },
+          {
+            country: "cross-sectional study",
+            type: "2016 年转基因种植面积",
+            value: 1,
+          },
+          {
+            country: "cross-sectional study",
+            type: "2016 年耕地总面积",
+            value: 5,
+          },
         ];
+        console.log("data", datas);
+
         const chart = new Chart({
           container: "searched-bar-chart",
-          width: 400,
-          height: 500,
-          padding: [10, 0, 0, 60],
+          autoFit: true,
+          height: 300,
+          padding: [10, 0, 0, 120],
         });
         chart.data(datas);
         chart.scale("value", {
@@ -91,7 +91,7 @@ class BarChart extends Component {
               .interval()
               .position("country*value")
               .color(color)
-              .size(30)
+              .size(20)
               .label("value", (val) => {
                 let offset = facetIndex === 1 ? -4 : 4;
                 let shadowBlur = 2;
