@@ -20,6 +20,7 @@ import Loader from "react-loader-spinner";
 import { handleServerErrors } from "utils/errorHandler";
 import RestAPI from "../services/api";
 import ReactApexChart from "react-apexcharts";
+import BarChart from "../components/UserCharts/BarChart";
 import "d3-transition";
 import ComparisonSlider from "../views/ComparisonSlider.js";
 import "react-tabs/style/react-tabs.css";
@@ -268,6 +269,18 @@ class SearchUserProfile extends React.Component {
           <Row>
             <Col className="order-xl-2" xl="6">
               <Card className="card-profile shadow">
+                <CardHeader className="bg-white border-0">
+                  <Row
+                    className="align-items-center"
+                    style={{ padding: "0 10px" }}
+                  >
+                    <h3>Bar Chart</h3>
+                    <p>
+                      Bar chart explaining the weight of users occupied by
+                      interest.
+                    </p>
+                  </Row>
+                </CardHeader>
                 <Row className="justify-content-center">
                   <Col className="order-lg-2" lg="12">
                     <div
@@ -284,6 +297,7 @@ class SearchUserProfile extends React.Component {
                   </Col>
                 </Row>
                 <CardBody className="pt-0 pt-md-4">
+                  <BarChart />
                   <Row>
                     <div className="col">
                       <div
