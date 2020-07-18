@@ -21,6 +21,7 @@ import BarChart from "../components/UserCharts/BarChart";
 import "d3-transition";
 import ComparisonSlider from "../views/ComparisonSlider.js";
 import VennDiagram from "../components/UserCharts/VennDiagram.js";
+import HeatMap from "../components/UserCharts/HeatMap.js";
 import "react-tabs/style/react-tabs.css";
 
 const SimilarityComponent = (props) => {
@@ -327,8 +328,12 @@ class SearchUserProfile extends React.Component {
               <Card className="bg-secondary shadow">
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
-                    <Col xs="8">
+                    <Col xs="12">
                       <h3 className="mb-0">Venn Diagram</h3>
+                      <p>
+                        Venn-chart Visualization explaining how the similarity
+                        between users was measured.
+                      </p>
                     </Col>
                   </Row>
                 </CardHeader>
@@ -343,18 +348,19 @@ class SearchUserProfile extends React.Component {
           <Row>
             <Col className="order-xl-1" xl="12">
               <Card className="bg-secondary shadow">
+                <CardHeader className="bg-white border-0">
+                  <Row className="align-items-center">
+                    <Col xs="12">
+                      <h3 className="mb-0">Heat Map</h3>
+                      <p>
+                        Heatmap Visualization explaining how the similarity
+                        between each interest keyword was measured.
+                      </p>
+                    </Col>
+                  </Row>
+                </CardHeader>
                 <CardBody>
-                  {" "}
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <h3 className="mb-0">Heat Map</h3>
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
+                  <HeatMap />
                 </CardBody>
               </Card>
             </Col>
