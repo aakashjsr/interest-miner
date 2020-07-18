@@ -57,7 +57,7 @@ class VennDiagram extends Component {
             style={{
               width: "40%",
               borderBottomLeftRadius: "8px",
-              background: "rgba(50, 151, 211, 0.18)",
+              background: "rgba(54, 250, 96, 0.28)",
               borderRight: "1px solid ghostwhite",
             }}
           >
@@ -86,7 +86,7 @@ class VennDiagram extends Component {
               width: "40%",
               borderBottomRightRadius: "8px",
               borderLeft: "1px solid ghostwhite",
-              background: "rgba(50, 151, 211, 0.18)",
+              background: "#b3bef9",
             }}
           >
             <p style={{ textAlign: "center" }}>Word1</p>
