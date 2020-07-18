@@ -1,7 +1,7 @@
 import React from "react";
 
 // reactstrap components
-import { Button, Card, Row, Col } from "reactstrap";
+import { Button, Card, Row, Col, CardHeader } from "reactstrap";
 // core components
 import { toast } from "react-toastify";
 import Loader from "react-loader-spinner";
@@ -21,7 +21,9 @@ import { Modal, ModalBody, ModalFooter } from "reactstrap";
 import { TwitterTweetEmbed } from "react-twitter-embed";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+import "../assets/scss/custom.css";
 import UserPieChart from "../components/Chart/UserPieChart";
+import swal from "@sweetalert/with-react";
 
 import ReactWordcloud from "react-wordcloud";
 /* Chart code */
@@ -296,7 +298,14 @@ class ComparisonSlider extends React.Component {
     text = text.split(word).join(`<mark>${word}</mark>`);
     return text;
   };
-
+  modalDetail = () => {
+    swal(
+      <div>
+        <h1>How the bar chart generated?</h1>
+        <img src={require("../assets/img/barchart.png")} />
+      </div>
+    );
+  };
   getCallback = (callback) => {
     let reactRef = this;
     return function (word, event) {
@@ -430,6 +439,21 @@ class ComparisonSlider extends React.Component {
     return (
       <Card className="card-profile shadow" style={{ padding: "15px" }}>
         <Row>
+          <CardHeader className="bg-white border-0">
+            <Row className="align-items-center">
+              <Col xs="12">
+                <h3 className="mb-0">Comparison Slider</h3>
+                <p>
+                  Comparison chart is used to compare the difference between two
+                  users.
+                </p>
+                <i
+                  onClick={this.modalDetail}
+                  className="fa fa-question-circle"
+                />
+              </Col>
+            </Row>
+          </CardHeader>
           <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
             <h1 style={{ color: "#076ec6" }}>{first_name + " " + last_name}</h1>
           </Col>

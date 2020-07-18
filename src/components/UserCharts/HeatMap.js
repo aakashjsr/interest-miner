@@ -45,7 +45,7 @@ class HeatMap extends Component {
     });
 
     const chart = new Chart({
-      container: "container",
+      container: "heatmap",
       autoFit: true,
       height: 500,
     });
@@ -119,7 +119,7 @@ class HeatMap extends Component {
   }
 
   render() {
-    return <div id="container" />;
+    return <div id="heatmap" />;
   }
 }
 

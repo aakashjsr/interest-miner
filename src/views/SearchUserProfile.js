@@ -343,6 +343,7 @@ class SearchUserProfile extends React.Component {
               </Card>
             </Col>
           </Row>
+
           <br />
 
           <Row>
