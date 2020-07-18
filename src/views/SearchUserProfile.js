@@ -242,7 +242,6 @@ class SearchUserProfile extends React.Component {
           // this.props.history.push("/admin/view-paper");
         })
         .catch((error) => {
-          console.log(error);
           this.setState({ isLoding1: false });
           handleServerErrors(error, toast.error);
         });
@@ -281,7 +280,7 @@ class SearchUserProfile extends React.Component {
                     </p>
                   </Row>
                 </CardHeader>
-                <Row className="justify-content-center">
+                {/* <Row className="justify-content-center">
                   <Col className="order-lg-2" lg="12">
                     <div
                       className="card-profile-image"
@@ -295,10 +294,10 @@ class SearchUserProfile extends React.Component {
                       />
                     </div>
                   </Col>
-                </Row>
+                </Row> */}
                 <CardBody className="pt-0 pt-md-4">
                   <BarChart />
-                  <Row>
+                  {/* <Row>
                     <div className="col">
                       <div
                         className="card-profile-stats d-flex justify-content-center "
@@ -310,11 +309,6 @@ class SearchUserProfile extends React.Component {
                           </span>
                           <span className="description">Papers</span>
                         </div>
-
-                        {/* <div>
-                          <span className="heading">{this.state.data && keyword_count}</span>
-                          <span className="description">Keywords</span>
-                        </div> */}
                         <div>
                           <span className="heading">
                             {this.state.data && tweet_count}
@@ -323,11 +317,11 @@ class SearchUserProfile extends React.Component {
                         </div>
                       </div>
                     </div>
-                  </Row>
-                  <div className="text-center">
+                  </Row> */}
+                  {/* <div className="text-center">
                     <h3>{this.state.data && first_name + " " + last_name}</h3>
                     <hr className="my-4" />
-                  </div>
+                  </div> */}
                 </CardBody>
               </Card>
             </Col>
