@@ -5,8 +5,8 @@ import { Card, CardHeader, CardBody, Container, Row, Col } from "reactstrap";
 // core components
 import { chartOptions, parseOptions } from "variables/charts.js";
 import Header from "components/Headers/Header.js";
-import swal from '@sweetalert/with-react'
-import "../assets/scss/custom.css"
+import swal from "@sweetalert/with-react";
+import "../assets/scss/custom.css";
 
 class BarChartPage extends React.Component {
   constructor(props) {
@@ -28,12 +28,13 @@ class BarChartPage extends React.Component {
     });
   };
   modalDetail = () => {
-    swal(<div>
-      <h1>How the bar chart generated?</h1>
-      <img src={require("../assets/img/barchart.png")} />
-
-    </div>);
-  }
+    swal(
+      <div>
+        <h1>How the bar chart generated?</h1>
+        <img src={require("../assets/img/barchart.png")} />
+      </div>
+    );
+  };
   render() {
     return (
       <>
@@ -52,11 +53,13 @@ class BarChartPage extends React.Component {
                       <h2 className="text-white1 mb-0">Activities</h2>
                       <p>
                         Here you can see the statistical result of how many
-                        papers/tweets you have published in the past times. .
+                        papers/tweets you have published in the past times.
+                        &nbsp;
+                        <i
+                          onClick={this.modalDetail}
+                          className="fa fa-question-circle"
+                        />
                       </p>
-                      <i onClick={this.modalDetail}
-                        className="fa fa-question-circle"
-                      />
                     </div>
                   </Row>
                 </CardHeader>

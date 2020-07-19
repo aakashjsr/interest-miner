@@ -23,7 +23,6 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import "../assets/scss/custom.css";
 import UserPieChart from "../components/Chart/UserPieChart";
-import swal from "@sweetalert/with-react";
 
 import ReactWordcloud from "react-wordcloud";
 /* Chart code */
@@ -298,14 +297,7 @@ class ComparisonSlider extends React.Component {
     text = text.split(word).join(`<mark>${word}</mark>`);
     return text;
   };
-  modalDetail = () => {
-    swal(
-      <div>
-        <h1>How the bar chart generated?</h1>
-        <img src={require("../assets/img/barchart.png")} />
-      </div>
-    );
-  };
+
   getCallback = (callback) => {
     let reactRef = this;
     return function (word, event) {
@@ -314,6 +306,7 @@ class ComparisonSlider extends React.Component {
         reactRef.setState({
           isTweetData: true,
           tweetIds: word.tweet_ids,
+          weight: word.weight,
         });
         if (word.tweet_ids.length === 0) {
           reactRef.setState({
@@ -327,6 +320,7 @@ class ComparisonSlider extends React.Component {
           userPageIDs: word.papers,
           papercount: word.papers.length,
           word: word.text,
+          weight: word.weight,
         });
 
         if (word.papers.length === 0) {
@@ -334,6 +328,11 @@ class ComparisonSlider extends React.Component {
             isPaperData: false,
           });
         }
+      }
+      if (word.source == "Manual") {
+        reactRef.setState({
+          isManualData: true,
+        });
       }
       reactRef.setState({
         isModalLoader: false,
@@ -384,6 +383,7 @@ class ComparisonSlider extends React.Component {
 
   render() {
     const { first_name, last_name } = this.props;
+    console.log(first_name);
     let graphOptions = {
       chart: {
         toolbar: {
@@ -433,7 +433,16 @@ class ComparisonSlider extends React.Component {
     paperGraphOptions.xaxis.categories = this.state.chartOptions.paperXaxis;
 
     const callbacks = {
-      getWordTooltip: (word) => `${word.source}`,
+      getWordTooltip: (word) =>
+        `${
+          word.source == "Scholar"
+            ? "Extracted from Paper"
+            : word.source == "Twitter"
+            ? "Extracted from Twitter"
+            : word.source == "Manual"
+            ? "Manually added"
+            : "Extracted from Paper & Twitter"
+        }`,
       onWordClick: this.getCallback("onWordClick"),
     };
     return (
@@ -447,13 +456,11 @@ class ComparisonSlider extends React.Component {
                   Comparison chart is used to compare the difference between two
                   users.
                 </p>
-                <i
-                  onClick={this.modalDetail}
-                  className="fa fa-question-circle"
-                />
               </Col>
             </Row>
           </CardHeader>
+        </Row>
+        <Row>
           <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
             <h1 style={{ color: "#076ec6" }}>{first_name + " " + last_name}</h1>
           </Col>
@@ -572,8 +579,18 @@ class ComparisonSlider extends React.Component {
                         {this.state.isPaperData ? (
                           <>
                             <p>
-                              {this.state.papercount} Papers Contain Predicting
+                              {this.state.papercount} Papers Contain this
+                              interest
                             </p>
+                            <p>The weight of interest :{this.state.weight} </p>
+                            <p>
+                              Interest keywords before Wikipedia filter related
+                              to this interest :{" "}
+                            </p>
+                            <p>
+                              Algorithm used to extract keywords : Singlerank
+                            </p>
+
                             {this.state.userPageIDs.map((data, idx) => (
                               <>
                                 <div
@@ -612,7 +629,9 @@ class ComparisonSlider extends React.Component {
                         ) : (
                           <>
                             <p style={{ textAlign: "center" }}>
-                              No matching papers found
+                              {this.state.isManualData
+                                ? "This interest was added manually"
+                                : "No matching papers found"}
                             </p>
                           </>
                         )}
@@ -634,6 +653,12 @@ class ComparisonSlider extends React.Component {
                       <>
                         {this.state.isTweetData ? (
                           <>
+                            <p>The weight of interest :{this.state.weight} </p>
+                            <p>
+                              Interest keywords before Wikipedia filter related
+                              to this interest :{" "}
+                            </p>
+                            <p>Algorithm used to extract keywords : YAKE</p>
                             {this.state.tweetIds.map((data, idx) => (
                               <div
                                 style={{
@@ -660,7 +685,9 @@ class ComparisonSlider extends React.Component {
                           </>
                         ) : (
                           <p style={{ textAlign: "center" }}>
-                            No matching tweets found{" "}
+                            {this.state.isManualData
+                              ? "This interest was added manually"
+                              : " No matching tweets found"}
                           </p>
                         )}
                       </>

@@ -10,8 +10,8 @@ import { chartOptions, parseOptions } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
 import { getItem } from "utils/localStorage";
-import swal from '@sweetalert/with-react'
-import "../assets/scss/custom.css"
+import swal from "@sweetalert/with-react";
+import "../assets/scss/custom.css";
 
 class CloudChartPage extends React.Component {
   constructor(props) {
@@ -41,12 +41,15 @@ class CloudChartPage extends React.Component {
     this.setState({ imageTooltipOpen: status });
   };
   modalDetail = () => {
-    swal(<div>
-
-      <img src={require("../assets/img/twitter.png")} />
-
-    </div>);
-  }
+    swal(
+      <div>
+        <img
+          style={{ width: "100%" }}
+          src={require("../assets/img/twitter.png")}
+        />
+      </div>
+    );
+  };
   render() {
     return (
       <>
@@ -70,13 +73,17 @@ class CloudChartPage extends React.Component {
                         <p>
                           This word cloud shows the top 15 interests based on
                           your published paper/tweets.
-                          <p className="flex">You can :  &nbsp;<li> Hover over a word will show the source</li></p>
-                          <li className="ml-80">Click on it for more detail.
-                          <i onClick={this.modalDetail}
+                          <p className="flex">You can </p>
+                          <li> Hover over a word will show the source</li>
+                          <li>
+                            Click on it for more detail.
+                            <i
+                              onClick={this.modalDetail}
                               className="fa fa-question-circle"
                               onMouseOver={() => this.handleToogle(true)}
                               onMouseOut={() => this.handleToogle(false)}
-                            /></li>
+                            />
+                          </li>
                           {this.state.imageTooltipOpen && (
                             <div className="imgTooltip">
                               Click here to show more details
@@ -85,7 +92,7 @@ class CloudChartPage extends React.Component {
                         </p>
                       </div>
                       {getItem("mId") === getItem("userId") ? (
-                        <>
+                        <div>
                           <Link
                             to="/app/Keyword"
                             className=" ls-1 mb-1"
@@ -104,16 +111,16 @@ class CloudChartPage extends React.Component {
                             onMouseOut={() => this.toogle(false)}
                           />
                           {this.state.tooltipOpen && (
-                            <div className="tooltips" >
+                            <div className="tooltips">
                               If you’re not satisfied with the interest modeling
                               result, click here to generate the better interest
                               model yourself.
                             </div>
                           )}
-                        </>
+                        </div>
                       ) : (
-                          <></>
-                        )}
+                        <></>
+                      )}
                     </div>
                   </Row>
                 </CardHeader>

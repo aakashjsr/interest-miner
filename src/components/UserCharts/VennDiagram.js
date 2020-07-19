@@ -4,6 +4,8 @@ import { Modal, ModalBody, ModalFooter, Button } from "reactstrap";
 class VennDiagram extends Component {
   state = {
     modal: false,
+    user_1_exclusive_interest: [],
+    user_2_exclusive_interest: [],
   };
   toggle = () => {
     this.setState({
@@ -15,7 +17,49 @@ class VennDiagram extends Component {
       modal: true,
     });
   };
+  componentDidMount() {
+    const data = [
+      {
+        user_1_exclusive_interest: ["python", "java", "swift"],
+        user_2_exclusive_interest: ["pan", "pot", "catalog"],
+        similar_interests: {
+          development: {
+            user: "user_1",
+            related_interests: ["sublime", "matlab"],
+          },
+          sublime: {
+            user: "user_2",
+            related_interests: ["development"],
+          },
+          matlab: {
+            user: "user_2",
+            related_interests: ["development"],
+          },
+        },
+      },
+    ];
+    console.log("data", data);
+    let similar_interests_key = Object.keys(data[0].similar_interests);
+    similar_interests_key && similar_interests_key.map((data1, idx) => (
+      console.log("kkkkkkkkkkk", data[0].similar_interests[data1].user, data[0].similar_interests[data1].related_interests)
+
+    ))
+
+    // if (Object.values(similar_interests_key.user) === "user_1") {
+    //   alert();
+    //   let similar_interests_user_1 = Object.keys(
+    //     similar_interests_key.related_interests
+    //   );
+    //   console.log(similar_interests_user_1);
+    // }
+    this.setState({
+      user_1_exclusive_interest: data[0].user_1_exclusive_interest,
+      user_2_exclusive_interest: data[0].user_2_exclusive_interest,
+    });
+  }
+
   render() {
+    console.log(this.state.user_1_exclusive_interest);
     return (
       <>
         <div
@@ -61,10 +105,10 @@ class VennDiagram extends Component {
               borderRight: "1px solid ghostwhite",
             }}
           >
-            <p style={{ textAlign: "center" }}>Word1</p>
-            <p style={{ textAlign: "center" }}>Word1</p>
-            <p style={{ textAlign: "center" }}>Word1</p>
-            <p style={{ textAlign: "center" }}>Word1</p>
+            {this.state.user_1_exclusive_interest &&
+              this.state.user_1_exclusive_interest.map((intersest, idx) => (
+                <p style={{ textAlign: "center" }}>{intersest}</p>
+              ))}
           </div>
           <div
             style={{
@@ -89,10 +133,10 @@ class VennDiagram extends Component {
               background: "#b3bef9",
             }}
           >
-            <p style={{ textAlign: "center" }}>Word1</p>
-            <p style={{ textAlign: "center" }}>Word1</p>
-            <p style={{ textAlign: "center" }}>Word1</p>
-            <p style={{ textAlign: "center" }}>Word1</p>
+            {this.state.user_2_exclusive_interest &&
+              this.state.user_2_exclusive_interest.map((intersest, idx) => (
+                <p style={{ textAlign: "center" }}>{intersest}</p>
+              ))}
           </div>
         </div>
         <Modal
