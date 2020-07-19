@@ -39,8 +39,7 @@ class VennDiagram extends Component {
       },
     ];
     console.log("data", data);
-    let similar_interests_key = Object.keys(data[0].similar_interests);
-    similar_interests_key && similar_interests_key.map((data1, idx) => (
+    data && Object.keys(data[0].similar_interests).map((data1, idx) => (
       console.log("kkkkkkkkkkk", data[0].similar_interests[data1].user, data[0].similar_interests[data1].related_interests)
 
     ))
