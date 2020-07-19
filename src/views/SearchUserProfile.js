@@ -23,6 +23,9 @@ import ComparisonSlider from "../views/ComparisonSlider.js";
 import VennDiagram from "../components/UserCharts/VennDiagram.js";
 import HeatMap from "../components/UserCharts/HeatMap.js";
 import "react-tabs/style/react-tabs.css";
+import "../assets/scss/custom.css";
+import swal from "@sweetalert/with-react";
+import { setItem } from "utils/localStorage";
 
 const SimilarityComponent = (props) => {
   if (props.showLoader) {
@@ -85,12 +88,15 @@ class SearchUserProfile extends React.Component {
     tweet_count: "",
     keyword_count: "",
     word: "",
+    imageTooltipOpen: false,
     score: "",
     isLoding: false,
     isLoding1: false,
     series1: [],
     data: [],
     series: [],
+    barchartdata: [],
+    paramid: "",
   };
 
   componentDidMount() {
@@ -108,6 +114,7 @@ class SearchUserProfile extends React.Component {
             paper_count: response.data.paper_count,
             tweet_count: response.data.tweet_count,
             keyword_count: response.data.keyword_count,
+            paramid: this.props.match.params.id,
           });
         })
         .catch((error) => {
@@ -122,6 +129,8 @@ class SearchUserProfile extends React.Component {
       this.setState({ isLoding: true }, () => {
         RestAPI.getUserProfile(this.props.match.params.id)
           .then((response) => {
+            setItem("userId", response.data.id);
+            window.location.reload();
             this.setState({
               isLoding: false,
               id: response.data.id,
@@ -134,6 +143,7 @@ class SearchUserProfile extends React.Component {
               tweet_count: response.data.tweet_count,
               keyword_count: response.data.keyword_count,
               score: "",
+              paramid: this.props.match.params.id,
               radarChartData: {},
             });
           })
@@ -196,47 +206,9 @@ class SearchUserProfile extends React.Component {
     this.setState({ isLoding1: true }, () => {
       RestAPI.getScore(this.props.match.params.id)
         .then((response) => {
-          const radarChartData = {
-            series: [
-              {
-                name: "Your Interests",
-                data: Object.values(response.data.user_1_data || {}),
-              },
-              {
-                name: "User's Interests",
-                data: Object.values(response.data.user_2_data || {}),
-              },
-            ],
-            options: {
-              chart: {
-                toolbar: { show: false },
-                height: 350,
-                type: "radar",
-                dropShadow: {
-                  enabled: true,
-                  blur: 1,
-                  left: 1,
-                  top: 1,
-                },
-              },
-              stroke: {
-                width: 2,
-              },
-              fill: {
-                opacity: 0.1,
-              },
-              markers: {
-                size: 0,
-              },
-              xaxis: {
-                categories: Object.keys(response.data.user_1_data || {}),
-              },
-            },
-          };
           this.setState({
             isLoding1: false,
             score: response.data.score,
-            radarChartData,
           });
           // this.props.history.push("/admin/view-paper");
         })
@@ -245,6 +217,17 @@ class SearchUserProfile extends React.Component {
           handleServerErrors(error, toast.error);
         });
     });
+  };
+  handleToogle = (status) => {
+    this.setState({ imageTooltipOpen: status });
+  };
+  modalDetail = () => {
+    swal(
+      <div>
+        <h1>How the bar chart generated?</h1>
+        <img src={require("../assets/img/barchart.png")} />
+      </div>
+    );
   };
 
   render() {
@@ -258,7 +241,6 @@ class SearchUserProfile extends React.Component {
       tweet_count,
       keyword_count,
     } = this.state;
-
     return (
       <>
         <SearchUserHeader />
@@ -268,16 +250,27 @@ class SearchUserProfile extends React.Component {
             <Col className="order-xl-2" xl="6">
               <Card className="card-profile shadow">
                 <CardHeader className="bg-white border-0">
-                  <Row
-                    className="align-items-center"
-                    style={{ padding: "0 10px" }}
-                  >
-                    <h3>Bar Chart</h3>
-                    <p>
-                      Bar chart explaining the weight of users occupied by
-                      interest.
-                    </p>
-                  </Row>
+                  <h3>Bar Chart</h3>
+                  <p>
+                    Bar chart explaining the weight of users occupied by
+                    interest.
+                    <i
+                      onClick={this.modalDetail}
+                      className="fa fa-question-circle"
+                      onMouseOver={() => this.handleToogle(true)}
+                      onMouseOut={() => this.handleToogle(false)}
+                    />
+                    {this.state.imageTooltipOpen && (
+                      <div
+                        className="tooltips"
+                        style={{
+                          width: "200px",
+                        }}
+                      >
+                        Click here to show more details
+                      </div>
+                    )}
+                  </p>
                 </CardHeader>
                 {/* <Row className="justify-content-center">
                   <Col className="order-lg-2" lg="12">
@@ -295,7 +288,7 @@ class SearchUserProfile extends React.Component {
                   </Col>
                 </Row> */}
                 <CardBody className="pt-0 pt-md-4">
-                  <BarChart />
+                  <BarChart paramid={this.state.paramid} />
                   {/* <Row>
                     <div className="col">
                       <div
@@ -338,7 +331,7 @@ class SearchUserProfile extends React.Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  <VennDiagram />
+                  <VennDiagram paramid={this.state.paramid} />
                 </CardBody>
               </Card>
             </Col>
@@ -361,7 +354,7 @@ class SearchUserProfile extends React.Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  <HeatMap />
+                  <HeatMap paramid={this.state.paramid} />
                 </CardBody>
               </Card>
             </Col>
