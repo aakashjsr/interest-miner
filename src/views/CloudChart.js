@@ -85,7 +85,10 @@ class CloudChartPage extends React.Component {
                             />
                           </li>
                           {this.state.imageTooltipOpen && (
-                            <div className="imgTooltip">
+                            <div
+                              className="imgTooltip"
+                              style={{ marginTop: "-33px" }}
+                            >
                               Click here to show more details
                             </div>
                           )}
@@ -111,7 +114,13 @@ class CloudChartPage extends React.Component {
                             onMouseOut={() => this.toogle(false)}
                           />
                           {this.state.tooltipOpen && (
-                            <div className="tooltips">
+                            <div
+                              className="tooltips"
+                              style={{
+                                width: "500px",
+                                right: "35px",
+                              }}
+                            >
                               If you’re not satisfied with the interest modeling
                               result, click here to generate the better interest
                               model yourself.

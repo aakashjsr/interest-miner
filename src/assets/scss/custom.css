@@ -25,10 +25,16 @@
   padding: 6px;
   font-size: 13px;
   border: 1px solid black;
-  position: absolute;
   margin-top: -55px;
-  right: 32px;
+  position: absolute;
 }
 .bold {
   font-weight: 400;
+}
+.highlight-keywords {
+  background-color: yellow;
+  padding: 0px 10px;
+  margin: 2px 4px;
+  border-radius: 500px;
+  color: black;
 }

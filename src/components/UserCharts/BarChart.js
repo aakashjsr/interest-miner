@@ -9,18 +9,19 @@ import swal from "@sweetalert/with-react";
 class BarChart extends Component {
   state = {
     score: "",
+    barchart: [],
   };
   componentDidMount() {
     RestAPI.getScore(getItem("userId"))
       .then((response) => {
-        console.log(response);
         this.setState({
           score: response.data.score,
+          barchart: response.data.bar_chart_data,
         });
-        let user_1_data = Object.keys(response.data.user_1_data);
-        let user_2_data = Object.keys(response.data.user_2_data);
-        let value1 = Object.values(response.data.user_1_data);
-        let value2 = Object.values(response.data.user_2_data);
+        let user_1_data = Object.keys(response.data.bar_chart_data.user_1_data);
+        let user_2_data = Object.keys(response.data.bar_chart_data.user_2_data);
+        let value1 = Object.values(response.data.bar_chart_data.user_1_data);
+        let value2 = Object.values(response.data.bar_chart_data.user_2_data);
         const datas = [];
         for (let i = 0; i < user_1_data.length; i++) {
           datas.push({
@@ -126,7 +127,11 @@ class BarChart extends Component {
         >
           Score : {this.state.score}
         </h3>
-        <div id="searched-bar-chart" />
+        {this.state.barchart ? (
+          <div id="searched-bar-chart" />
+        ) : (
+          <p>No Data Found</p>
+        )}
       </>
     );
   }
