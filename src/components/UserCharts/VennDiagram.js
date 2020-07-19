@@ -6,6 +6,8 @@ class VennDiagram extends Component {
     modal: false,
     user_1_exclusive_interest: [],
     user_2_exclusive_interest: [],
+    similar_interests_user_1: [],
+    similar_interests_user_2: [],
   };
   toggle = () => {
     this.setState({
@@ -17,48 +19,55 @@ class VennDiagram extends Component {
       modal: true,
     });
   };
+  // getMarkedAbstract = (text, word) => {
+  //   text = text || "";
+  //   text = text.split(word).join(`<mark>${word}</mark>`);
+  //   word = word[0].toUpperCase() + word.slice(1);
+  //   text = text.split(word).join(`<mark>${word}</mark>`);
+  //   return text;
+  // };
+  // handleToogle = (status) => {
+  //   const {
+  //     similar_interests_user_2
+  //   } = this.state;
+  //   let word = document.getElementById("user1").innerHTML; 
+  //   for(let i =0;i<similar_interests_user_2.length;i++){
+      
+  //   }
+  //   console.log(word)
+  // };
+  
   componentDidMount() {
     const data = [
-      {
-        user_1_exclusive_interest: ["python", "java", "swift"],
-        user_2_exclusive_interest: ["pan", "pot", "catalog"],
-        similar_interests: {
-          development: {
-            user: "user_1",
-            related_interests: ["sublime", "matlab"],
-          },
-          sublime: {
-            user: "user_2",
-            related_interests: ["development"],
-          },
-          matlab: {
-            user: "user_2",
-            related_interests: ["development"],
-          },
-        },
-      },
+    {
+    user_1_exclusive_interest: ["python", "java", "swift"],
+    user_2_exclusive_interest: ["pan", "pot", "catalog"],
+    similar_interests: {
+    	user_1: {
+    		development: ["sublime", "matlab"]
+    	},
+    	user_2: {
+    		sublime: ["development"],
+    		matlab: ["development"]
+    	}
+    }
+}
     ];
-    console.log("data", data);
-    data && Object.keys(data[0].similar_interests).map((data1, idx) => (
-      console.log("kkkkkkkkkkk", data[0].similar_interests[data1].user, data[0].similar_interests[data1].related_interests)
-
-    ))
-
-    // if (Object.values(similar_interests_key.user) === "user_1") {
-    //   alert();
-    //   let similar_interests_user_1 = Object.keys(
-    //     similar_interests_key.related_interests
-    //   );
-    //   console.log(similar_interests_user_1);
-    // }
+    let similar_interests_user_1 = Object.keys(data[0].similar_interests.user_1)
+    let similar_interests_user_2 = Object.keys(data[0].similar_interests.user_2)
     this.setState({
       user_1_exclusive_interest: data[0].user_1_exclusive_interest,
       user_2_exclusive_interest: data[0].user_2_exclusive_interest,
+      similar_interests_user_1: similar_interests_user_1,
+      similar_interests_user_2: similar_interests_user_2,
     });
   }
 
   render() {
-    console.log(this.state.user_1_exclusive_interest);
+    console.log(
+      this.state.similar_interests_user_1,
+      this.state.similar_interests_user_2
+    );
     return (
       <>
         <div
@@ -146,6 +155,42 @@ class VennDiagram extends Component {
         >
           <ModalBody>
             <h3>Similar Keywords</h3>
+            <br />
+            <div className="flex">
+              {/* <div style={{ width: "50%" }}>
+                {this.state.similar_interests_user_1 &&
+                  this.state.similar_interests_user_1.map((intersest, idx) => (
+                    <p id="user1"   onMouseOver={() => this.handleToogle(true)}
+                    onMouseOut={() => this.handleToogle(false)}style={{ textAlign: "center" }}>{intersest}</p>
+                  ))}
+              </div>
+
+              <div style={{ width: "50%" }}>
+                {this.state.similar_interests_user_2 &&
+                  this.state.similar_interests_user_2.map((intersest, idx) => (
+                    <p id="user2"   onMouseOver={() => this.handleToogle(true)}
+                    onMouseOut={() => this.handleToogle(false)}style={{ textAlign: "center" }}>{intersest}</p>
+                  ))}
+              </div> */}
+              <div style={{ width: "50%" }}>
+                {this.state.similar_interests_user_1 &&
+                  this.state.similar_interests_user_1.map((intersest, idx) => (
+                    <p id="user1" style={{ textAlign: "center" }}>{intersest}</p>
+                  ))}
+              </div>
+
+              <div style={{ width: "50%" }}>
+                {this.state.similar_interests_user_2 &&
+                  this.state.similar_interests_user_2.map((intersest, idx) => (
+                    <p id="user2"  
+                    //   dangerouslySetInnerHTML={{
+                    //   __html: this.getMarkedAbstract(
+                    //   ),
+                    // }}
+                     style={{ textAlign: "center" }}>{intersest}</p>
+                  ))}
+              </div>
+            </div>
           </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={this.toggle}>

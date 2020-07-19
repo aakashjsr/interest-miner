@@ -8,6 +8,75 @@ class HeatMap extends Component {
     this.state = {};
   }
   componentDidMount() {
+    const datas = [
+      {
+        django: {
+          learning: 0.3,
+          analytics: 0.3,
+          web: 0.4,
+          development: 0.2,
+          react: 0.1,
+        },
+        postgre: {
+          learning: 0.2,
+          analytics: 0.5,
+          web: 0.6,
+          development: 0.2,
+          react: 0.6,
+        },
+        docker: {
+          learning: 0.1,
+          analytics: 0.1,
+          web: 0.2,
+          development: 0.1,
+          react: 0.3,
+        },
+        redis: {
+          learning: 0.6,
+          analytics: 0.7,
+          web: 0.1,
+          development: 0.4,
+          react: 0.4,
+        },
+        celery: {
+          learning: 0.7,
+          analytics: 0.4,
+          web: 0.3,
+          development: 0.2,
+          react: 0.5,
+        },
+      },
+    ];
+    console.log("datasssssssssssssssss", datas);
+    let name = Object.keys(datas[0]);
+    const field = [];
+    const values =[]
+    datas &&
+      Object.keys(datas[0]).map((data1, idx) => {
+        Object.keys(datas[0][data1]).map((data2, idx) => {
+          console.log(
+            "dataspushdataspushdataspushdataspushdataspushdataspushdataspushdataspush",
+            datas[0][data1][data2]
+          );
+          field.push(data2);
+          values.push(datas[0][data1][data2])
+        });
+      });
+    const fields = [];
+    for (let i = 0; i < field.length; i++) {
+      if (field[i] === fields[0]) {
+        break
+      }
+      else{
+      fields.push(field[i]);
+      }
+    }
+    console.log("vvvvvvvvvvvvvvv",values)
+    for(let i=0;i<values.length;i++){
+      console.log(fields.length)
+        
+    }
+
     const data = [
       [0, 0, 0.3],
       [0, 1, 0.3],
@@ -35,7 +104,7 @@ class HeatMap extends Component {
       [4, 3, 0.2],
       [4, 4, 0.1],
     ];
-
+    console.log("data",data)
     const source = data.map((arr) => {
       return {
         name: arr[0],
@@ -54,11 +123,11 @@ class HeatMap extends Component {
 
     chart.scale("name", {
       type: "cat",
-      values: ["django", "postgre", "docker", "redis", "celery"],
+      values: name,
     });
     chart.scale("day", {
       type: "cat",
-      values: ["learning", "analytics", "web", "development", "react"],
+      values: fields,
     });
     chart.scale("sales", {
       nice: true,
