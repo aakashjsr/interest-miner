@@ -23,6 +23,8 @@ import ComparisonSlider from "../views/ComparisonSlider.js";
 import VennDiagram from "../components/UserCharts/VennDiagram.js";
 import HeatMap from "../components/UserCharts/HeatMap.js";
 import "react-tabs/style/react-tabs.css";
+import "../assets/scss/custom.css";
+import swal from "@sweetalert/with-react";
 
 const SimilarityComponent = (props) => {
   if (props.showLoader) {
@@ -85,6 +87,7 @@ class SearchUserProfile extends React.Component {
     tweet_count: "",
     keyword_count: "",
     word: "",
+    imageTooltipOpen: false,
     score: "",
     isLoding: false,
     isLoding1: false,
@@ -122,6 +125,7 @@ class SearchUserProfile extends React.Component {
       this.setState({ isLoding: true }, () => {
         RestAPI.getUserProfile(this.props.match.params.id)
           .then((response) => {
+            console.log(response);
             this.setState({
               isLoding: false,
               id: response.data.id,
@@ -246,6 +250,17 @@ class SearchUserProfile extends React.Component {
         });
     });
   };
+  handleToogle = (status) => {
+    this.setState({ imageTooltipOpen: status });
+  };
+  modalDetail = () => {
+    swal(
+      <div>
+        <h1>How the bar chart generated?</h1>
+        <img src={require("../assets/img/barchart.png")} />
+      </div>
+    );
+  };
 
   render() {
     const {
@@ -268,16 +283,29 @@ class SearchUserProfile extends React.Component {
             <Col className="order-xl-2" xl="6">
               <Card className="card-profile shadow">
                 <CardHeader className="bg-white border-0">
-                  <Row
-                    className="align-items-center"
-                    style={{ padding: "0 10px" }}
-                  >
-                    <h3>Bar Chart</h3>
-                    <p>
-                      Bar chart explaining the weight of users occupied by
-                      interest.
-                    </p>
-                  </Row>
+                  <h3>Bar Chart</h3>
+                  <p>
+                    Bar chart explaining the weight of users occupied by
+                    interest.
+                    <i
+                      onClick={this.modalDetail}
+                      className="fa fa-question-circle"
+                      onMouseOver={() => this.handleToogle(true)}
+                      onMouseOut={() => this.handleToogle(false)}
+                    />
+                    {this.state.imageTooltipOpen && (
+                      <div
+                        className="tooltips"
+                        style={{
+                          marginTop: "-32px",
+                          left: "100px",
+                          width: "200px",
+                        }}
+                      >
+                        Click here to show more details
+                      </div>
+                    )}
+                  </p>
                 </CardHeader>
                 {/* <Row className="justify-content-center">
                   <Col className="order-lg-2" lg="12">

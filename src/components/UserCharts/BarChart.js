@@ -4,51 +4,36 @@ import { handleServerErrors } from "utils/errorHandler";
 import RestAPI from "../../services/api";
 import { toast } from "react-toastify";
 import { getItem } from "utils/localStorage";
+import swal from "@sweetalert/with-react";
 
 class BarChart extends Component {
-  state = {};
+  state = {
+    score: "",
+  };
   componentDidMount() {
     RestAPI.getScore(getItem("userId"))
       .then((response) => {
         console.log(response);
+        this.setState({
+          score: response.data.score,
+        });
         let user_1_data = Object.keys(response.data.user_1_data);
         let user_2_data = Object.keys(response.data.user_2_data);
         let value1 = Object.values(response.data.user_1_data);
         let value2 = Object.values(response.data.user_2_data);
-        //api data
         const datas = [];
         for (let i = 0; i < user_1_data.length; i++) {
           datas.push({
             country: user_1_data[i],
-            type: "2016 年转基因种植面积",
+            type: "User 1 Data",
             value: parseInt(value1[i]),
           });
           datas.push({
             country: user_2_data[i],
-            type: "2016 年耕地总面积",
+            type: "User 2 Data",
             value: parseInt(value2[i]),
           });
         }
-        console.log("data", datas);
-        //custom data
-        const data = [
-          { country: "object", type: "2016 年转基因种植面积", value: 5 },
-          { country: "object", type: "2016 年耕地总面积", value: 1 },
-          { country: "hiv", type: "2016 年转基因种植面积", value: 1 },
-          { country: "hiv", type: "2016 年耕地总面积", value: 5 },
-          {
-            country: "cross-sectional study",
-            type: "2016 年转基因种植面积",
-            value: 1,
-          },
-          {
-            country: "cross-sectional study",
-            type: "2016 年耕地总面积",
-            value: 5,
-          },
-        ];
-        console.log("data", datas);
-
         const chart = new Chart({
           container: "searched-bar-chart",
           autoFit: true,
@@ -118,16 +103,32 @@ class BarChart extends Component {
         });
         chart.interaction("element-highlight");
         chart.render();
-        console.log(datas);
       })
       .catch((error) => {
-        console.log(error);
         handleServerErrors(error, toast.error);
       });
   }
+  modalDetail = () => {
+    swal(
+      <div>
+        <h1>How to calculate similarity?</h1>
+        <img src={require("../../assets/img/similaritychart.png")} />
+      </div>
+    );
+  };
 
   render() {
-    return <div id="searched-bar-chart" />;
+    return (
+      <>
+        <h3
+          onClick={this.modalDetail}
+          style={{ textAlign: "center", cursor: "pointer" }}
+        >
+          Score : {this.state.score}
+        </h3>
+        <div id="searched-bar-chart" />
+      </>
+    );
   }
 }
 export default BarChart;
