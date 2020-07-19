@@ -10,36 +10,36 @@ class BarChart extends Component {
   componentDidMount() {
     RestAPI.getScore(getItem("userId"))
       .then((response) => {
-        console.log(response);
+        console.log("jjjjjjj", response);
         let user_1_data = Object.keys(response.data.user_1_data);
         let user_2_data = Object.keys(response.data.user_2_data);
         let value1 = Object.values(response.data.user_1_data);
         let value2 = Object.values(response.data.user_2_data);
         //api data
-        const datas = [];
-        for (let i = 0; i < user_1_data.length; i++) {
-          datas.push({
-            country: user_1_data[i],
-            type: "2016 年转基因种植面积",
-            value: parseInt(value1[i]),
-          });
-          datas.push({
-            country: user_2_data[i],
-            type: "2016 年耕地总面积",
-            value: parseInt(value2[i]),
-          });
-        }
-        console.log("data", datas);
+        // const datas = [];
+        // for (let i = 0; i < user_1_data.length; i++) {
+        //   datas.push({
+        //     country: user_1_data[i],
+        //     type: "2016 年转基因种植面积",
+        //     value: parseInt(value1[i]),
+        //   });
+        //   datas.push({
+        //     country: user_2_data[i],
+        //     type: "2016 年耕地总面积",
+        //     value: parseInt(value2[i]),
+        //   });
+        // }
+        // console.log("data", datas);
         //custom data
-        const data = [
+        const datas = [
           { country: "object", type: "2016 年转基因种植面积", value: 5 },
           { country: "object", type: "2016 年耕地总面积", value: 1 },
-          { country: "hiv", type: "2016 年转基因种植面积", value: 1 },
-          { country: "hiv", type: "2016 年耕地总面积", value: 5 },
+          { country: "hiv", type: "2016 年转基因种植面积", value: 5 },
+          { country: "hiv", type: "2016 年耕地总面积", value: 1 },
           {
             country: "cross-sectional study",
             type: "2016 年转基因种植面积",
-            value: 1,
+            value: 5,
           },
           {
             country: "cross-sectional study",
