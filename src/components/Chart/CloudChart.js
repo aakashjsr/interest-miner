@@ -94,8 +94,11 @@ class CloudChartPage extends Component {
   getCallback = (callback) => {
     let reactRef = this;
     return function (word, event) {
-      console.log("kkkkkkkkk", word);
-      reactRef.setState({ modal: true, isModalLoader: true });
+      reactRef.setState({
+        modal: true,
+        isModalLoader: true,
+        isManualData: false,
+      });
       if (word.tweet_ids) {
         reactRef.setState({
           isTweetData: true,
@@ -248,14 +251,14 @@ class CloudChartPage extends Component {
                           </>
                         ))}
                       </>
+                    ) : this.state.isManualData ? (
+                      <p style={{ textAlign: "center" }}>
+                        This interest was added manually
+                      </p>
                     ) : (
-                      <>
-                        <p style={{ textAlign: "center" }}>
-                          {this.state.isManualData
-                            ? "This interest was added manually"
-                            : "No matching papers found"}
-                        </p>
-                      </>
+                      <p style={{ textAlign: "center" }}>
+                        No Matching Papers Found{" "}
+                      </p>
                     )}
                   </>
                 )}
@@ -305,11 +308,13 @@ class CloudChartPage extends Component {
                           </div>
                         ))}
                       </>
+                    ) : this.state.isManualData ? (
+                      <p style={{ textAlign: "center" }}>
+                        This interest was added manually
+                      </p>
                     ) : (
                       <p style={{ textAlign: "center" }}>
-                        {this.state.isManualData
-                          ? "This interest was added manually"
-                          : " No matching tweets found"}
+                        No Matching Papers Found{" "}
                       </p>
                     )}
                   </>
