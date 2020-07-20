@@ -308,7 +308,11 @@ class SearchUserProfile extends React.Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  <VennDiagram paramid={this.state.paramid} />
+                  <VennDiagram
+                    first_name={this.state.first_name}
+                    last_name={this.state.last_name}
+                    paramid={this.state.paramid}
+                  />
                 </CardBody>
               </Card>
             </Col>
