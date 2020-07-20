@@ -218,9 +218,7 @@ class SearchUserProfile extends React.Component {
         });
     });
   };
-  handleToogle = (status) => {
-    this.setState({ imageTooltipOpen: status });
-  };
+
   modalDetail = () => {
     swal(
       <div>
@@ -231,16 +229,6 @@ class SearchUserProfile extends React.Component {
   };
 
   render() {
-    const {
-      email,
-      first_name,
-      last_name,
-      twitter_account_id,
-      author_id,
-      paper_count,
-      tweet_count,
-      keyword_count,
-    } = this.state;
     return (
       <>
         <SearchUserHeader />
@@ -255,21 +243,10 @@ class SearchUserProfile extends React.Component {
                     Bar chart explaining the weight of users occupied by
                     interest.
                     <i
+                      style={{ cursor: "pointer" }}
                       onClick={this.modalDetail}
                       className="fa fa-question-circle"
-                      onMouseOver={() => this.handleToogle(true)}
-                      onMouseOut={() => this.handleToogle(false)}
                     />
-                    {this.state.imageTooltipOpen && (
-                      <div
-                        className="tooltips"
-                        style={{
-                          width: "200px",
-                        }}
-                      >
-                        Click here to show more details
-                      </div>
-                    )}
                   </p>
                 </CardHeader>
                 {/* <Row className="justify-content-center">

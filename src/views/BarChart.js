@@ -27,14 +27,14 @@ class BarChartPage extends React.Component {
         this.state.chartExample1Data === "data1" ? "data2" : "data1",
     });
   };
-  modalDetail = () => {
-    swal(
-      <div>
-        <h1>How the bar chart generated?</h1>
-        <img src={require("../assets/img/barchart.png")} />
-      </div>
-    );
-  };
+  // modalDetail = () => {
+  //   swal(
+  //     <div>
+  //       <h1>How the bar chart generated?</h1>
+  //       <img src={require("../assets/img/barchart.png")} />
+  //     </div>
+  //   );
+  // };
   render() {
     return (
       <>
@@ -55,10 +55,10 @@ class BarChartPage extends React.Component {
                         Here you can see the statistical result of how many
                         papers/tweets you have published in the past times.
                         &nbsp;
-                        <i
+                        {/* <i
                           onClick={this.modalDetail}
                           className="fa fa-question-circle"
-                        />
+                        /> */}
                       </p>
                     </div>
                   </Row>
