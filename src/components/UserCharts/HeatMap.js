@@ -30,7 +30,7 @@ class HeatMap extends Component {
             Object.keys(datas).map((data1, idx) => {
               Object.keys(datas[data1]).map((data2, idx) => {
                 field.push(data2);
-                values.push(datas[data1][data2]);
+                values.push(datas[data1][data2].toFixed(2));
               });
             });
           const fields = [];
@@ -59,7 +59,7 @@ class HeatMap extends Component {
           const chart = new Chart({
             container: "heatmap",
             autoFit: true,
-            height: 500,
+            height: 550,
           });
 
           chart.data(source);
@@ -140,13 +140,7 @@ class HeatMap extends Component {
       <>
         {this.state.Loader ? (
           <div className="text-center" style={{ padding: "20px" }}>
-            <Loader
-              type="Puff"
-              color="#00BFFF"
-              height={100}
-              width={100}
-              timeout={3000}
-            />
+            <Loader type="Puff" color="#00BFFF" height={100} width={100} />
           </div>
         ) : (
           <div id="heatmap" />

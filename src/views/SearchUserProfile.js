@@ -26,6 +26,7 @@ import "react-tabs/style/react-tabs.css";
 import "../assets/scss/custom.css";
 import swal from "@sweetalert/with-react";
 import { setItem } from "utils/localStorage";
+import { ThemeProvider } from "@material-ui/core";
 
 const SimilarityComponent = (props) => {
   if (props.showLoader) {
@@ -75,36 +76,53 @@ const SimilarityComponent = (props) => {
 };
 
 class SearchUserProfile extends React.Component {
-  state = {
-    data: [],
-    id: "",
-    email: "",
-    first_name: "",
-    last_name: "",
-    twitter_account_id: "",
-    author_id: "",
-    papercount: null,
-    paper_count: "",
-    tweet_count: "",
-    keyword_count: "",
-    word: "",
-    imageTooltipOpen: false,
-    score: "",
-    isLoding: false,
-    isLoding1: false,
-    series1: [],
-    data: [],
-    series: [],
-    barchartdata: [],
-    paramid: "",
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      id: "",
+      email: "",
+      first_name: "",
+      last_name: "",
+      twitter_account_id: "",
+      author_id: "",
+      papercount: null,
+      paper_count: "",
+      tweet_count: "",
+      keyword_count: "",
+      word: "",
+      imageTooltipOpen: false,
+      score: "",
+      isLoding: false,
+      isLoding1: false,
+      series1: [],
+      data: [],
+      series: [],
+      barchartdata: [],
+      paramid: "",
+      venn_chart_data: [],
+      HeatMap: [],
+    };
+  }
 
   componentDidMount() {
     this.setState({ isLoding: true }, () => {
+      RestAPI.getScore(this.props.match.params.id)
+        .then((response) => {
+          this.setState({
+            score: response.data.score,
+            venn_chart_data: response.data.venn_chart_data,
+            barchart: response.data.bar_chart_data,
+            HeatMap: response.data.heat_map_data,
+          });
+        })
+        .catch((error) => {
+          this.setState({ isLoding1: false });
+          handleServerErrors(error, toast.error);
+        });
       RestAPI.getUserProfile(this.props.match.params.id)
         .then((response) => {
           this.setState({
-            isLoding: false,
             id: response.data.id,
             first_name: response.data.first_name,
             email: response.data.email,
@@ -118,9 +136,9 @@ class SearchUserProfile extends React.Component {
           });
         })
         .catch((error) => {
-          this.setState({ isLoding: false });
           handleServerErrors(error, toast.error);
         });
+      this.setState({ isLoding: false });
     });
   }
 
@@ -142,7 +160,6 @@ class SearchUserProfile extends React.Component {
               paper_count: response.data.paper_count,
               tweet_count: response.data.tweet_count,
               keyword_count: response.data.keyword_count,
-              score: "",
               paramid: this.props.match.params.id,
               radarChartData: {},
             });
@@ -161,63 +178,46 @@ class SearchUserProfile extends React.Component {
     });
   };
 
-  handleChange = (e) => {
-    let getValue = e.target.value;
-    let getName = e.target.name;
-    this.setState(() => ({ [getName]: getValue }));
-  };
+  // handleChange = (e) => {
+  //   let getValue = e.target.value;
+  //   let getName = e.target.name;
+  //   this.setState(() => ({ [getName]: getValue }));
+  // };
 
-  _handleSubmit = (e) => {
-    const {
-      id,
-      email,
-      first_name,
-      last_name,
-      twitter_account_id,
-      author_id,
-    } = this.state;
-    e.preventDefault();
-    let data = {
-      email: email,
-      first_name: first_name,
-      last_name: last_name,
-      twitter_account_id: twitter_account_id,
-      author_id: author_id,
-    };
+  // _handleSubmit = (e) => {
+  //   const {
+  //     id,
+  //     email,
+  //     first_name,
+  //     last_name,
+  //     twitter_account_id,
+  //     author_id,
+  //   } = this.state;
+  //   e.preventDefault();
+  //   let data = {
+  //     email: email,
+  //     first_name: first_name,
+  //     last_name: last_name,
+  //     twitter_account_id: twitter_account_id,
+  //     author_id: author_id,
+  //   };
 
-    this.setState({ isLoding: true }, () => {
-      RestAPI.updateUserProfile(data, id)
-        .then((response) => {
-          toast.success("Update Profile Data !", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 2000,
-          });
-          this.setState({ isLoding: false });
-          // this.props.history.push("/admin/view-paper");
-        })
-        .catch((error) => {
-          this.setState({ isLoding: false });
-          handleServerErrors(error, toast.error);
-        });
-    });
-  };
-
-  getScore = () => {
-    this.setState({ isLoding1: true }, () => {
-      RestAPI.getScore(this.props.match.params.id)
-        .then((response) => {
-          this.setState({
-            isLoding1: false,
-            score: response.data.score,
-          });
-          // this.props.history.push("/admin/view-paper");
-        })
-        .catch((error) => {
-          this.setState({ isLoding1: false });
-          handleServerErrors(error, toast.error);
-        });
-    });
-  };
+  //   this.setState({ isLoding: true }, () => {
+  //     RestAPI.updateUserProfile(data, id)
+  //       .then((response) => {
+  //         toast.success("Update Profile Data !", {
+  //           position: toast.POSITION.TOP_RIGHT,
+  //           autoClose: 2000,
+  //         });
+  //         this.setState({ isLoding: false });
+  //         // this.props.history.push("/admin/view-paper");
+  //       })
+  //       .catch((error) => {
+  //         this.setState({ isLoding: false });
+  //         handleServerErrors(error, toast.error);
+  //       });
+  //   });
+  // };
 
   modalDetail = () => {
     swal(
@@ -231,7 +231,11 @@ class SearchUserProfile extends React.Component {
   render() {
     return (
       <>
-        <SearchUserHeader />
+        <SearchUserHeader
+          first_name={this.state.first_name}
+          last_name={this.state.last_name}
+          score={this.state.score}
+        />
 
         <Container className="mt--7" fluid>
           <Row>
@@ -265,7 +269,21 @@ class SearchUserProfile extends React.Component {
                   </Col>
                 </Row> */}
                 <CardBody className="pt-0 pt-md-4">
-                  <BarChart paramid={this.state.paramid} />
+                  {this.state.isLoding ? (
+                    <div className="text-center" style={{ padding: "20px" }}>
+                      <Loader
+                        type="Puff"
+                        color="#00BFFF"
+                        height={100}
+                        width={100}
+                      />
+                    </div>
+                  ) : (
+                    <BarChart
+                      barchart={this.state.barchart}
+                      paramid={this.state.paramid}
+                    />
+                  )}
                   {/* <Row>
                     <div className="col">
                       <div
@@ -308,11 +326,23 @@ class SearchUserProfile extends React.Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  <VennDiagram
-                    first_name={this.state.first_name}
-                    last_name={this.state.last_name}
-                    paramid={this.state.paramid}
-                  />
+                  {this.state.isLoding ? (
+                    <div className="text-center" style={{ padding: "20px" }}>
+                      <Loader
+                        type="Puff"
+                        color="#00BFFF"
+                        height={100}
+                        width={100}
+                      />
+                    </div>
+                  ) : (
+                    <VennDiagram
+                      first_name={this.state.first_name}
+                      last_name={this.state.last_name}
+                      paramid={this.state.paramid}
+                      venn_chart_data={this.state.venn_chart_data}
+                    />
+                  )}
                 </CardBody>
               </Card>
             </Col>
@@ -335,7 +365,21 @@ class SearchUserProfile extends React.Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  <HeatMap paramid={this.state.paramid} />
+                  {this.state.isLoding ? (
+                    <div className="text-center" style={{ padding: "20px" }}>
+                      <Loader
+                        type="Puff"
+                        color="#00BFFF"
+                        height={100}
+                        width={100}
+                      />
+                    </div>
+                  ) : (
+                    <HeatMap
+                      HeatMap={this.state.HeatMap}
+                      paramid={this.state.paramid}
+                    />
+                  )}
                 </CardBody>
               </Card>
             </Col>

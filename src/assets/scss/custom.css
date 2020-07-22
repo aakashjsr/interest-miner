@@ -31,10 +31,45 @@
 .bold {
   font-weight: 400;
 }
-.highlight-keywords {
+.highlight-keywords-1 {
+  border: 3px solid white;
   background-color: yellow;
-  padding: 0px 10px;
-  margin: 2px 4px;
+  padding: 4px 10px;
+  margin: 2px 6px;
   border-radius: 500px;
   color: black;
+  text-align: center;
+}
+.highlight-keywords {
+  border: 3px solid red;
+  background-color: yellow;
+  padding: 4px 10px;
+  margin: 2px 6px;
+  border-radius: 500px;
+  color: black;
+  text-align: center;
+}
+.h1-s {
+  text-align: center;
+  width: 600px;
+  font-weight: 700;
+  color: #32325d;
+  font-size: 18px;
+}
+
+.rtl {
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+  margin-top: -424px;
+  height: 400px;
+  margin-left: -18px;
+}
+.rtl-1 {
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+  margin-top: -265px;
+  height: 250px;
+}
+#chart-1 > .apexcharts-canvas {
+  margin-left: 50px !important;
 }
