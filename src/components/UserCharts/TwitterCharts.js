@@ -126,103 +126,6 @@ class TwitterCharts extends Component {
 
   componentDidMount() {
     this.setState({ isLoding: true }, () => {
-      RestAPI.barChartUser()
-        .then((response) => {
-          let categorieList = Object.keys(response.data.papers);
-          let value = Object.values(response.data.papers);
-          let tweetscategorieList = Object.keys(response.data.tweets);
-          let tweetsvalue = Object.values(response.data.tweets);
-          this.setState({
-            isLoding: false,
-            data: response.data,
-            series: [{ name: "Paper", data: [...value] }],
-            tweetseries: [{ name: "Tweet", data: [...tweetsvalue] }],
-            // options: { ...this.state.options, ...this.state.options.xaxis, ...this.state.options.xaxis.categories = categorieList },
-            // tweetoptions: { ...this.state.tweetoptions, ...this.state.tweetoptions.xaxis, ...this.state.tweetoptions.xaxis.categories = tweetscategorieList },
-            options: {
-              chart: {
-                id: "basic-bar",
-              },
-
-              fill: {
-                colors: ["#9C27B0"],
-              },
-              xaxis: {
-                categories: [...categorieList],
-              },
-            },
-            tweetoptions: {
-              chart: {
-                id: "basic-bar",
-              },
-              xaxis: {
-                categories: [...tweetscategorieList],
-              },
-            },
-          });
-        })
-        .catch((error) => {
-          this.setState({ isLoding: false });
-          handleServerErrors(error, toast.error);
-        });
-      RestAPI.barChart()
-        .then((response) => {
-          let categorieList = Object.keys(response.data.papers);
-          let value = Object.values(response.data.papers);
-          let tweetscategorieList = Object.keys(response.data.tweets);
-          let tweetsvalue = Object.values(response.data.tweets);
-          this.setState({
-            isLoding: false,
-            data: response.data,
-            series: [{ name: "Paper", data: [...value] }],
-            tweetseries: [{ name: "Tweet", data: [...tweetsvalue] }],
-            // options: { ...this.state.options, ...this.state.options.xaxis, ...this.state.options.xaxis.categories = categorieList },
-            // tweetoptions: { ...this.state.tweetoptions, ...this.state.tweetoptions.xaxis, ...this.state.tweetoptions.xaxis.categories = tweetscategorieList },
-            options: {
-              chart: {
-                id: "basic-bar",
-              },
-
-              fill: {
-                colors: ["#9C27B0"],
-              },
-              xaxis: {
-                categories: [...categorieList],
-              },
-            },
-            tweetoptions: {
-              chart: {
-                id: "basic-bar",
-              },
-              xaxis: {
-                categories: [...tweetscategorieList],
-              },
-            },
-          });
-        })
-        .catch((error) => {
-          this.setState({ isLoding: false });
-          handleServerErrors(error, toast.error);
-        });
-      RestAPI.pieChart()
-        .then((response) => {
-          let mydata = response.data.map((val) => val.keyword);
-          let values = response.data.map((val) => val.weight);
-
-          this.setState({
-            isLoding: false,
-            data: response.data,
-            series: values,
-            options: {
-              ...this.state.options,
-              labels: mydata,
-            },
-          });
-        })
-        .catch((error) => {
-          this.setState({ isLoding: false });
-          handleServerErrors(error, toast.error);
-        });
       RestAPI.streamChart()
         .then((response) => {
           let twitterData = this.getChartOptions(response.data.twitter_data);
@@ -236,32 +139,6 @@ class TwitterCharts extends Component {
           };
 
           this.setState({ chartOptions, isLoding: false });
-        })
-        .catch((error) => {
-          this.setState({ isLoding: false });
-          handleServerErrors(error, toast.error);
-        });
-      RestAPI.cloudChart()
-        .then((response) => {
-          let keywordArray = [];
-          for (let i = 0; i < response.data.length; i++) {
-            keywordArray.push({
-              text: response.data[i].keyword,
-              value: response.data[i].weight,
-              tweet_ids: response.data[i].tweet_ids,
-              papers: response.data[i].papers,
-              source: response.data[i].source,
-            });
-          }
-          if (response.data.length === 0) {
-            this.setState({
-              isData: false,
-            });
-          }
-          this.setState({
-            isLoding: false,
-            wordArray: keywordArray,
-          });
         })
         .catch((error) => {
           this.setState({ isLoding: false });
@@ -301,47 +178,6 @@ class TwitterCharts extends Component {
       });
     }
     return { xAxis: xAxisOptions, series: seriesData };
-  };
-
-  handleChange = (e) => {
-    let getValue = e.target.value;
-    let getName = e.target.name;
-    this.setState(() => ({ [getName]: getValue }));
-  };
-
-  _handleSubmit = (e) => {
-    const {
-      id,
-      email,
-      first_name,
-      last_name,
-      twitter_account_id,
-      author_id,
-    } = this.state;
-    e.preventDefault();
-    let data = {
-      email: email,
-      first_name: first_name,
-      last_name: last_name,
-      twitter_account_id: twitter_account_id,
-      author_id: author_id,
-    };
-
-    this.setState({ isLoding: true }, () => {
-      RestAPI.updateUserProfile(data, id)
-        .then((response) => {
-          toast.success("Update Profile Data !", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 2000,
-          });
-          this.setState({ isLoding: false });
-          // this.props.history.push("/admin/view-paper");
-        })
-        .catch((error) => {
-          this.setState({ isLoding: false });
-          handleServerErrors(error, toast.error);
-        });
-    });
   };
 
   render() {

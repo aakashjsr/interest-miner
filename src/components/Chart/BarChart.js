@@ -97,6 +97,8 @@ class BarChart extends Component {
                 type="bar"
                 width="600"
               />
+              <p className="h1-s rtl">Papers Published</p>
+              <p className="h1-s">Year</p>
               <hr />
               <h1>Tweet Data</h1>
               <Chart
@@ -105,6 +107,8 @@ class BarChart extends Component {
                 type="bar"
                 width="600"
               />
+              <p className="h1-s rtl">Tweets</p>
+              <p className="h1-s">Year</p>
             </div>
           </>
         )}

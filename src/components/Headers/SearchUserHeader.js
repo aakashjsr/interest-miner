@@ -69,7 +69,17 @@ class SearchUserHeader extends React.Component {
             style={{ position: "absolute", top: "70px" }}
           >
             <Row>
-              <Col lg="12" md="10"></Col>
+              <Col lg="12" md="10">
+                <h1
+                  style={{ marginTop: "150px" }}
+                  className="display-2 text-white"
+                >
+                  {this.props.first_name + " " + this.props.last_name}
+                </h1>
+                <p className="text-white mt-0 mb-5">
+                  Score : {this.props.score} %
+                </p>
+              </Col>
             </Row>
           </Container>
         </div>

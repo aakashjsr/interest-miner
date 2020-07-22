@@ -162,10 +162,11 @@ class ComparisonSlider extends React.Component {
     url: "",
     year: "",
     abstract: "",
+    Loader: false,
   };
 
   componentDidMount() {
-    this.setState({ isLoding: true }, () => {
+    this.setState({ isLoding: true, Loader: true }, () => {
       RestAPI.barChartUser()
         .then((response) => {
           let categorieList = Object.keys(response.data.papers);
@@ -173,49 +174,9 @@ class ComparisonSlider extends React.Component {
           let tweetscategorieList = Object.keys(response.data.tweets);
           let tweetsvalue = Object.values(response.data.tweets);
           this.setState({
-            isLoding: false,
             data: response.data,
             series: [{ name: "Paper", data: [...value] }],
             tweetseries: [{ name: "Tweet", data: [...tweetsvalue] }],
-            options: {
-              chart: {
-                id: "basic-bar",
-              },
-
-              fill: {
-                colors: ["#9C27B0"],
-              },
-              xaxis: {
-                categories: [...categorieList],
-              },
-            },
-            tweetoptions: {
-              chart: {
-                id: "basic-bar",
-              },
-              xaxis: {
-                categories: [...tweetscategorieList],
-              },
-            },
-          });
-        })
-        .catch((error) => {
-          this.setState({ isLoding: false });
-          handleServerErrors(error, toast.error);
-        });
-      RestAPI.barChart()
-        .then((response) => {
-          let categorieList = Object.keys(response.data.papers);
-          let value = Object.values(response.data.papers);
-          let tweetscategorieList = Object.keys(response.data.tweets);
-          let tweetsvalue = Object.values(response.data.tweets);
-          this.setState({
-            isLoding: false,
-            data: response.data,
-            series: [{ name: "Paper", data: [...value] }],
-            tweetseries: [{ name: "Tweet", data: [...tweetsvalue] }],
-            // options: { ...this.state.options, ...this.state.options.xaxis, ...this.state.options.xaxis.categories = categorieList },
-            // tweetoptions: { ...this.state.tweetoptions, ...this.state.tweetoptions.xaxis, ...this.state.tweetoptions.xaxis.categories = tweetscategorieList },
             options: {
               chart: {
                 id: "basic-bar",
@@ -279,8 +240,8 @@ class ComparisonSlider extends React.Component {
             });
           }
           this.setState({
-            isLoding: false,
             wordArray: keywordArray,
+            Loader: false,
           });
         })
         .catch((error) => {
@@ -310,7 +271,7 @@ class ComparisonSlider extends React.Component {
         reactRef.setState({
           isTweetData: true,
           tweetIds: word.tweet_ids,
-          weight: word.weight,
+          weight: word.value,
         });
         if (word.tweet_ids.length === 0) {
           reactRef.setState({
@@ -324,7 +285,7 @@ class ComparisonSlider extends React.Component {
           userPageIDs: word.papers,
           papercount: word.papers.length,
           word: word.text,
-          weight: word.weight,
+          weight: word.value,
         });
 
         if (word.papers.length === 0) {
@@ -387,7 +348,6 @@ class ComparisonSlider extends React.Component {
 
   render() {
     const { first_name, last_name } = this.props;
-    console.log(first_name);
     let graphOptions = {
       chart: {
         toolbar: {
@@ -464,287 +424,328 @@ class ComparisonSlider extends React.Component {
             </Row>
           </CardHeader>
         </Row>
-        <Row>
-          <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
-            <h1 style={{ color: "#076ec6" }}>{first_name + " " + last_name}</h1>
-          </Col>
-          <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
-            <h1 style={{ color: "#076ec6" }}>
-              {getItem("name") + " " + getItem("lastname")}
-            </h1>
-          </Col>
-        </Row>
-        <Carousel
-          interval={1000000000}
-          indicators={false}
-          style={{
-            background: "rgba(50, 151, 211, 0.25)",
-            borderRadius: "6px",
-            height: "450px",
-            overflow: "hidden",
-            padding: "10px",
-          }}
-        >
-          <Carousel.Item>
+        {this.state.Loader ? (
+          <div className="text-center" style={{ padding: "20px" }}>
+            <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+          </div>
+        ) : (
+          <>
             <Row>
               <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
-                <PieChart />
+                <h1 style={{ color: "#076ec6" }}>
+                  {first_name + " " + last_name}
+                </h1>
               </Col>
               <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
-                <UserPieChart />
+                <h1 style={{ color: "#076ec6" }}>
+                  {getItem("name") + " " + getItem("lastname")}
+                </h1>
               </Col>
             </Row>
-          </Carousel.Item>
-          <Carousel.Item>
-            <Row>
-              <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
-                <PaperBar />
-              </Col>
-              <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
-                <div className="mixed-chart">
-                  <h1>Paper Data</h1>
-                  <Chart
-                    options={this.state.options}
-                    series={this.state.series}
-                    type="bar"
-                    width="400"
-                  />
-                </div>
-              </Col>
-            </Row>
-          </Carousel.Item>
-          <Carousel.Item>
-            <Row>
-              <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
-                <TweetBar />
-              </Col>
-              <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
-                <div className="mixed-chart">
-                  <h1>Tweet Data</h1>
-                  <Chart
-                    style={{ margin: "0 auto" }}
-                    options={this.state.tweetoptions}
-                    series={this.state.tweetseries}
-                    type="bar"
-                    width="400"
-                  />
-                </div>
-              </Col>
-            </Row>
-          </Carousel.Item>
-          <Carousel.Item>
-            <Row>
-              <Col
-                className="order-xl-2 mb-5 mb-xl-0"
-                lg="6"
-                style={{ overflow: "hidden" }}
-              >
-                <CloudChart />
-              </Col>
-              <Col
-                className="order-xl-2 mb-5 mb-xl-0"
-                lg="6"
-                style={{ overflow: "hidden" }}
-              >
-                <ReactWordcloud
-                  options={options}
-                  callbacks={callbacks}
-                  words={this.state.wordArray}
-                  width="100"
-                />
-              </Col>
-            </Row>
-            <div style={{ height: 400, width: "100%" }}></div>
-            <Modal
-              isOpen={this.state.modal}
-              toggle={this.toggle}
-              size="lg"
-              id="modal"
+            <Carousel
+              interval={1000000000}
+              indicators={false}
+              style={{
+                background: "rgba(50, 151, 211, 0.25)",
+                borderRadius: "6px",
+                height: "450px",
+                overflow: "hidden",
+                padding: "10px",
+              }}
             >
-              <ModalBody>
-                <Tabs>
-                  <TabList>
-                    <Tab>Papers</Tab>
-                    <Tab>Tweets</Tab>
-                  </TabList>
-                  <TabPanel>
-                    {this.state.isModalLoader ? (
-                      <div className="text-center" style={{ padding: "20px" }}>
-                        <Loader
-                          type="Puff"
-                          color="#00BFFF"
-                          height={100}
-                          width={100}
-                          timeout={1000}
-                        />
-                      </div>
-                    ) : (
-                      <>
-                        {this.state.isPaperData ? (
+              <Carousel.Item>
+                <Row>
+                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
+                    <PieChart />
+                  </Col>
+                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
+                    <UserPieChart />
+                  </Col>
+                </Row>
+              </Carousel.Item>
+              <Carousel.Item>
+                <Row>
+                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
+                    <PaperBar />
+                  </Col>
+                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
+                    <div className="mixed-chart">
+                      <h1>Paper Data</h1>
+                      <Chart
+                        options={this.state.options}
+                        series={this.state.series}
+                        type="bar"
+                        width="350"
+                        height="250"
+                        id="chart-1"
+                      />
+                      <p className="h1-s rtl-1">Papers Published</p>
+                      <p
+                        className="h1-s"
+                        style={{ width: "350px", marginLeft: "50px" }}
+                      >
+                        Year
+                      </p>
+                    </div>
+                  </Col>
+                </Row>
+              </Carousel.Item>
+              <Carousel.Item>
+                <Row>
+                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
+                    <TweetBar />
+                  </Col>
+                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
+                    <div className="mixed-chart">
+                      <h1>Tweet Data</h1>
+                      <Chart
+                        style={{ margin: "0 auto" }}
+                        options={this.state.tweetoptions}
+                        series={this.state.tweetseries}
+                        type="bar"
+                        width="350"
+                        height="250"
+                        id="chart-1"
+                      />
+                      <p className="h1-s rtl-1" style={{ marginTop: "-300px" }}>
+                        Tweets
+                      </p>
+                      <p
+                        className="h1-s"
+                        style={{ width: "350px", marginLeft: "50px" }}
+                      >
+                        Year
+                      </p>
+                    </div>
+                  </Col>
+                </Row>
+              </Carousel.Item>
+              <Carousel.Item>
+                <Row>
+                  <Col
+                    className="order-xl-2 mb-5 mb-xl-0"
+                    lg="6"
+                    style={{ overflow: "hidden" }}
+                  >
+                    <CloudChart />
+                  </Col>
+                  <Col
+                    className="order-xl-2 mb-5 mb-xl-0"
+                    lg="6"
+                    style={{ overflow: "hidden" }}
+                  >
+                    <ReactWordcloud
+                      options={options}
+                      callbacks={callbacks}
+                      words={this.state.wordArray}
+                      width="100"
+                    />
+                  </Col>
+                </Row>
+                <div style={{ height: 400, width: "100%" }}></div>
+                <Modal
+                  isOpen={this.state.modal}
+                  toggle={this.toggle}
+                  size="lg"
+                  id="modal"
+                >
+                  <ModalBody>
+                    <Tabs>
+                      <TabList>
+                        <Tab>Papers</Tab>
+                        <Tab>Tweets</Tab>
+                      </TabList>
+                      <TabPanel>
+                        {this.state.isModalLoader ? (
+                          <div
+                            className="text-center"
+                            style={{ padding: "20px" }}
+                          >
+                            <Loader
+                              type="Puff"
+                              color="#00BFFF"
+                              height={100}
+                              width={100}
+                              timeout={1000}
+                            />
+                          </div>
+                        ) : (
                           <>
-                            <p>
-                              {this.state.papercount} Papers Contain this
-                              interest
-                            </p>
-                            <p>The weight of interest :{this.state.weight} </p>
-                            <p>
-                              Interest keywords before Wikipedia filter related
-                              to this interest :{" "}
-                            </p>
-                            <p>
-                              Algorithm used to extract keywords : Singlerank
-                            </p>
-
-                            {this.state.userPageIDs.map((data, idx) => (
+                            {this.state.isPaperData ? (
                               <>
-                                <div
-                                  style={{
-                                    borderRadius: "20px",
-                                    padding: "20px",
-                                    margin: "20px 0",
-                                    boxShadow: "4px 4px 24px 4px gainsboro",
-                                  }}
-                                >
-                                  <strong>Title: </strong>{" "}
-                                  <p
-                                    dangerouslySetInnerHTML={{
-                                      __html: this.getMarkedAbstract(
-                                        data.title,
-                                        this.state.word
-                                      ),
-                                    }}
-                                  ></p>
-                                  <strong>Year: </strong> <p>{data.year}</p>
-                                  <strong>URL: </strong> <p>{data.url}</p>
-                                  <strong>Abstract: </strong>{" "}
-                                  <p
-                                    id="abstract"
-                                    dangerouslySetInnerHTML={{
-                                      __html: this.getMarkedAbstract(
-                                        data.abstract,
-                                        this.state.word
-                                      ),
-                                    }}
-                                  ></p>
-                                </div>
-                              </>
-                            ))}
-                          </>
-                        ) : this.state.isManualData ? (
-                          <p style={{ textAlign: "center" }}>
-                            This interest was added manually
-                          </p>
-                        ) : (
-                          <p style={{ textAlign: "center" }}>
-                            No Matching Papers Found{" "}
-                          </p>
-                        )}
-                      </>
-                    )}
-                  </TabPanel>
-                  <TabPanel>
-                    {this.state.isModalLoader ? (
-                      <div className="text-center" style={{ padding: "20px" }}>
-                        <Loader
-                          type="Puff"
-                          color="#00BFFF"
-                          height={100}
-                          width={100}
-                          timeout={3000}
-                        />
-                      </div>
-                    ) : (
-                      <>
-                        {this.state.isTweetData ? (
-                          <>
-                            <p>The weight of interest :{this.state.weight} </p>
-                            <p>
-                              Interest keywords before Wikipedia filter related
-                              to this interest :{" "}
-                            </p>
-                            <p>Algorithm used to extract keywords : YAKE</p>
-                            {this.state.tweetIds.map((data, idx) => (
-                              <div
-                                style={{
-                                  display: "flex",
-                                  justifyContent: "center",
-                                }}
-                              >
-                                <TwitterTweetEmbed
-                                  tweetId={data}
-                                  placeholder={
-                                    <Loader
-                                      type="Puff"
-                                      color="#00BFFF"
-                                      height={100}
-                                      style={{
-                                        padding: "200px 0px",
-                                      }}
-                                      width={100}
-                                    />
-                                  }
-                                />
-                              </div>
-                            ))}
-                          </>
-                        ) : this.state.isManualData ? (
-                          <p style={{ textAlign: "center" }}>
-                            This interest was added manually
-                          </p>
-                        ) : (
-                          <p style={{ textAlign: "center" }}>
-                            No Matching Papers Found{" "}
-                          </p>
-                        )}
-                      </>
-                    )}
-                  </TabPanel>
-                </Tabs>
-              </ModalBody>
+                                <p>
+                                  {this.state.papercount} Papers Contain this
+                                  interest
+                                </p>
+                                <p>
+                                  The weight of interest :{this.state.weight}{" "}
+                                </p>
+                                <p>
+                                  Interest keywords before Wikipedia filter
+                                  related to this interest :{" "}
+                                </p>
+                                <p>
+                                  Algorithm used to extract keywords :
+                                  Singlerank
+                                </p>
 
-              <ModalFooter>
-                <Button color="primary" onClick={this.toggle}>
-                  OK
-                </Button>
-              </ModalFooter>
-            </Modal>
-          </Carousel.Item>
-          <Carousel.Item>
-            <Row>
-              <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
-                <TwitterCharts />
-              </Col>
-              <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
-                <div align="center">Twitter Keyword Trends</div>
-                <div id="chart">
-                  <Chart
-                    type="area"
-                    series={this.state.chartOptions.twitterSeries}
-                    options={twitterGraphOptions}
-                  />
-                </div>
-              </Col>
-            </Row>
-          </Carousel.Item>
-          <Carousel.Item>
-            <Row>
-              <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
-                <PaperCharts />
-              </Col>
-              <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
-                <div align="center">Paper Keyword Trends</div>
-                <div id="chart">
-                  <Chart
-                    type="area"
-                    series={this.state.chartOptions.paperSeries}
-                    options={paperGraphOptions}
-                    width="400"
-                  />
-                </div>
-              </Col>
-            </Row>
-          </Carousel.Item>
-        </Carousel>
+                                {this.state.userPageIDs.map((data, idx) => (
+                                  <>
+                                    <div
+                                      style={{
+                                        borderRadius: "20px",
+                                        padding: "20px",
+                                        margin: "20px 0",
+                                        boxShadow: "4px 4px 24px 4px gainsboro",
+                                      }}
+                                    >
+                                      <strong>Title: </strong>{" "}
+                                      <p
+                                        dangerouslySetInnerHTML={{
+                                          __html: this.getMarkedAbstract(
+                                            data.title,
+                                            this.state.word
+                                          ),
+                                        }}
+                                      ></p>
+                                      <strong>Year: </strong> <p>{data.year}</p>
+                                      <strong>URL: </strong> <p>{data.url}</p>
+                                      <strong>Abstract: </strong>{" "}
+                                      <p
+                                        id="abstract"
+                                        dangerouslySetInnerHTML={{
+                                          __html: this.getMarkedAbstract(
+                                            data.abstract,
+                                            this.state.word
+                                          ),
+                                        }}
+                                      ></p>
+                                    </div>
+                                  </>
+                                ))}
+                              </>
+                            ) : this.state.isManualData ? (
+                              <p style={{ textAlign: "center" }}>
+                                This interest was added manually
+                              </p>
+                            ) : (
+                              <p style={{ textAlign: "center" }}>
+                                No Matching Papers Found{" "}
+                              </p>
+                            )}
+                          </>
+                        )}
+                      </TabPanel>
+                      <TabPanel>
+                        {this.state.isModalLoader ? (
+                          <div
+                            className="text-center"
+                            style={{ padding: "20px" }}
+                          >
+                            <Loader
+                              type="Puff"
+                              color="#00BFFF"
+                              height={100}
+                              width={100}
+                              timeout={3000}
+                            />
+                          </div>
+                        ) : (
+                          <>
+                            {this.state.isTweetData ? (
+                              <>
+                                <p>
+                                  The weight of interest :{this.state.weight}{" "}
+                                </p>
+                                <p>
+                                  Interest keywords before Wikipedia filter
+                                  related to this interest :{" "}
+                                </p>
+                                <p>Algorithm used to extract keywords : YAKE</p>
+                                {this.state.tweetIds.map((data, idx) => (
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      justifyContent: "center",
+                                    }}
+                                  >
+                                    <TwitterTweetEmbed
+                                      tweetId={data}
+                                      placeholder={
+                                        <Loader
+                                          type="Puff"
+                                          color="#00BFFF"
+                                          height={100}
+                                          style={{
+                                            padding: "200px 0px",
+                                          }}
+                                          width={100}
+                                        />
+                                      }
+                                    />
+                                  </div>
+                                ))}
+                              </>
+                            ) : this.state.isManualData ? (
+                              <p style={{ textAlign: "center" }}>
+                                This interest was added manually
+                              </p>
+                            ) : (
+                              <p style={{ textAlign: "center" }}>
+                                No Matching Papers Found{" "}
+                              </p>
+                            )}
+                          </>
+                        )}
+                      </TabPanel>
+                    </Tabs>
+                  </ModalBody>
+
+                  <ModalFooter>
+                    <Button color="primary" onClick={this.toggle}>
+                      OK
+                    </Button>
+                  </ModalFooter>
+                </Modal>
+              </Carousel.Item>
+              <Carousel.Item>
+                <Row>
+                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
+                    <TwitterCharts />
+                  </Col>
+                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
+                    <div align="center">Twitter Keyword Trends</div>
+                    <div id="chart">
+                      <Chart
+                        type="area"
+                        series={this.state.chartOptions.twitterSeries}
+                        options={twitterGraphOptions}
+                      />
+                    </div>
+                  </Col>
+                </Row>
+              </Carousel.Item>
+              <Carousel.Item>
+                <Row>
+                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
+                    <PaperCharts />
+                  </Col>
+                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
+                    <div align="center">Paper Keyword Trends</div>
+                    <div id="chart">
+                      <Chart
+                        type="area"
+                        series={this.state.chartOptions.paperSeries}
+                        options={paperGraphOptions}
+                        width="400"
+                      />
+                    </div>
+                  </Col>
+                </Row>
+              </Carousel.Item>
+            </Carousel>
+          </>
+        )}
       </Card>
     );
   }

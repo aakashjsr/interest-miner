@@ -103,7 +103,7 @@ class CloudChartPage extends Component {
         reactRef.setState({
           isTweetData: true,
           tweetIds: word.tweet_ids,
-          weight: word.weight,
+          weight: word.value,
         });
         if (word.tweet_ids.length === 0) {
           reactRef.setState({
@@ -117,7 +117,7 @@ class CloudChartPage extends Component {
           userPageIDs: word.papers,
           papercount: word.papers.length,
           word: word.text,
-          weight: word.weight,
+          weight: word.value,
         });
 
         if (word.papers.length === 0) {

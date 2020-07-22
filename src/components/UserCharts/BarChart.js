@@ -134,17 +134,11 @@ class BarChart extends Component {
           onClick={this.modalDetail}
           style={{ textAlign: "center", cursor: "pointer" }}
         >
-          Score : {this.state.score}
+          Score : {this.state.score} %
         </h3>
         {this.state.Loader ? (
           <div className="text-center" style={{ padding: "20px" }}>
-            <Loader
-              type="Puff"
-              color="#00BFFF"
-              height={100}
-              width={100}
-              timeout={3000}
-            />
+            <Loader type="Puff" color="#00BFFF" height={100} width={100} />
           </div>
         ) : this.state.barchart ? (
           <div id="searched-bar-chart" />
