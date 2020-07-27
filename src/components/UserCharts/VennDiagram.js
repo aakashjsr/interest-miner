@@ -235,9 +235,15 @@ class VennDiagram extends Component {
                       style={{ width: "50%", cursor: "pointer" }}
                       className="user1"
                     >
+                      <h3 style={{ textAlign: "center" }}>
+                        {this.props.first_name + " " + this.props.last_name}
+                      </h3>
                       {this.getUser1Keywords()}
                     </div>
                     <div style={{ width: "50%", cursor: "pointer" }} id="user2">
+                      <h3 style={{ textAlign: "center" }}>
+                        {getItem("name") + " " + getItem("lastname")}
+                      </h3>
                       {this.getUser2Keywords()}
                     </div>
                   </div>

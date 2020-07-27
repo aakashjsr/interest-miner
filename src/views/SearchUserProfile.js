@@ -227,14 +227,6 @@ class SearchUserProfile extends React.Component {
       </div>
     );
   };
-  modalSimilarity = () => {
-    swal(
-      <div>
-        <h1>How to calculate similarity?</h1>
-        <img src={require("../assets/img/similaritychart.png")} />
-      </div>
-    );
-  };
 
   render() {
     return (
@@ -257,14 +249,6 @@ class SearchUserProfile extends React.Component {
                     <i
                       style={{ cursor: "pointer" }}
                       onClick={this.modalDetail}
-                      className="fa fa-question-circle"
-                    />
-                  </p>
-                  <p>
-                    How to calculate similarity.
-                    <i
-                      style={{ cursor: "pointer" }}
-                      onClick={this.modalSimilarity}
                       className="fa fa-question-circle"
                     />
                   </p>

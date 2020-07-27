@@ -30,7 +30,7 @@ class HeatMap extends Component {
             Object.keys(datas).map((data1, idx) => {
               Object.keys(datas[data1]).map((data2, idx) => {
                 field.push(data2);
-                values.push(datas[data1][data2].toFixed(2));
+                values.push(parseFloat(datas[data1][data2].toFixed(2)));
               });
             });
           const fields = [];
@@ -48,6 +48,8 @@ class HeatMap extends Component {
               data.push([i, p, values[k]]);
             }
           }
+          console.log("values", values);
+
           const source = data.map((arr) => {
             return {
               name: arr[0],
