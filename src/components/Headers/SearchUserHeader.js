@@ -14,8 +14,6 @@ class SearchUserHeader extends React.Component {
     activeSuggestion: 0,
     showSuggestions: false,
     popupVisible: false,
-    tooltipOpen: false,
-    imageTooltipOpen: false,
   };
 
   getInfo = () => {
@@ -50,12 +48,7 @@ class SearchUserHeader extends React.Component {
       }
     );
   };
-  toogle = (status) => {
-    this.setState({ tooltipOpen: status });
-  };
-  handleToogle = (status) => {
-    this.setState({ imageTooltipOpen: status });
-  };
+
   modalDetail = () => {
     swal(
       <div>
@@ -98,26 +91,13 @@ class SearchUserHeader extends React.Component {
                   style={{ fontSize: "1.2rem" }}
                 >
                   Similarity Score : {this.props.score} % &nbsp;
-                  <i
+                  <span
                     onClick={this.modalDetail}
-                    className="fa fa-question-circle"
                     style={{ cursor: "pointer" }}
-                    onMouseOver={() => this.handleToogle(true)}
-                    onMouseOut={() => this.handleToogle(false)}
-                  />
-                  {this.state.imageTooltipOpen && (
-                    <div
-                      className="imgTooltip"
-                      style={{
-                        marginTop: "-33px",
-                        width: "200px",
-                        fontWeight: "bold",
-                        left: "247px",
-                      }}
-                    >
-                      How to calculate similarity{" "}
-                    </div>
-                  )}
+                  >
+                    {" "}
+                    (how is this calculated?)
+                  </span>
                 </p>
               </Col>
             </Row>
