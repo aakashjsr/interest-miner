@@ -237,6 +237,7 @@ class TwitterCharts extends Component {
             type="area"
             series={this.state.chartOptions.twitterSeries}
             options={twitterGraphOptions}
+            width="400"
           />
         </div>
       </>
