@@ -76,8 +76,11 @@ class SearchUserHeader extends React.Component {
                 >
                   {this.props.first_name + " " + this.props.last_name}
                 </h1>
-                <p className="text-white mt-0 mb-5">
-                  Score : {this.props.score} %
+                <p
+                  className="text-white mt-0 mb-5"
+                  style={{ fontSize: "1.2rem" }}
+                >
+                  Similarity Score : {this.props.score} %
                 </p>
               </Col>
             </Row>

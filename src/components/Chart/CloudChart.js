@@ -52,6 +52,7 @@ class CloudChartPage extends Component {
     word: "",
     abstract: "",
     weight: "",
+    original_keyword: "",
   };
 
   componentDidMount() {
@@ -85,6 +86,9 @@ class CloudChartPage extends Component {
     });
   }
   getMarkedAbstract = (text, word) => {
+    if (word === undefined) {
+      return text;
+    }
     text = text || "";
     text = text.split(word).join(`<mark>${word}</mark>`);
     word = word[0].toUpperCase() + word.slice(1);
@@ -104,6 +108,7 @@ class CloudChartPage extends Component {
           isTweetData: true,
           tweetIds: word.tweet_ids,
           weight: word.value,
+          original_keyword: word.original_keyword,
         });
         if (word.tweet_ids.length === 0) {
           reactRef.setState({
@@ -118,6 +123,7 @@ class CloudChartPage extends Component {
           papercount: word.papers.length,
           word: word.text,
           weight: word.value,
+          original_keyword: word.original_keyword,
         });
 
         if (word.papers.length === 0) {
@@ -212,7 +218,7 @@ class CloudChartPage extends Component {
                         <p>The weight of interest :{this.state.weight} </p>
                         <p>
                           Interest keywords before Wikipedia filter related to
-                          this interest :{" "}
+                          this interest : {this.state.original_keyword}
                         </p>
                         <p>Algorithm used to extract keywords : Singlerank</p>
 
@@ -231,7 +237,7 @@ class CloudChartPage extends Component {
                                 dangerouslySetInnerHTML={{
                                   __html: this.getMarkedAbstract(
                                     data.title,
-                                    this.state.word
+                                    this.state.original_keyword
                                   ),
                                 }}
                               ></p>
@@ -243,7 +249,7 @@ class CloudChartPage extends Component {
                                 dangerouslySetInnerHTML={{
                                   __html: this.getMarkedAbstract(
                                     data.abstract,
-                                    this.state.word
+                                    this.state.original_keyword
                                   ),
                                 }}
                               ></p>
@@ -281,7 +287,7 @@ class CloudChartPage extends Component {
                         <p>The weight of interest :{this.state.weight} </p>
                         <p>
                           Interest keywords before Wikipedia filter related to
-                          this interest :{" "}
+                          this interest : {this.state.original_keyword}
                         </p>
                         <p>Algorithm used to extract keywords : YAKE</p>
                         {this.state.tweetIds.map((data, idx) => (

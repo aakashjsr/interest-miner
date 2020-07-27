@@ -62,6 +62,7 @@ class ComparisonSlider extends React.Component {
     isLoding: false,
     isLoding1: false,
     radarChartData: {},
+    original_keyword: "",
     options: {
       chart: {
         id: "basic-bar",
@@ -252,6 +253,9 @@ class ComparisonSlider extends React.Component {
   }
 
   getMarkedAbstract = (text, word) => {
+    if (word === undefined) {
+      return text;
+    }
     text = text || "";
     text = text.split(word).join(`<mark>${word}</mark>`);
     word = word[0].toUpperCase() + word.slice(1);
@@ -272,6 +276,7 @@ class ComparisonSlider extends React.Component {
           isTweetData: true,
           tweetIds: word.tweet_ids,
           weight: word.value,
+          original_keyword: word.original_keyword,
         });
         if (word.tweet_ids.length === 0) {
           reactRef.setState({
@@ -286,6 +291,7 @@ class ComparisonSlider extends React.Component {
           papercount: word.papers.length,
           word: word.text,
           weight: word.value,
+          original_keyword: word.original_keyword,
         });
 
         if (word.papers.length === 0) {
@@ -582,7 +588,8 @@ class ComparisonSlider extends React.Component {
                                 </p>
                                 <p>
                                   Interest keywords before Wikipedia filter
-                                  related to this interest :{" "}
+                                  related to this interest :
+                                  {this.state.original_keyword}
                                 </p>
                                 <p>
                                   Algorithm used to extract keywords :
@@ -604,7 +611,7 @@ class ComparisonSlider extends React.Component {
                                         dangerouslySetInnerHTML={{
                                           __html: this.getMarkedAbstract(
                                             data.title,
-                                            this.state.word
+                                            this.state.original_keyword
                                           ),
                                         }}
                                       ></p>
@@ -616,7 +623,7 @@ class ComparisonSlider extends React.Component {
                                         dangerouslySetInnerHTML={{
                                           __html: this.getMarkedAbstract(
                                             data.abstract,
-                                            this.state.word
+                                            this.state.original_keyword
                                           ),
                                         }}
                                       ></p>
@@ -659,7 +666,8 @@ class ComparisonSlider extends React.Component {
                                 </p>
                                 <p>
                                   Interest keywords before Wikipedia filter
-                                  related to this interest :{" "}
+                                  related to this interest :
+                                  {this.state.original_keyword}
                                 </p>
                                 <p>Algorithm used to extract keywords : YAKE</p>
                                 {this.state.tweetIds.map((data, idx) => (

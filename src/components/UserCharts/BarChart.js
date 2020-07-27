@@ -4,7 +4,6 @@ import { handleServerErrors } from "utils/errorHandler";
 import RestAPI from "../../services/api";
 import { toast } from "react-toastify";
 import { getItem } from "utils/localStorage";
-import swal from "@sweetalert/with-react";
 import Loader from "react-loader-spinner";
 
 class BarChart extends Component {
@@ -118,24 +117,10 @@ class BarChart extends Component {
         });
     });
   }
-  modalDetail = () => {
-    swal(
-      <div>
-        <h1>How to calculate similarity?</h1>
-        <img src={require("../../assets/img/similaritychart.png")} />
-      </div>
-    );
-  };
 
   render() {
     return (
       <>
-        <h3
-          onClick={this.modalDetail}
-          style={{ textAlign: "center", cursor: "pointer" }}
-        >
-          Score : {this.state.score} %
-        </h3>
         {this.state.Loader ? (
           <div className="text-center" style={{ padding: "20px" }}>
             <Loader type="Puff" color="#00BFFF" height={100} width={100} />
