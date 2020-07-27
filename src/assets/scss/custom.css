@@ -73,3 +73,8 @@
 #chart-1 > .apexcharts-canvas {
   margin-left: 50px !important;
 }
+.second-user {
+  color: #076ec6;
+  background: white;
+  padding: 10px;
+}

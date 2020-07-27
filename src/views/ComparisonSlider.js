@@ -437,14 +437,9 @@ class ComparisonSlider extends React.Component {
         ) : (
           <>
             <Row>
-              <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
+              <Col className="order-xl-2 mb-5 mb-xl-0" lg="12">
                 <h1 style={{ color: "#076ec6" }}>
                   {first_name + " " + last_name}
-                </h1>
-              </Col>
-              <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
-                <h1 style={{ color: "#076ec6" }}>
-                  {getItem("name") + " " + getItem("lastname")}
                 </h1>
               </Col>
             </Row>
@@ -454,74 +449,92 @@ class ComparisonSlider extends React.Component {
               style={{
                 background: "rgba(50, 151, 211, 0.25)",
                 borderRadius: "6px",
-                height: "450px",
                 overflow: "hidden",
                 padding: "10px",
               }}
             >
               <Carousel.Item>
                 <Row>
-                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
+                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="12">
                     <PieChart />
                   </Col>
-                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
+                </Row>
+                <Row>
+                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="12">
+                    <h1 className="second-user">
+                      {getItem("name") + " " + getItem("lastname")}
+                    </h1>
                     <UserPieChart />
                   </Col>
                 </Row>
               </Carousel.Item>
               <Carousel.Item>
                 <Row>
-                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
+                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="12">
                     <PaperBar />
                   </Col>
-                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
-                    <div className="mixed-chart">
-                      <h1>Paper Data</h1>
-                      <Chart
-                        options={this.state.options}
-                        series={this.state.series}
-                        type="bar"
-                        width="350"
-                        height="250"
-                        id="chart-1"
-                      />
-                      <p className="h1-s rtl-1">Papers Published</p>
-                      <p
-                        className="h1-s"
-                        style={{ width: "350px", marginLeft: "50px" }}
-                      >
-                        Year
-                      </p>
+
+                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="12">
+                    <h1 className="second-user">
+                      {getItem("name") + " " + getItem("lastname")}
+                    </h1>
+                    <div>
+                      <div className="mixed-chart">
+                        <h1>Paper Data</h1>
+                        <Chart
+                          options={this.state.options}
+                          series={this.state.series}
+                          type="bar"
+                          width="350"
+                          height="250"
+                          id="chart-1"
+                        />
+                        <p className="h1-s rtl-1">Papers Published</p>
+                        <p
+                          className="h1-s"
+                          style={{ width: "350px", marginLeft: "50px" }}
+                        >
+                          Year
+                        </p>
+                      </div>
                     </div>
                   </Col>
                 </Row>
               </Carousel.Item>
               <Carousel.Item>
                 <Row>
-                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
+                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="12">
                     <TweetBar />
                   </Col>
-                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
-                    <div className="mixed-chart">
-                      <h1>Tweet Data</h1>
-                      <Chart
-                        style={{ margin: "0 auto" }}
-                        options={this.state.tweetoptions}
-                        series={this.state.tweetseries}
-                        type="bar"
-                        width="350"
-                        height="250"
-                        id="chart-1"
-                      />
-                      <p className="h1-s rtl-1" style={{ marginTop: "-300px" }}>
-                        Tweets
-                      </p>
-                      <p
-                        className="h1-s"
-                        style={{ width: "350px", marginLeft: "50px" }}
-                      >
-                        Year
-                      </p>
+                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="12">
+                    <h1 className="second-user">
+                      {getItem("name") + " " + getItem("lastname")}
+                    </h1>
+                    <div>
+                      <div className="mixed-chart">
+                        <h1>Tweet Data</h1>
+                        <Chart
+                          style={{ margin: "0 auto" }}
+                          options={this.state.tweetoptions}
+                          series={this.state.tweetseries}
+                          type="bar"
+                          width="350"
+                          height="250"
+                          id="chart-1"
+                        />
+                        <p
+                          className="h1-s rtl-1"
+                          style={{ marginTop: "-300px" }}
+                        >
+                          Tweets
+                        </p>
+                        <p
+                          className="h1-s"
+                          style={{ width: "350px", marginLeft: "50px" }}
+                        >
+                          Year
+                        </p>
+                      </div>
                     </div>
                   </Col>
                 </Row>
@@ -530,25 +543,30 @@ class ComparisonSlider extends React.Component {
                 <Row>
                   <Col
                     className="order-xl-2 mb-5 mb-xl-0"
-                    lg="6"
+                    lg="12"
                     style={{ overflow: "hidden" }}
                   >
                     <CloudChart />
                   </Col>
+
                   <Col
                     className="order-xl-2 mb-5 mb-xl-0"
-                    lg="6"
+                    lg="12"
                     style={{ overflow: "hidden" }}
                   >
-                    <ReactWordcloud
-                      options={options}
-                      callbacks={callbacks}
-                      words={this.state.wordArray}
-                      width="100"
-                    />
+                    <h1 className="second-user">
+                      {getItem("name") + " " + getItem("lastname")}
+                    </h1>
+
+                    <div style={{ height: 400, width: "100%" }}>
+                      <ReactWordcloud
+                        options={options}
+                        callbacks={callbacks}
+                        words={this.state.wordArray}
+                      />
+                    </div>
                   </Col>
                 </Row>
-                <div style={{ height: 400, width: "100%" }}></div>
                 <Modal
                   isOpen={this.state.modal}
                   toggle={this.toggle}
@@ -718,35 +736,46 @@ class ComparisonSlider extends React.Component {
               </Carousel.Item>
               <Carousel.Item>
                 <Row>
-                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
+                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="12">
                     <TwitterCharts />
                   </Col>
-                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
-                    <div align="center">Twitter Keyword Trends</div>
-                    <div id="chart">
-                      <Chart
-                        type="area"
-                        series={this.state.chartOptions.twitterSeries}
-                        options={twitterGraphOptions}
-                      />
+                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="12">
+                    <h1 className="second-user">
+                      {getItem("name") + " " + getItem("lastname")}
+                    </h1>
+                    <div>
+                      <div align="center">Twitter Keyword Trends</div>
+                      <div id="chart">
+                        <Chart
+                          type="area"
+                          series={this.state.chartOptions.twitterSeries}
+                          options={twitterGraphOptions}
+                          width="400"
+                        />
+                      </div>
                     </div>
                   </Col>
                 </Row>
               </Carousel.Item>
               <Carousel.Item>
                 <Row>
-                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
+                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="12">
                     <PaperCharts />
                   </Col>
-                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="6">
-                    <div align="center">Paper Keyword Trends</div>
-                    <div id="chart">
-                      <Chart
-                        type="area"
-                        series={this.state.chartOptions.paperSeries}
-                        options={paperGraphOptions}
-                        width="400"
-                      />
+                  <Col className="order-xl-2 mb-5 mb-xl-0" lg="12">
+                    <h1 className="second-user">
+                      {getItem("name") + " " + getItem("lastname")}
+                    </h1>
+                    <div>
+                      <div align="center">Paper Keyword Trends</div>
+                      <div id="chart">
+                        <Chart
+                          type="area"
+                          series={this.state.chartOptions.paperSeries}
+                          options={paperGraphOptions}
+                          width="400"
+                        />
+                      </div>
                     </div>
                   </Col>
                 </Row>
