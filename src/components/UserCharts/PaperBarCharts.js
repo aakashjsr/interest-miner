@@ -64,7 +64,10 @@ class PaperBar extends Component {
             <Loader type="Puff" color="#00BFFF" height={100} width={100} />
           </div>
         ) : (
-          <div className="mixed-chart">
+          <div
+            className="mixed-chart"
+            style={{ width: "450px", margin: "0 auto" }}
+          >
             <h1>Paper Data</h1>
             <Chart
               options={this.state.options}

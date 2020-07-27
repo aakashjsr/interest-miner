@@ -124,14 +124,16 @@ class PaperCharts extends Component {
 
     return (
       <>
-        <div align="center">Paper Keyword Trends</div>
-        <div id="chart">
-          <Chart
-            type="area"
-            series={this.state.chartOptions.paperSeries}
-            options={paperGraphOptions}
-            width="400"
-          />
+        <div style={{ width: "450px", margin: "0 auto" }}>
+          <div align="center">Paper Keyword Trends</div>
+          <div id="chart">
+            <Chart
+              type="area"
+              series={this.state.chartOptions.paperSeries}
+              options={paperGraphOptions}
+              width="400"
+            />
+          </div>
         </div>
       </>
     );

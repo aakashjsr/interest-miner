@@ -438,7 +438,7 @@ class ComparisonSlider extends React.Component {
           <>
             <Row>
               <Col className="order-xl-2 mb-5 mb-xl-0" lg="12">
-                <h1 style={{ color: "#076ec6" }}>
+                <h1 style={{ color: "#076ec6", textAlign: "center" }}>
                   {first_name + " " + last_name}
                 </h1>
               </Col>
@@ -471,7 +471,7 @@ class ComparisonSlider extends React.Component {
               <Carousel.Item>
                 <Row>
                   <Col className="order-xl-2 mb-5 mb-xl-0" lg="12">
-                    <PaperBar />
+                    <PaperBar style={{ width: "450px", margin: "0 auto" }} />
                   </Col>
 
                   <Col className="order-xl-2 mb-5 mb-xl-0" lg="12">
@@ -479,7 +479,10 @@ class ComparisonSlider extends React.Component {
                       {getItem("name") + " " + getItem("lastname")}
                     </h1>
                     <div>
-                      <div className="mixed-chart">
+                      <div
+                        className="mixed-chart"
+                        style={{ width: "450px", margin: "0 auto" }}
+                      >
                         <h1>Paper Data</h1>
                         <Chart
                           options={this.state.options}
@@ -511,7 +514,10 @@ class ComparisonSlider extends React.Component {
                       {getItem("name") + " " + getItem("lastname")}
                     </h1>
                     <div>
-                      <div className="mixed-chart">
+                      <div
+                        className="mixed-chart"
+                        style={{ width: "450px", margin: "0 auto" }}
+                      >
                         <h1>Tweet Data</h1>
                         <Chart
                           style={{ margin: "0 auto" }}
@@ -735,7 +741,7 @@ class ComparisonSlider extends React.Component {
                 </Modal>
               </Carousel.Item>
               <Carousel.Item>
-                <Row>
+                <Row id="twitter">
                   <Col className="order-xl-2 mb-5 mb-xl-0" lg="12">
                     <TwitterCharts />
                   </Col>
@@ -743,7 +749,7 @@ class ComparisonSlider extends React.Component {
                     <h1 className="second-user">
                       {getItem("name") + " " + getItem("lastname")}
                     </h1>
-                    <div>
+                    <div style={{ width: "450px", margin: "0 auto" }}>
                       <div align="center">Twitter Keyword Trends</div>
                       <div id="chart">
                         <Chart
@@ -766,7 +772,7 @@ class ComparisonSlider extends React.Component {
                     <h1 className="second-user">
                       {getItem("name") + " " + getItem("lastname")}
                     </h1>
-                    <div>
+                    <div style={{ width: "450px", margin: "0 auto" }}>
                       <div align="center">Paper Keyword Trends</div>
                       <div id="chart">
                         <Chart
