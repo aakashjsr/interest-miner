@@ -93,7 +93,11 @@ class SearchUserHeader extends React.Component {
                   Similarity Score : {this.props.score} % &nbsp;
                   <span
                     onClick={this.modalDetail}
-                    style={{ cursor: "pointer" }}
+                    style={{
+                      cursor: "pointer",
+                      fontSize: "18px",
+                      fontStyle: "italic",
+                    }}
                   >
                     {" "}
                     (how is this calculated?)
