@@ -43,7 +43,6 @@ class Login extends React.Component {
     this.setState({ isLoding: true });
     RestAPI.userSignIn(data)
       .then((response) => {
-        console.log(response);
         this.setState({ isLoding: false, modal: true });
         if (response.status === 200) {
           localStorage.setItem("accessToken", response.data.token);
@@ -59,7 +58,7 @@ class Login extends React.Component {
         }
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log("Login Api Response", error);
         this.setState({ isLoding: false });
         handleServerErrors(error, toast.error);
       });
