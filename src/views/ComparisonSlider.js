@@ -36,7 +36,7 @@ const options = {
   fontSizes: [14, 60],
   fontStyle: "normal",
   fontWeight: "normal",
-  padding: 3,
+  padding: 5,
   rotations: 2,
   rotationAngles: [0, 90],
   scale: "sqrt",
@@ -233,6 +233,7 @@ class ComparisonSlider extends React.Component {
               papers: response.data[i].papers,
               papercount: response.data[i].papers.length,
               source: response.data[i].source,
+              original_keyword: response.data[i].original_keyword,
             });
           }
           if (response.data.length === 0) {
@@ -552,7 +553,9 @@ class ComparisonSlider extends React.Component {
                     lg="12"
                     style={{ overflow: "hidden" }}
                   >
-                    <CloudChart />
+                    <div>
+                      <CloudChart />
+                    </div>
                   </Col>
 
                   <Col
@@ -563,13 +566,14 @@ class ComparisonSlider extends React.Component {
                     <h1 className="second-user">
                       {getItem("name") + " " + getItem("lastname")}
                     </h1>
-
-                    <div style={{ height: 400, width: "100%" }}>
-                      <ReactWordcloud
-                        options={options}
-                        callbacks={callbacks}
-                        words={this.state.wordArray}
-                      />
+                    <div>
+                      <div style={{ height: "500px", width: "100%" }}>
+                        <ReactWordcloud
+                          options={options}
+                          callbacks={callbacks}
+                          words={this.state.wordArray}
+                        />
+                      </div>
                     </div>
                   </Col>
                 </Row>
