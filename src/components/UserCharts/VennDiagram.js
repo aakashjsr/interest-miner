@@ -81,14 +81,24 @@ class VennDiagram extends Component {
     } = this.state;
     let items = [];
     let relatedKeywords = [];
+    console.log("selectedUser", selectedKeyword);
     if (selectedUser == "user_2") {
-      relatedKeywords = similar_user_1[selectedKeyword];
+      for (let i = 0; i < similar_user_2[selectedKeyword].length; i++) {
+        relatedKeywords.push(similar_user_2[selectedKeyword][i]);
+      }
     }
     let keys = Object.keys(similar_user_1);
+    console.log(
+      "relatedkeywords1",
+      similar_user_1,
+      Object.keys(similar_user_1)
+    );
     for (let index = 0; index < Object.keys(similar_user_1).length; index++) {
       let appliedClass = "";
-      if (relatedKeywords.indexOf(keys[index]) !== -1) {
-        appliedClass = "highlight-keywords";
+      if (relatedKeywords) {
+        if (relatedKeywords.indexOf(keys[index]) !== -1) {
+          appliedClass = "highlight-keywords";
+        }
       }
       items.push(
         <div
@@ -113,13 +123,18 @@ class VennDiagram extends Component {
     let items = [];
     let relatedKeywords = [];
     if (selectedUser == "user_1") {
-      relatedKeywords = similar_user_2[selectedKeyword];
+      for (let i = 0; i < similar_user_1[selectedKeyword].length; i++) {
+        relatedKeywords.push(similar_user_1[selectedKeyword][i]);
+      }
     }
     let keys = Object.keys(similar_user_2);
+    console.log("relatedkeywords2", keys);
     for (let index = 0; index < Object.keys(similar_user_2).length; index++) {
       let appliedClass = "";
-      if (relatedKeywords.indexOf(keys[index]) !== -1) {
-        appliedClass = "highlight-keywords";
+      if (relatedKeywords) {
+        if (relatedKeywords.indexOf(keys[index]) !== -1) {
+          appliedClass = "highlight-keywords";
+        }
       }
       items.push(
         <div
