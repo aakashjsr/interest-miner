@@ -53,6 +53,7 @@ class CloudChartPage extends Component {
     abstract: "",
     weight: "",
     original_keyword: "",
+    original_keywords: [],
   };
 
   componentDidMount() {
@@ -68,6 +69,7 @@ class CloudChartPage extends Component {
               papers: response.data[i].papers,
               source: response.data[i].source,
               original_keyword: response.data[i].original_keyword,
+              original_keywords: response.data[i].original_keywords || [],
             });
           }
           if (response.data.length === 0) {
@@ -86,16 +88,26 @@ class CloudChartPage extends Component {
         });
     });
   }
-  getMarkedAbstract = (text, word) => {
-    if (word === undefined) {
+  getMarkedAbstract = (text, words) => {
+
+    if (!words) {
       return text;
     }
+
+    words = JSON.parse(JSON.stringify(words))
+    console.log("words original: ", words)
+    words.sort(word=>word.length);
+    words.reverse();
+    console.log("words changed: ", words)
     text = text || "";
-    text = text.split(word).join(`<mark>${word}</mark>`);
-    word = word[0].toUpperCase() + word.slice(1);
-    text = text.split(word).join(`<mark>${word}</mark>`);
+    for (let index=0; index < words.length; index++) {
+      let word = words[index];
+      let regExp = new RegExp(word, "ig");
+      text = text.replace(regExp, `<mark>${word}</mark>`);
+    }
     return text;
   };
+
   getCallback = (callback) => {
     let reactRef = this;
     return function (word, event) {
@@ -110,6 +122,7 @@ class CloudChartPage extends Component {
           tweetIds: word.tweet_ids,
           weight: word.value,
           original_keyword: word.original_keyword,
+          original_keywords: word.original_keywords,
         });
         if (word.tweet_ids.length === 0) {
           reactRef.setState({
@@ -125,6 +138,7 @@ class CloudChartPage extends Component {
           word: word.text,
           weight: word.value,
           original_keyword: word.original_keyword,
+          original_keywords: word.original_keywords,
         });
 
         if (word.papers.length === 0) {
@@ -219,7 +233,7 @@ class CloudChartPage extends Component {
                         <p>The weight of interest :{this.state.weight} </p>
                         <p>
                           Interest keywords before Wikipedia filter related to
-                          this interest : {this.state.original_keyword}
+                          this interest : {this.state.original_keywords.join(',')}
                         </p>
                         <p>Algorithm used to extract keywords : Singlerank</p>
 
@@ -238,7 +252,7 @@ class CloudChartPage extends Component {
                                 dangerouslySetInnerHTML={{
                                   __html: this.getMarkedAbstract(
                                     data.title,
-                                    this.state.original_keyword
+                                    this.state.original_keywords
                                   ),
                                 }}
                               ></p>
@@ -250,7 +264,7 @@ class CloudChartPage extends Component {
                                 dangerouslySetInnerHTML={{
                                   __html: this.getMarkedAbstract(
                                     data.abstract,
-                                    this.state.original_keyword
+                                    this.state.original_keywords
                                   ),
                                 }}
                               ></p>
